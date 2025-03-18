@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 03:58:40 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/03/18 06:15:28 by ababdoul         ###   ########.fr       */
+/*   Created: 2025/03/18 06:03:39 by ababdoul          #+#    #+#             */
+/*   Updated: 2025/03/18 06:26:52 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#ifndef MINISHELL_H
+#define MINISHELL_H
 
-int main()
-{
-    char *line;
-    // atexit(f);
-    while (1)
-    {
-        line = readline("$minishell > ");
-        if (line == NULL)
-            printf("Error\n");
-        else if (strcmp(line, "exit") == 0)
-            break;
-        if (*line)
-            add_history(line);
-        printf("you enter %s\n", line);
+#include <stdio.h>
+#include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <string.h>
 
-        free(line);
-    }
-    return (0);
-}
+typdef struct t_commande{
+    char *cmd;
+    int arg_count;
+} s_commande;
+
+
+#endif
