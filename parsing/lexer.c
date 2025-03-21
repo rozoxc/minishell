@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rozox <rozox@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 05:56:46 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/03/19 06:17:32 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/03/21 05:03:09 by rozox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,42 @@ int ft_strlen(char *str)
         i++;
     return (i);
 }
+s_token *add_new_token()
+{
+    s_token *token;
+
+    token = malloc(sizeof(s_token));
+ }
 
 s_token *lexer(char *input)
 {
     int i;
     s_token_type type;
-    s_token *value;
+    s_token *token;
+    char **str;
 
-    value = malloc(sizeof(char) * ft_strlen(input) + 1);
+    token = malloc(sizeof(s_token));
+    if (token == NULL)
+        return NULL;
+    str = ft_split(input, ' ');
     i = 0;
-    while (input[i] != '\0')
+    while (str[i] != NULL)
     {
-        value[i] = input[i];
+        token->value = str[i];
+        token->next = add_new_token()
         i++;
     }
-    value[i] = '\0';
+}
+int main()
+{
+    s_token *token;
+    char *str = "ls -la";
+
+    token  = lexer(str);
+    while (token != NULL)
+    {
+        printf("%s\n", token->value);
+        token = token->next;
+    }
+    return (0);
 }
