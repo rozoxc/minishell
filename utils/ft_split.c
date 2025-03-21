@@ -6,7 +6,7 @@
 /*   By: rozox <rozox@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 04:45:49 by rozox             #+#    #+#             */
-/*   Updated: 2025/03/21 04:48:16 by rozox            ###   ########.fr       */
+/*   Updated: 2025/03/21 05:12:24 by rozox            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static char	*my_free(char **str)
 	return (NULL);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	int		i;
 	int		size;
