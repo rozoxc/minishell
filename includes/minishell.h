@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rozox <rozox@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rozo <rozo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 06:03:39 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/03/21 05:37:42 by rozox            ###   ########.fr       */
+/*   Updated: 2025/03/22 03:55:37 by rozo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ typedef struct t_token{
     s_token_type type;
     struct t_token *next;
 }s_token;
+
+typedef struct t_cmd_node{
+    char **cmd;
+    int type;
+    char *file;
+    struct t_cmd_node *right;
+    struct t_cmd_node *left;
+} s_cmd_node;
 
 s_token *lexer(char *input);
 

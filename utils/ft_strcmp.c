@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rozox <rozox@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rozo <rozo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/21 05:33:28 by rozox             #+#    #+#             */
-/*   Updated: 2025/03/21 05:35:11 by rozox            ###   ########.fr       */
+/*   Created: 2025/03/21 17:25:35 by rozo              #+#    #+#             */
+/*   Updated: 2025/03/21 17:28:47 by rozo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <string.h>
 
-char *ft_strdup(char *str)
+int ft_strcmp(char *s1, char *s2)
 {
     int i;
-    char *p;
 
     i = 0;
-    p = malloc(sizeof(char) * ft_strlen(str) + 1);
-    if (p == NULL)
-        return NULL;
-    while (str[i] != '\0')
-    {
-        p[i] = str[i];
+    while ((s1[i] != '\0' || s2[i] != '\0') && s1[i] == s2[i])
         i++;
-    }
-    p[i] = '\0';
+    return (s1[i] - s2[i]);
 }
