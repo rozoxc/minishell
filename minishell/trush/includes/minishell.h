@@ -1,0 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rozo <rozo@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/18 06:03:39 by ababdoul          #+#    #+#             */
+/*   Updated: 2025/03/22 03:55:37 by rozo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MINISHELL_H
+#define MINISHELL_H
+
+#include <stdio.h>
+#include <stdlib.h>
+// #include <readline/readline.h>
+// #include <readline/history.h>
+#include <string.h>
+
+#define MAX_ARG 64
+
+typedef enum t_token_type{
+    word, // commande
+    pipe, // |
+    redirect_in, // <
+    redirect_out, // >
+    redirect_append, // >>
+    heredoc, // <<
+}s_token_type;
+
+typedef struct t_cmd{
+    char **args;
+    int pipe;
+    int input_fd;
+    int output_fd;
+    struct t_cmd *next;
+}s_cmd;
+
+typedef struct t_token{
+    char *value;
+    s_token_type type;
+    struct t_token *next;
+}s_token;
+
+typedef struct t_cmd_node{
+    char **cmd;
+    int type;
+    char *file;
+    struct t_cmd_node *right;
+    struct t_cmd_node *left;
+} s_cmd_node;
+
+s_token *lexer(char *input);
+
+//utils
+char	**ft_split(char *s, char c);
+int ft_strlen(char *str);
+char *ft_strdup(char *str);
+
+#endif
