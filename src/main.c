@@ -15,7 +15,7 @@ int	main(int args, char **argv, char **env)
 	{
 		// GPT here the signal function
 		obj.str = readline("minishell : ");
-		parsing(&obj); // sir kad parsing 
+		parsing(&obj); // sir kad parsing rah dart wahad file smito trush fih dakchi li kanti dayar latkhasak chi7aja  
 		// here add history
 		executor(&obj, env); // hadi dyali sir 9awad rah kadit file parsing matzid walo hna wla kad signal wla history
 		// here we build a claen function 
