@@ -1,62 +1,68 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rozo <rozo@student.42.fr>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 06:03:39 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/03/22 03:55:37 by rozo             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-// #include <readline/readline.h>
-// #include <readline/history.h>
-#include <string.h>
 
-#define MAX_ARG 64
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
+# include <fcntl.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/wait.h>
 
-typedef enum t_token_type{
-    word, // commande
-    pipe, // |
-    redirect_in, // <
-    redirect_out, // >
-    redirect_append, // >>
-    heredoc, // <<
-}s_token_type;
+typedef struct s_token
+{
+	char			*str;
+	int				type;
+	struct s_token	*next;
+	struct s_token	*prev;
+}	t_token;
 
-typedef struct t_cmd{
-    char **args;
-    int pipe;
-    int input_fd;
-    int output_fd;
-    struct t_cmd *next;
-}s_cmd;
+typedef struct s_lexer
+{
+	char			*str;
+	int				i;
+	struct s_lexer	*next;
+}	t_lexer;
 
-typedef struct t_token{
-    char *value;
-    s_token_type type;
-    struct t_token *next;
-}s_token;
+typedef struct t_cmd
+{
+	char			**argv;
+	t_lexer			*lexer;
+	struct t_cmd	*next;
+	struct t_cmd	*prev;
+}	t_cmd;
 
-typedef struct t_cmd_node{
-    char **cmd;
-    int type;
-    char *file;
-    struct t_cmd_node *right;
-    struct t_cmd_node *left;
-} s_cmd_node;
+typedef struct s_env
+{
+	char			*value;
+	struct s_env	*next;
+	struct s_env	*prev;
+}	t_env;
 
-s_token *lexer(char *input);
+typedef struct s_tool
+{
+	char	*pwd;
+	char	*oldpwd;
+}	t_tool;
 
-//utils
-char	**ft_split(char *s, char c);
-int ft_strlen(char *str);
-char *ft_strdup(char *str);
+typedef struct s_obj
+{
+	t_token	*token;
+	t_cmd	*cmd;
+	t_env	*env;
+	t_tool	tool;
+	char	*str;
+	int		*pid;
+	int		exit_code;
+}	t_obj;
+
+typedef struct s_bulding
+{
+	char	*str;
+	int		(*function)(char **argv, t_obj *obj);
+}	t_bulding;
+
 
 #endif
