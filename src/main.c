@@ -1,5 +1,17 @@
 #include "../includes/minishell.h"
 
+void sigint_handler(int sig)
+{
+	(void)sig; // this canst for pass the error "unused parameter"
+	rl_on_new_line(); // This tells Readline that a new line has started
+	rl_replace_line("\n", 0); // This replaces the current input line with the string "\n"
+	rl_redisplay(); // makes the terminal look clean after something like Ctrl+C
+}
+
+void	init_obj(t_obj *obj, char **env)
+{
+
+}
 
 int	main(int args, char **argv, char **env)
 {
@@ -10,10 +22,10 @@ int	main(int args, char **argv, char **env)
 		printf("error : minishell accepts no argumnets.\n");
 		return (1);
 	}
-	// here build function to intit the obj
+	init_obj(&obj, env);
 	while (1)
 	{
-		// GPT here the signal function
+		signal(SIGINT, sigint_handler); // this for in the test click ctrl + C
 		obj.str = readline("minishell : ");
 		parsing(&obj); // sir kad parsing rah dart wahad file smito trush fih dakchi li kanti dayar latkhasak chi7aja  
 		// here add history
