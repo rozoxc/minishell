@@ -10,7 +10,20 @@ void sigint_handler(int sig)
 
 void	init_obj(t_obj *obj, char **env)
 {
+	char pwd[200];
 
+	getcwd(pwd, 200);
+	obj->str = NULL;
+	obj->tool.pwd = ft_strdup(pwd);
+	obj->tool.oldpwd = ft_strdup(pwd);
+	obj->exit_code = 0;
+	obj->token = NULL;
+	obj->cmd = NULL;
+	obj->env = NULL;
+	whie (*env)
+	{
+		//here function for set the env
+	}
 }
 
 int	main(int args, char **argv, char **env)
