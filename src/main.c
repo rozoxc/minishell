@@ -20,10 +20,10 @@ void	init_obj(t_obj *obj, char **env)
 	obj->token = NULL;
 	obj->cmd = NULL;
 	obj->env = NULL;
-	whie (*env)
-	{
-		//here function for set the env
-	}
+	// whie (*env)
+	// {
+	// 	//here function for set the env
+	// }
 }
 
 int	main(int args, char **argv, char **env)
