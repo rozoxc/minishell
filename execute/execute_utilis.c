@@ -1,0 +1,25 @@
+#include "../includes/minishell.h"
+
+void	close_fds(int fd1, int fd2)
+{
+	if (fd1 >= 0)
+		close(fd1);
+	if (fd2 >= 0)
+		close(fd2);
+}
+
+int	count_cmd(t_obj *obj)
+{
+	t_cmd	*cmd_temp;
+	int		count;
+
+	count = 0;
+	cmd_temp = obj->cmd;
+	while (cmd_temp)
+	{
+		count++;
+		cmd_temp = cmd_temp->next;
+	}
+	return (count);
+}
+
