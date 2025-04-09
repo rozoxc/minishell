@@ -27,4 +27,5 @@ char *ft_strdup(char *str)
         i++;
     }
     p[i] = '\0';
+    return (p);
 }

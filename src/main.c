@@ -20,10 +20,6 @@ void	init_obj(t_obj *obj, char **env)
 	obj->token = NULL;
 	obj->cmd = NULL;
 	obj->env = NULL;
-	// whie (*env)
-	// {
-	// 	//here function for set the env
-	// }
 }
 
 int	main(int args, char **argv, char **env)
@@ -39,11 +35,17 @@ int	main(int args, char **argv, char **env)
 	while (1)
 	{
 		signal(SIGINT, sigint_handler); // this for in the test click ctrl + C
-		obj.str = readline("minishell : ");
-		parsing(&obj); // sir kad parsing rah dart wahad file smito trush fih dakchi li kanti dayar latkhasak chi7aja  
-		// here add history
-		executor(&obj, env); // hadi dyali sir 9awad rah kadit file parsing matzid walo hna wla kad signal wla history
-		// here we build a claen function 
+    	obj.str = readline("minishell-> ");
+		if (obj.str == NULL) // This happens on Ctrl+D (EOF)
+		{
+			printf("exit\n");
+			exit(0);
+		}
+		parsing(&obj);
+		add_history(obj.str);
+		execute(&obj, env);
+		free(obj.str);
+		free(obj.cmd);
 	}
 	return 0;
 }

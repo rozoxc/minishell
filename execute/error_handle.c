@@ -8,13 +8,13 @@ int	determine_exit_code(t_obj *obj, int exit_code)
 
 void	pipe_error(t_obj *obj, int pid)
 {
+	
     if (pid == -1)
     {
         ft_putstr_fd("minishell error : ", 2);
         perror("pipe error");
         exit(determine_exit_code(obj, 130));
     }
-    return (pid);
 }
 
 int	fork_error(t_obj *obj, int pid)

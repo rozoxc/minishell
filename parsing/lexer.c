@@ -70,17 +70,3 @@ t_token *lexer(char *input)
     }
     return (head);
 }
-
-int main()
-{
-    t_token *token;
-    char *str = "echo $HOME";
-
-    token = lexer(str);
-    while (token != NULL)
-    {
-        printf("token : %s and type : %d\n", token->str, token->type);
-        token = token->next;
-    }
-    return (0);
-}

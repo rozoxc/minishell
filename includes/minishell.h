@@ -23,6 +23,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include "../libft/libft.h"
 
 
 //parsing structs
@@ -63,8 +64,6 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 }	t_cmd;
 
-// execution structs
-
 typedef struct s_env
 {
 	char			*value;
@@ -96,13 +95,21 @@ typedef struct s_bulding
 }	t_bulding;
 
 //parsing functions
-t_token *main_parser(char *input);
-t_token *lexer(char *input);
-t_cmd *parse_tokens(t_token *tokens);
+t_token	*main_parser(char *input);
+t_token	*lexer(char *input);
+t_cmd	*parse_tokens(t_token *tokens);
+void parsing(t_obj *obj);
 
-//utils functions
-char	**ft_split(char *s, char c);
-int ft_strcmp(char *s1, char *s2);
-char *ft_strdup(char *str);
-int ft_strlen(char *str);
+//executed utils functions
+int		determine_exit_code(t_obj *obj, int exit_code);
+void	pipe_error(t_obj *obj, int pid);
+int		fork_error(t_obj *obj, int pid);
+int		dup_error(t_obj *obj, int dup);
+void	dup2_error(t_obj *obj, int dup);
+void	close_fds(int fd1, int fd2);
+int		count_cmds(t_obj *obj);
+char	*validate_and_get_path(char **command, char **envp);
+int		execute(t_obj *obj, char **env);
+void ft_wait_all(t_obj *obj, int *status);
+
 #endif

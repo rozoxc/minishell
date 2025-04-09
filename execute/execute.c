@@ -1,17 +1,13 @@
 #include "../includes/minishell.h"
 
+
 void	child_process_execution(t_obj *obj, char *path, t_cmd *cur_cmd, char **env)
 {
-    if (access(cur_cmd->argv[0], X_OK) == 0)
-        path = cur_cmd->argv[0];
-    else
+    path = validate_and_get_path(obj->cmd->argv, env);
+    if (path == NULL)
     {
-        path = get_path(); // get this from the pipex
-        if (path == NULL)
-        {
-            perror("command not fond");
-            exit(determine_exit_code(obj, 130));
-        }
+        perror("command not fond");
+        exit(determine_exit_code(obj, 130));
     }
     execve(path, cur_cmd->argv, env);
     determine_exit_code(obj, 130);
@@ -20,19 +16,19 @@ void	child_process_execution(t_obj *obj, char *path, t_cmd *cur_cmd, char **env)
     exit(determine_exit_code(obj, 130));
 }
 
-void	child_porcess(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
+void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
 {
     char *path;
 
     path = NULL;
     if (cur_cmd->next != NULL)
     {
-        dup2_error(obj, dup2(fd_pipe, STDIN_FILENO));
+        dup2_error(obj, dup2(fd_pipe[1], STDIN_FILENO));
         close_fds(fd_pipe[0], fd_pipe[1]);
     }
     // here add function for redirections
-    if (cur_cmd->argv[0] && check_buildings(cur_cmd->argv))// to do
-		run_buildings(obj, cur_cmd->argv);// to do
+    // if (cur_cmd->argv[0] && check_buildings(cur_cmd->argv))// to do
+	// 	run_buildings(obj, cur_cmd->argv);// to do
     else
     {
         child_process_execution(obj, path, cur_cmd, env);
@@ -59,7 +55,7 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 
     cur_cmd = obj->cmd;
     pid = 0;
-    obj->pid = malloc(sizeof(t_cmd) * count_cmd(obj));
+    obj->pid = malloc(sizeof(t_cmd) * count_cmds(obj));
     while (cur_cmd)
     {
         pipe_error(obj, pipe(ft_pipe));
@@ -81,6 +77,7 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 
 int	execute(t_obj *obj, char **env)
 {
+    int status;
     t_cmd *cur_cmd;
     int std_in;
     int std_out;
@@ -97,7 +94,7 @@ int	execute(t_obj *obj, char **env)
     if (cur_cmd && cur_cmd->argv[0])
     {
         execution_loop(obj, std_in, std_out, env);
-        //add a wait here
+        ft_wait_all(obj, &status);
     }
     dup2_error(obj, dup2(std_in, STDIN_FILENO));
     dup2_error(obj, dup2(std_out, STDOUT_FILENO));

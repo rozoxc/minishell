@@ -12,10 +12,9 @@
 
 #include "../includes/minishell.h"
 
-t_token *main_parser(char *input)
-{
-    t_token *token;
 
-    token = lexer(input);
-    
+void parsing(t_obj *obj)
+{
+    obj->token = lexer(obj->str);
+    obj->cmd = parse_tokens(obj->token);
 }

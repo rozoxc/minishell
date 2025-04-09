@@ -58,24 +58,3 @@ t_cmd *parse_tokens(t_token *tokens)
     }
     return (cmd_list);
 }
-// int main()
-// {
-//     t_token  *tokens;
-//     t_cmd *cmd_list;
-//     tokens = lexer("ls -la | NULL | grep file.txt");
-//     // printf("heere @\n");
-//     cmd_list = parse_tokens(tokens);
-//     while (cmd_list != NULL)
-//     {
-//         int i  = 0;
-//         while (cmd_list->argv[i] != NULL)
-//         {
-//             printf("arg[%d] = %s\n", i, cmd_list->argv[i]);
-//             i++;
-//         }
-//         cmd_list = cmd_list->next;
-//         printf("--------------\n");
-//     }
-
-//     return (0);
-// }
