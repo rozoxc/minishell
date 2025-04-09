@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/09 13:17:32 by ababdoul          #+#    #+#             */
+/*   Updated: 2025/04/09 13:17:32 by ababdoul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -12,7 +24,17 @@
 # include <sys/wait.h>
 # include <signal.h>
 
-# include "../libft/libft.h"
+
+//parsing structs
+
+typedef enum s_token_type{
+	PIPE,
+	REDIRECT_APPEND,
+	REDIRECT_IN,
+	REDIRECT_OUT,
+	HEREDOC,
+	WORD,
+} t_token_type;
 
 typedef struct s_token
 {
@@ -29,13 +51,19 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 }	t_lexer;
 
-typedef struct t_cmd
+typedef struct s_cmd
 {
-	char			**argv;
+	char	**argv;
+	char	*intfile;
+	char	*outfile;
+	int		append;
+	int 	heredoc;
 	t_lexer			*lexer;
-	struct t_cmd	*next;
-	struct t_cmd	*prev;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
 }	t_cmd;
+
+// execution structs
 
 typedef struct s_env
 {
@@ -67,5 +95,14 @@ typedef struct s_bulding
 	int		(*function)(char **argv, t_obj *obj);
 }	t_bulding;
 
+//parsing functions
+t_token *main_parser(char *input);
+t_token *lexer(char *input);
+t_cmd *parse_tokens(t_token *tokens);
 
+//utils functions
+char	**ft_split(char *s, char c);
+int ft_strcmp(char *s1, char *s2);
+char *ft_strdup(char *str);
+int ft_strlen(char *str);
 #endif
