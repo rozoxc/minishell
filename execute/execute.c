@@ -3,17 +3,17 @@
 
 void	child_process_execution(t_obj *obj, char *path, t_cmd *cur_cmd, char **env)
 {
-    path = validate_and_get_path(obj->cmd->argv, env);
+    path = validate_and_get_path(cur_cmd->argv, env);
     if (path == NULL)
     {
-        perror("command not fond");
-        exit(determine_exit_code(obj, 130));
+        perror("command not found");
+        exit(determine_exit_code(obj, 127));
     }
     execve(path, cur_cmd->argv, env);
     determine_exit_code(obj, 130);
     perror("execve err");
     free(path);
-    exit(determine_exit_code(obj, 130));
+    exit(determine_exit_code(obj, 126));
 }
 
 void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
@@ -21,29 +21,31 @@ void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
     char *path;
 
     path = NULL;
+    close(fd_pipe[0]);
     if (cur_cmd->next != NULL)
     {
-        dup2_error(obj, dup2(fd_pipe[1], STDIN_FILENO));
-        close_fds(fd_pipe[0], fd_pipe[1]);
+        dup2_error(obj, dup2(fd_pipe[1], STDOUT_FILENO));
+        close(fd_pipe[1]);
     }
     // here add function for redirections
     // if (cur_cmd->argv[0] && check_buildings(cur_cmd->argv))// to do
 	// 	run_buildings(obj, cur_cmd->argv);// to do
-    else
-    {
-        child_process_execution(obj, path, cur_cmd, env);
-    }
+    child_process_execution(obj, path, cur_cmd, env);
+    // else
+    // {
+    // }
     exit(determine_exit_code(obj, 130));
 }
 
 void	parent_process(t_obj *obj, t_cmd *curr_cmd, int fd_pipe[2])
 {
+    close(fd_pipe[1]);
 	if (curr_cmd->next == NULL)
-		close_fds(STDIN_FILENO, -1);
+		close(fd_pipe[0]);
 	else
 	{
 		dup2_error(obj, dup2(fd_pipe[0], STDIN_FILENO));
-		close_fds(fd_pipe[1], fd_pipe[0]);
+		close(fd_pipe[0]);
 	}
 }
 
