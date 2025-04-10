@@ -8,34 +8,20 @@ void	close_fds(int fd1, int fd2)
 		close(fd2);
 }
 
-int	count_cmd(t_obj *obj)
+
+int count_cmds(t_obj *obj)
 {
-	t_cmd	*cmd_temp;
-	int		count;
+	t_cmd *cmd_temp;
+	int count;
 
 	count = 0;
 	cmd_temp = obj->cmd;
 	while (cmd_temp)
 	{
-		count++;
-		cmd_temp = cmd_temp->next;
+	count++;
+	cmd_temp = cmd_temp->next;
 	}
 	return (count);
-}
-
-int count_cmds(t_obj *obj)
-{
-t_cmd *cmd_temp;
-int count;
-
-count = 0;
-cmd_temp = obj->cmd;
-while (cmd_temp)
-{
-count++;
-cmd_temp = cmd_temp->next;
-}
-return (count);
 }
 
 void ft_wait_all(t_obj *obj, int *status)
