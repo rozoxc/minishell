@@ -25,6 +25,19 @@
 # include <signal.h>
 # include "../libft/libft.h"
 
+// # define SUCCESS 0
+// # define FAILURE -1
+// # define Q_ERROR 130
+// # define SYNTAX_ERRROR 1
+
+// # define EMPTY 0
+// # define COMMAND 1
+// # define ARG 3
+// # define APPEND 4 // >>
+// # define INPUT 5 // <
+// # define TRUNC 6 // >
+// # define HEREDOC 7 // <<
+// # define PIPE 8 // |
 
 //parsing structs
 
