@@ -25,30 +25,19 @@
 # include <signal.h>
 # include "../libft/libft.h"
 
-// # define SUCCESS 0
-// # define FAILURE -1
-// # define Q_ERROR 130
-// # define SYNTAX_ERRROR 1
+# define SUCCESS 0
+# define FAILURE -1
+# define Q_ERROR 130
+# define SYNTAX_ERRROR 1
 
-// # define EMPTY 0
-// # define COMMAND 1
-// # define ARG 3
-// # define APPEND 4 // >>
-// # define INPUT 5 // <
-// # define TRUNC 6 // >
-// # define HEREDOC 7 // <<
-// # define PIPE 8 // |
-
-//parsing structs
-
-typedef enum s_token_type{
-	PIPE,
-	REDIRECT_APPEND,
-	REDIRECT_IN,
-	REDIRECT_OUT,
-	HEREDOC,
-	WORD,
-} t_token_type;
+# define EMPTY 0
+# define COMMAND 1
+# define ARG 3
+# define APPEND 4 // >>
+# define INPUT 5 // <
+# define TRUNC 6 // >
+# define HEREDOC 7 // <<
+# define PIPE 8 // |
 
 typedef struct s_token
 {
@@ -124,5 +113,6 @@ int		count_cmds(t_obj *obj);
 char	*validate_and_get_path(char **command, char **envp);
 int		execute(t_obj *obj, char **env);
 void ft_wait_all(t_obj *obj, int *status);
+int	ft_heredoc(t_obj *obj);
 
 #endif

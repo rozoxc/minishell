@@ -27,7 +27,8 @@ void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
         dup2_error(obj, dup2(fd_pipe[1], STDOUT_FILENO));
         close(fd_pipe[1]);
     }
-    // here add function for redirections
+    if (set_redirections(cur_cmd) == Q_ERROR)
+		exit(determine_exit_code(obj, Q_ERROR));
     // if (cur_cmd->argv[0] && check_buildings(cur_cmd->argv))// to do
 	// 	run_buildings(obj, cur_cmd->argv);// to do
     child_process_execution(obj, path, cur_cmd, env);
@@ -87,7 +88,7 @@ int	execute(t_obj *obj, char **env)
     std_in = dup_error(obj, dup(STDIN_FILENO));
     std_out = dup_error(obj, dup(STDOUT_FILENO));
     cur_cmd = obj->cmd;
-    //check heredoc
+    ft_heredoc(obj);
     // and you need the check_build function
     // if (cur_cmd && cur_cmd->argv[0] && check_build(cur_cmd->argv) && cur_cmd->next == NULL)
     // {
