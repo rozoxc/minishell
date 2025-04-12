@@ -104,12 +104,16 @@ int		dup_error(t_obj *obj, int dup);
 void	dup2_error(t_obj *obj, int dup);
 void	close_fds(int fd1, int fd2);
 int		count_cmds(t_obj *obj);
-char	*validate_and_get_path(char **command, char **envp);
+char	*get_path(t_obj *obj, char *cmd);
 int		execute(t_obj *obj, char **env);
 void	ft_wait_all(t_obj *obj, int *status);
 int		ft_heredoc(t_obj *obj);
+int		set_redirections(t_cmd *cmd);
+char	**ft_split_simple(char const *str, char charset);
 
 // parsing utlis function
+int		parsing(t_obj *obj);
+t_cmd	*create_list(t_token *token);
 int		alloc_mem(char *str);
 void	append_token(t_token **token, char *str);
 void	skip_space(char **str);
@@ -117,6 +121,8 @@ int		check_sep(char **str, char c);
 char	set_char(char **str, char c);
 int		syntax(t_token *token);
 void	expand(t_obj *obj);
+void	append_lexer(t_lexer **lexer, char *str, int i);
+void	append_argv(t_cmd **cmd, t_lexer *lexer, char **argv);
 
 // free
 void	free_argv(char **argv);
@@ -124,4 +130,8 @@ void	free_lexer(t_lexer **lexer);
 void	free_token(t_token **token);
 void	free_cmd(t_cmd **cmd);
 void	free_env(t_env **env);
+
+// utlis
+char	*get_value(t_obj *obj, char *str);
+
 #endif

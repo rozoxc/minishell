@@ -32,10 +32,10 @@ char	*ft_expand(t_obj *obj, char *str)
 	str = NULL;
 	while (argv[i])
 	{
-		// if (ft_strrchr(argv[i], '$'))
-		// 	str = ft_strjoin2(str, get_value(obj, argv[i] + 1), 2);
-		// else
-		str = ft_strjoin2(str, argv[i], 2);
+		if (ft_strrchr(argv[i], '$'))
+			str = ft_strjoin2(str, get_value(obj, argv[i] + 1), 2);
+		else
+			str = ft_strjoin2(str, argv[i], 2);
 		i++;
 	}
 	return (str);
@@ -107,4 +107,3 @@ int	ft_heredoc(t_obj *obj)
 	ft_herdoc_execution(obj, cmd_t, lexer);
 	return (0);
 }
-

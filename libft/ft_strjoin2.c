@@ -6,11 +6,12 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:47:14 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/11 17:47:16 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/12 17:27:34 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 char	*ft_strjoin2(char *s1, char *s2, int n)
 {

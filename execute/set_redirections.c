@@ -19,6 +19,44 @@ int	set_red_input(t_lexer *red)
 	return (EXIT_SUCCESS);
 }
 
+int	set_red_append(t_lexer *red)
+{
+	int	fd;
+
+	fd = open(red->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	if (fd < 0)
+	{
+		ft_putstr_fd("Minishell Err, outfile\n", 2);
+		return (EXIT_FAILURE);
+	}
+	if (dup2(fd, STDOUT_FILENO) < 0)
+	{
+		ft_putstr_fd("Minishell Err: redirection\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	close (fd);
+	return (EXIT_SUCCESS);
+}
+
+int	set_red_trunc(t_lexer *red)
+{
+	int	fd;
+
+	fd = open(red->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+	{
+		ft_putstr_fd("Minishell Err, outfile\n", 2);
+		return (EXIT_FAILURE);
+	}
+	if (dup2(fd, STDOUT_FILENO) < 0)
+	{
+		ft_putstr_fd("Minishell Err: redirection\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	close (fd);
+	return (EXIT_SUCCESS);
+}
+
 int	set_redirections(t_cmd *cmd)
 {
 	t_lexer	*red_temp;
@@ -33,6 +71,17 @@ int	set_redirections(t_cmd *cmd)
 			if (set_red_input(red_temp) == EXIT_FAILURE)
 				return (Q_ERROR);
 		}
+		else if (red_temp->i == TRUNC)
+		{
+			if (set_red_trunc(red_temp) == EXIT_FAILURE)
+				return (Q_ERROR);
+		}
+		else if (red_temp->i == APPEND)
+		{
+			if (set_red_append(red_temp) == EXIT_FAILURE)
+				return (Q_ERROR);
+		}
+		red_temp = red_temp->next;
 	}
 	return (0);
 }

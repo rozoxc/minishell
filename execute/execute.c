@@ -1,13 +1,17 @@
 #include "../includes/minishell.h"
 
-
 void	child_process_execution(t_obj *obj, char *path, t_cmd *cur_cmd, char **env)
 {
-    path = validate_and_get_path(cur_cmd->argv, env);
-    if (path == NULL)
+    if (access(cur_cmd->argv[0], X_OK) == 0)
+        path = cur_cmd->argv[0];
+    else
     {
-        perror("command not found");
-        exit(determine_exit_code(obj, 127));
+        path = get_path(obj, cur_cmd->argv[0]);
+        if (path == NULL)
+        {
+            perror("command not found");
+            exit(determine_exit_code(obj, 127));
+        }
     }
     execve(path, cur_cmd->argv, env);
     determine_exit_code(obj, 130);
@@ -33,7 +37,7 @@ void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
 	// 	run_buildings(obj, cur_cmd->argv);// to do
     child_process_execution(obj, path, cur_cmd, env);
     // else
-    // {
+    // {  
     // }
     exit(determine_exit_code(obj, 130));
 }

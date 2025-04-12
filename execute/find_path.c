@@ -1,54 +1,59 @@
 #include "../includes/minishell.h"
 
-char	*free_paths_return(char **paths, char *return_value)
+char	*pp_check_full_path(char *path_elemt, char *cmd)
 {
-	int	i;
+	int		path_len;
+	int		cmd_len;
+	char	*full_path;
 
-	i = -1;
-	while (paths[++i])
-		free(paths[i]);
-	free(paths);
-	return (return_value);
+	if (path_elemt == NULL || cmd == NULL)
+		return (NULL);
+	path_len = ft_strlen(path_elemt);
+	cmd_len = ft_strlen(cmd);
+	full_path = malloc(sizeof(char) * (path_len + cmd_len + 2));
+	if (!full_path)
+		return (NULL);
+	ft_strlcpy(full_path, path_elemt, path_len + 1);
+	ft_strlcpy(full_path + path_len, "/", 2);
+	ft_strlcpy(full_path + path_len + 1, cmd, cmd_len + 1);
+	return (full_path);
 }
 
-char	*find_path(char *command, char **envp)
+char	*pp_path_cheker(char **path_array, char *cmd)
 {
 	int		i;
-	char	*path;
-	char	*path_part;
-	char	**paths;
+	char	*cmd_path;
 
 	i = 0;
-	while (envp[i] && ft_strnstr(envp[i], "PATH", 4) == 0)
-		i++;
-	if (!envp[i])
-		return (NULL);
-	paths = ft_split(envp[i] + 5, ':');
-	i = 0;
-	while (paths[i])
+	cmd_path = NULL;
+	while (path_array[i])
 	{
-		path_part = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(path_part, command);
-		free(path_part);
-		if (access(path, X_OK) == 0)
-			return (free_paths_return(paths, path));
-		free(path);
+		cmd_path = pp_check_full_path(path_array[i], cmd);
+		if (access(cmd_path, X_OK) == 0)
+			return (cmd_path);
 		i++;
+		free (cmd_path);
 	}
-	return (free_paths_return(paths, 0));
+	return (NULL);
 }
 
-char	*validate_and_get_path(char **command, char **envp)
+char	*get_path(t_obj *obj, char *cmd)
 {
-	char	*path;
+	t_env	*env_temp;
+	char	**path_array;
 
-	if (command[0] == NULL)
-		path = find_path(command[0], envp);
-	else if (command[0][0] == '.' && command[0][1] == '/' )
-		path = ft_strdup(command[0]);
-	else if (command[0][0] == '/')
-		path = ft_strdup(command[0]);
-	else
-		path = find_path(command[0], envp);
-	return (path);
+	env_temp = obj->env;
+	path_array = NULL;
+	while (env_temp && !path_array)
+	{
+		if (ft_strncmp(env_temp->value, "PATH=", 5) == 0)
+			path_array = ft_split_simple(env_temp->value + 5, ':');
+		env_temp = env_temp->next;
+	}
+	if (!path_array)
+	{
+		perror("couldns find path variables");
+		exit (determine_exit_code(obj, Q_ERROR));
+	}
+	return (pp_path_cheker(path_array, cmd));
 }

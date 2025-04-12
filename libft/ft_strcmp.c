@@ -6,12 +6,12 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 13:50:24 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/12 13:50:26 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/12 18:14:52 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
+#include <stdio.h>
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	if (ft_strncmp(s1, s2, ft_strlen(s1)) != 0)

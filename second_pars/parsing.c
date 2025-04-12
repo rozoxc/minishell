@@ -115,5 +115,7 @@ int	parsing(t_obj *obj)
 		return (determine_exit_code(obj, SYNTAX_ERRROR));
 	}
 	expand(obj);
+	obj->cmd = create_list(obj->token);
+	free_token(&obj->token);
 	return (determine_exit_code(obj, SUCCESS));
 }
