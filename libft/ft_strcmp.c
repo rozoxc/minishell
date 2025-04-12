@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rozox <rozox@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/21 05:35:44 by rozox             #+#    #+#             */
-/*   Updated: 2025/03/21 05:36:58 by rozox            ###   ########.fr       */
+/*   Created: 2025/04/12 13:50:24 by hfalati           #+#    #+#             */
+/*   Updated: 2025/04/12 13:50:26 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int ft_strlen(char *str)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-    int i;
-
-    i = 0;
-    while (str[i] != '\0')
-        i++;
-    return (i);
+	if (ft_strncmp(s1, s2, ft_strlen(s1)) != 0)
+		return (-1);
+	if (ft_strncmp(s2, s1, ft_strlen(s2)) != 0)
+		return (-1);
+	return (0);
 }

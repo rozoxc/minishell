@@ -67,7 +67,7 @@ int	main(int args, char **argv, char **env)
 	while (1)
 	{
 		signal(SIGINT, sigint_handler); // this for in the test click ctrl + C
-    	obj.str = readline("minishell-> ");
+    	obj.str = readline("minishell-1.0$~ ");
 		if (obj.str == NULL) // This happens on Ctrl+D (EOF)
 		{
 			printf("exit\n");

@@ -96,12 +96,6 @@ typedef struct s_bulding
 	int		(*function)(char **argv, t_obj *obj);
 }	t_bulding;
 
-//parsing functions
-t_token	*main_parser(char *input);
-t_token	*lexer(char *input);
-t_cmd	*parse_tokens(t_token *tokens);
-void parsing(t_obj *obj);
-
 //executed utils functions
 int		determine_exit_code(t_obj *obj, int exit_code);
 void	pipe_error(t_obj *obj, int pid);
@@ -112,7 +106,22 @@ void	close_fds(int fd1, int fd2);
 int		count_cmds(t_obj *obj);
 char	*validate_and_get_path(char **command, char **envp);
 int		execute(t_obj *obj, char **env);
-void ft_wait_all(t_obj *obj, int *status);
-int	ft_heredoc(t_obj *obj);
+void	ft_wait_all(t_obj *obj, int *status);
+int		ft_heredoc(t_obj *obj);
 
+// parsing utlis function
+int		alloc_mem(char *str);
+void	append_token(t_token **token, char *str);
+void	skip_space(char **str);
+int		check_sep(char **str, char c);
+char	set_char(char **str, char c);
+int		syntax(t_token *token);
+void	expand(t_obj *obj);
+
+// free
+void	free_argv(char **argv);
+void	free_lexer(t_lexer **lexer);
+void	free_token(t_token **token);
+void	free_cmd(t_cmd **cmd);
+void	free_env(t_env **env);
 #endif

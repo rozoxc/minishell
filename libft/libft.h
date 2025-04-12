@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 12:56:59 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/11 17:47:35 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/12 13:51:11 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size);
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 char	*ft_strjoin2(char *s1, char *s2, int n);
-
+int		ft_strcmp(const char *s1, const char *s2);
 #endif
