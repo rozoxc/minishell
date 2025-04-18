@@ -6,7 +6,7 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/13 14:10:49 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:17:47 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,25 +90,25 @@ int ft_cd(char **args)
     return (0);
 }
 
-int main()
-{
-    char *args[] = {"cd", "/tmp", NULL};  // Test cd to /tmp
-    char *args_invalid[] = {"cd", "nonexistent", NULL};  // Test invalid path
+// int main()
+// {
+//     char *args[] = {"cd", "/tmp", NULL};  // Test cd to /tmp
+//     char *args_invalid[] = {"cd", "nonexistent", NULL};  // Test invalid path
 
-    printf("Testing ft_cd with valid path (cd /tmp):\n");
-    printf("Before cd:\n");
-    char cwd[1024];
-    if (getcwd(cwd, sizeof(cwd)) != NULL)
-        printf("Current directory: %s\n", cwd);
+//     printf("Testing ft_cd with valid path (cd /tmp):\n");
+//     printf("Before cd:\n");
+//     char cwd[1024];
+//     if (getcwd(cwd, sizeof(cwd)) != NULL)
+//         printf("Current directory: %s\n", cwd);
 
-    ft_cd(args);  // Call ft_cd with valid path
+//     ft_cd(args);  // Call ft_cd with valid path
 
-    printf("After cd:\n");
-    if (getcwd(cwd, sizeof(cwd)) != NULL)
-        printf("Current directory: %s\n", cwd);
+//     printf("After cd:\n");
+//     if (getcwd(cwd, sizeof(cwd)) != NULL)
+//         printf("Current directory: %s\n", cwd);
 
-    printf("\nTesting ft_cd with invalid path (cd nonexistent):\n");
-    ft_cd(args_invalid);  // Call ft_cd with invalid path
-    return 0;
-}
+//     printf("\nTesting ft_cd with invalid path (cd nonexistent):\n");
+//     ft_cd(args_invalid);  // Call ft_cd with invalid path
+//     return 0;
+// }
 
