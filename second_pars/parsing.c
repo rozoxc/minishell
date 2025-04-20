@@ -91,6 +91,7 @@ t_token	*token(char **str)
 		append_token(&token, line);
 		token_type(&token);
 		free(line);
+		line = NULL;
 		if (*(*str) == '\0')
 			break ;
 		(*str)++;
