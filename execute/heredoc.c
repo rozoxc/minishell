@@ -97,9 +97,7 @@ int	ft_heredoc(t_obj *obj)
 {
 	t_cmd	*cmd_t;
 	t_lexer	*lexer;
-	int		i;
 
-	i = 0;
 	cmd_t = obj->cmd;
 	lexer = NULL;
 	if (is_heredoc(cmd_t) != 1)
