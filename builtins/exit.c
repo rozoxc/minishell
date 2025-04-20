@@ -6,13 +6,13 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:23:14 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/14 18:30:45 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/20 16:40:23 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ft_exit(void)
+int ft_exit(void )
 {
     printf("exit\n");
     exit(SUCCESS);    

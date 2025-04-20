@@ -6,7 +6,7 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:39:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/12 18:42:51 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/20 16:29:16 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ int ft_size(char **arg)
     return (i);
 }
 
-int  ft_echo(char **arg)
+int  ft_echo(char **arg , t_obj *obj)
 {
+    (void)obj;
     int no_new_line;
     int size;
     int i;

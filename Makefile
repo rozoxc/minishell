@@ -16,6 +16,8 @@ SRC = second_pars/create_list.c \
       execute/heredoc.c \
       execute/set_redirections.c \
       execute/test.c \
+      execute/check_building.c \
+      builtins/echo.c \
       utils/append.c \
       utils/utils.c \
       utils/free_mem.c \
