@@ -91,12 +91,11 @@ int	execute(t_obj *obj, char **env)
     std_out = dup_error(obj, dup(STDOUT_FILENO));
     cur_cmd = obj->cmd;
     ft_heredoc(obj);
-    // and you need the check_build function
-    // if (cur_cmd && cur_cmd->argv[0] && check_build(cur_cmd->argv) && cur_cmd->next == NULL)
-    // {
-
-    // }
-    if (cur_cmd && cur_cmd->argv[0])
+    if (cur_cmd && cur_cmd->argv[0] && check_build(cur_cmd->argv[0]) && cur_cmd->next == NULL)
+    {
+        run_build(obj, cur_cmd->argv);
+    }
+    else if (cur_cmd && cur_cmd->argv[0])
     {
         execution_loop(obj, std_in, std_out, env);
         ft_wait_all(obj, &status);
