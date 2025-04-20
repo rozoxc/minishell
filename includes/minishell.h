@@ -27,7 +27,7 @@
 
 # define SUCCESS 0
 # define FAILURE -1
-# define Q_ERROR 130
+# define Q_ERROR 127
 # define SYNTAX_ERRROR 1
 
 # define EMPTY 0
@@ -124,6 +124,15 @@ void	expand(t_obj *obj);
 void	append_lexer(t_lexer **lexer, char *str, int i);
 void	append_argv(t_cmd **cmd, t_lexer *lexer, char **argv);
 
+//builtuin function
+int ft_export(char **arg, char ***env);
+int  ft_echo(char **arg , t_obj *obj);
+int ft_env(char **env);
+int ft_pwd();
+int ft_exit(void);
+int ft_unset(char **args);
+void update_env_var(const char *key, const char *value);
+
 // free
 void	free_argv(char **argv);
 void	free_lexer(t_lexer **lexer);
@@ -133,5 +142,8 @@ void	free_env(t_env **env);
 
 // utlis
 char	*get_value(t_obj *obj, char *str);
+int check_build(char *cmd);
+int check_build(char *cmd);
+int run_build(t_obj *obj, char **cmd);
 
 #endif
