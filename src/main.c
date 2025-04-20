@@ -3,9 +3,10 @@
 void sigint_handler(int sig)
 {
 	(void)sig; // this canst for pass the error "unused parameter"
-	rl_on_new_line(); // This tells Readline that a new line has started
-	rl_replace_line("\n", 0); // This replaces the current input line with the string "\n"
-	rl_redisplay(); // makes the terminal look clean after something l	ike Ctrl+C
+	write(STDOUT_FILENO, "\n", 1);  // Print a newline
+    rl_replace_line("", 0);         // Clear the line buffer
+    rl_on_new_line();               // Move to the new line
+    rl_redisplay();                 // Display the prompt
 }
 
 void	get_env(t_env **env, char *str)

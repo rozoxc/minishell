@@ -101,7 +101,7 @@ int	ft_heredoc(t_obj *obj)
 	cmd_t = obj->cmd;
 	lexer = NULL;
 	if (is_heredoc(cmd_t) != 1)
-		return (0);
+		return (SUCCESS);
 	ft_herdoc_execution(obj, cmd_t, lexer);
-	return (0);
+	return (SUCCESS);
 }

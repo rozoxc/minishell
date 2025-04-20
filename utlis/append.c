@@ -9,8 +9,10 @@ int	alloc_mem(char *str)
 	c = 0;
 	while (*str)
 	{
-		if (*str == '\'' || *str == '\"')
-			c = *str;
+		if (c == 0 && (*str == '\'' || *str == '\"'))
+    		c = *str;  // Start of quoted section
+		else if (c != 0 && *str == c)
+    		c = 0;     // End of quoted section
 		i++;
 		if (check_sep(&str, c) != 0)
 			break ;
