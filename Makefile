@@ -18,6 +18,8 @@ SRC = second_pars/create_list.c \
       execute/test.c \
       execute/check_building.c \
       builtins/echo.c \
+      builtins/env.c \
+      builtins/pwd.c \
       utils/append.c \
       utils/utils.c \
       utils/free_mem.c \

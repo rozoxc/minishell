@@ -3,18 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   check_building.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 16:15:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/20 16:34:04 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/20 18:44:48 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int run_build(t_obj *obj, char **cmd)
+int run_build(t_obj *obj, char **cmd, char **env)
 {
-    ft_echo(cmd, obj);
+    if (ft_strcmp(cmd[0], "echo") == 0)
+        ft_echo(cmd, obj);
+    else if (ft_strcmp(cmd[0] , "pwd") == 0)
+        ft_pwd(cmd, obj);
+    else if (ft_strcmp(cmd[0], "env") == 0)
+        ft_env(env);
     return (obj->exit_code);
 }
 int check_build(char *cmd)

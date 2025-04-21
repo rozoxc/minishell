@@ -48,11 +48,22 @@ void	init_obj(t_obj *obj, char **env)
 	obj->token = NULL;
 	obj->cmd = NULL;
 	obj->env = NULL;
-	while (*env)
+    if (!env || !*env) {
+        char pwd_var[256];
+        snprintf(pwd_var, sizeof(pwd_var), "PWD=%s", pwd);
+        get_env(&obj->env, pwd_var);
+        get_env(&obj->env, "SHLVL=1");
+        get_env(&obj->env, "_=/usr/bin/env");
+		get_env(&obj->env, "PATH=/bin/");
+    }
+	else
 	{
-		get_env(&obj->env, *env);
-		env++;
-	}
+        while (*env)
+		{
+            get_env(&obj->env, *env);
+            env++;
+        }
+    }
 }
 
 int	main(int args, char **argv, char **env)
@@ -76,7 +87,7 @@ int	main(int args, char **argv, char **env)
 		}
 		parsing(&obj);
 		add_history(obj.str);
-		execute(&obj, env);
+		execute(&obj);
 		free(obj.str);
 		free(obj.cmd);
 	}

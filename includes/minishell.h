@@ -105,7 +105,7 @@ void	dup2_error(t_obj *obj, int dup);
 void	close_fds(int fd1, int fd2);
 int		count_cmds(t_obj *obj);
 char	*get_path(t_obj *obj, char *cmd);
-int		execute(t_obj *obj, char **env);
+int		execute(t_obj *obj);
 void	ft_wait_all(t_obj *obj, int *status);
 int		ft_heredoc(t_obj *obj);
 int		set_redirections(t_cmd *cmd);
@@ -144,6 +144,7 @@ void	free_env(t_env **env);
 char	*get_value(t_obj *obj, char *str);
 int check_build(char *cmd);
 int check_build(char *cmd);
-int run_build(t_obj *obj, char **cmd);
+int run_build(t_obj *obj, char **cmd, char **env);
+char **env_to_array(t_env *env);
 
 #endif

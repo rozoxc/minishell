@@ -34,7 +34,7 @@ void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
     if (set_redirections(cur_cmd) == Q_ERROR)
 		exit(determine_exit_code(obj, Q_ERROR));
     else if (cur_cmd->argv[0] && check_build(cur_cmd->argv[0]))// to do
-		run_build(obj, cur_cmd->argv);// to do
+		run_build(obj, cur_cmd->argv, env);// to do
     else 
         child_process_execution(obj, path, cur_cmd, env);
     exit(determine_exit_code(obj, 130));
@@ -80,12 +80,13 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
     }
 }
 
-int	execute(t_obj *obj, char **env)
+int	execute(t_obj *obj)
 {
     int status;
     t_cmd *cur_cmd;
     int std_in;
     int std_out;
+    char **env = env_to_array(obj->env);
 
     std_in = dup_error(obj, dup(STDIN_FILENO));
     std_out = dup_error(obj, dup(STDOUT_FILENO));
@@ -93,7 +94,7 @@ int	execute(t_obj *obj, char **env)
     ft_heredoc(obj);
     if (cur_cmd && cur_cmd->argv[0] && check_build(cur_cmd->argv[0]) && cur_cmd->next == NULL)
     {
-        run_build(obj, cur_cmd->argv);
+        run_build(obj, cur_cmd->argv, env);
     }
     else if (cur_cmd && cur_cmd->argv[0])
     {
