@@ -30,11 +30,12 @@ void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
     {
         dup2_error(obj, dup2(fd_pipe[1], STDOUT_FILENO));
         close(fd_pipe[1]);
+        close(fd_pipe[0]);
     }
     if (set_redirections(cur_cmd) == Q_ERROR)
 		exit(determine_exit_code(obj, Q_ERROR));
-    else if (cur_cmd->argv[0] && check_build(cur_cmd->argv[0]))// to do
-		run_build(obj, cur_cmd->argv, env);// to do
+    else if (cur_cmd->argv[0] && check_build(cur_cmd->argv[0]))
+		run_build(obj, cur_cmd->argv, env);
     else 
         child_process_execution(obj, path, cur_cmd, env);
     exit(determine_exit_code(obj, 130));
@@ -44,11 +45,12 @@ void	parent_process(t_obj *obj, t_cmd *curr_cmd, int fd_pipe[2])
 {
     close(fd_pipe[1]);
 	if (curr_cmd->next == NULL)
-		close(fd_pipe[0]);
+		close(STDIN_FILENO);
 	else
 	{
 		dup2_error(obj, dup2(fd_pipe[0], STDIN_FILENO));
 		close(fd_pipe[0]);
+        close(fd_pipe[1]);
 	}
 }
 

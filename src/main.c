@@ -4,9 +4,9 @@ void sigint_handler(int sig)
 {
 	(void)sig; // this canst for pass the error "unused parameter"
 	write(STDOUT_FILENO, "\n", 1);  // Print a newline
-    rl_replace_line("", 0);         // Clear the line buffer
-    rl_on_new_line();               // Move to the new line
-    rl_redisplay();                 // Display the prompt
+	rl_replace_line("", 0);         // Clear the line buffer
+	rl_on_new_line();               // Move to the new line
+	rl_redisplay();                 // Display the prompt
 }
 
 void	get_env(t_env **env, char *str)
@@ -38,7 +38,8 @@ void	get_env(t_env **env, char *str)
 
 void	init_obj(t_obj *obj, char **env)
 {
-	char pwd[200];
+	char pwd[_PC_PATH_MAX];
+	char pwd_var[_PC_PATH_MAX];
 
 	getcwd(pwd, 200);
 	obj->str = NULL;
@@ -48,29 +49,29 @@ void	init_obj(t_obj *obj, char **env)
 	obj->token = NULL;
 	obj->cmd = NULL;
 	obj->env = NULL;
-    if (!env || !*env) {
-        char pwd_var[256];
-        snprintf(pwd_var, sizeof(pwd_var), "PWD=%s", pwd);
-        get_env(&obj->env, pwd_var);
-        get_env(&obj->env, "SHLVL=1");
-        get_env(&obj->env, "_=/usr/bin/env");
+	if (!env || !*env) {
+		strcpy(pwd_var, "PWD=");
+        strcat(pwd_var, pwd);
+		get_env(&obj->env, pwd_var);
+		get_env(&obj->env, "SHLVL=1");
+		get_env(&obj->env, "_=/usr/bin/env");
 		get_env(&obj->env, "PATH=/bin/");
-    }
+	}
 	else
 	{
-        while (*env)
+		while (*env)
 		{
-            get_env(&obj->env, *env);
-            env++;
-        }
-    }
+			get_env(&obj->env, *env);
+			env++;
+		}
+	}
 }
 
 int	main(int args, char **argv, char **env)
 {
 	t_obj	obj;
 
-    if (args == 2 || argv[1] != NULL)
+	if (args == 2 || argv[1] != NULL)
 	{
 		printf("error : minishell accepts no argumnets.\n");
 		return (1);
@@ -79,7 +80,7 @@ int	main(int args, char **argv, char **env)
 	while (1)
 	{
 		signal(SIGINT, sigint_handler); // this for in the test click ctrl + C
-    	obj.str = readline("minishell-1.0$~ ");
+		obj.str = readline("minishell-1.0$~ ");
 		if (obj.str == NULL) // This happens on Ctrl+D (EOF)
 		{
 			printf("exit\n");
