@@ -84,7 +84,6 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 
 int	execute(t_obj *obj)
 {
-    int status;
     t_cmd *cur_cmd;
     int std_in;
     int std_out;
@@ -101,7 +100,7 @@ int	execute(t_obj *obj)
     else if (cur_cmd && cur_cmd->argv[0])
     {
         execution_loop(obj, std_in, std_out, env);
-        ft_wait_all(obj, &status);
+        ft_wait_all(obj);
     }
     dup2_error(obj, dup2(std_in, STDIN_FILENO));
     dup2_error(obj, dup2(std_out, STDOUT_FILENO));

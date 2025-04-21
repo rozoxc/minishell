@@ -15,7 +15,7 @@ int	set_red_input(t_lexer *red)
 		ft_putstr_fd("Minishell Error: redirection\n", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	close(fd);
+	unlink(red->str);
 	return (EXIT_SUCCESS);
 }
 

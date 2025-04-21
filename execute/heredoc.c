@@ -17,7 +17,7 @@ int	is_heredoc(t_cmd *cmd)
 		cmd = cmd->next;
 	}
 	return (0);
-}
+	}
 
 char	*ft_expand(t_obj *obj, char *str)
 {
@@ -47,7 +47,7 @@ char	*ft_run(t_obj *obj, char *stop, int n)
 	char	*file;
 	int		fd;
 
-	file = ft_strjoin2("f", ft_itoa(n), 3);
+	file = ft_strjoin2(".f", ft_itoa(n), 3);
 	fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	while (1)
 	{

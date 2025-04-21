@@ -107,7 +107,7 @@ void	close_fds(int fd1, int fd2);
 int		count_cmds(t_obj *obj);
 char	*get_path(t_obj *obj, char *cmd);
 int		execute(t_obj *obj);
-void	ft_wait_all(t_obj *obj, int *status);
+void	ft_wait_all(t_obj *obj);
 int		ft_heredoc(t_obj *obj);
 int		set_redirections(t_cmd *cmd);
 char	**ft_split_simple(char const *str, char charset);

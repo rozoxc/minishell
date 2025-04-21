@@ -90,7 +90,7 @@ int	main(int args, char **argv, char **env)
 		add_history(obj.str);
 		execute(&obj);
 		free(obj.str);
-		free(obj.cmd);
+		free_cmd(&obj.cmd);
 	}
 	return 0;
 }

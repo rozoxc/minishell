@@ -24,17 +24,30 @@ int count_cmds(t_obj *obj)
 	return (count);
 }
 
-void ft_wait_all(t_obj *obj, int *status)
+void ft_wait_all(t_obj *obj)
 {
-	int i;
-	int cmd_count;
+    int status;
+    int i = 0;
+    int cmd_count = count_cmds(obj);
 
-	i = -1;
-	cmd_count = count_cmds(obj);
-	while (++i < cmd_count)
-	{
-		waitpid(obj->pid[i], status, 0);
-		determine_exit_code(obj, *status);
-	}
-	free(obj->pid);
+    while (i < cmd_count)
+    {
+        pid_t pid = waitpid(obj->pid[i], &status, 0);
+        if (pid == -1)
+        {
+            perror("waitpid failed");
+            obj->exit_code = 1; // Assign a generic error code
+        }
+        else
+        {
+            if (WIFEXITED(status))
+                obj->exit_code = WEXITSTATUS(status);
+            else if (WIFSIGNALED(status))
+                obj->exit_code = 128 + WTERMSIG(status);
+            else
+                obj->exit_code = 1; // Fallback for other cases
+        }
+        i++;
+    }
+    free(obj->pid);
 }
