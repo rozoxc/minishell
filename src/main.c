@@ -38,8 +38,8 @@ void	get_env(t_env **env, char *str)
 
 void	init_obj(t_obj *obj, char **env)
 {
-	char pwd[_PC_PATH_MAX];
-	char pwd_var[_PC_PATH_MAX];
+	char pwd[200];
+	char pwd_var[200];
 
 	getcwd(pwd, 200);
 	obj->str = NULL;
