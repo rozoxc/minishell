@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_building.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 16:15:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/22 10:11:12 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/22 14:50:36 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 int run_build(t_obj *obj, char **cmd, char **env)
 {
+    (void)env;
     if (ft_strcmp(cmd[0], "echo") == 0)
         ft_echo(cmd, obj);
     else if (ft_strcmp(cmd[0], "pwd") == 0)
         ft_pwd(cmd, obj);
     else if (ft_strcmp(cmd[0], "env") == 0)
-        ft_env(env);
+        ft_env(obj);
     else if (ft_strcmp(cmd[0], "cd") == 0)
         ft_cd(cmd);
     else if (ft_strcmp(cmd[0], "exit") == 0)
