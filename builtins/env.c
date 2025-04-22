@@ -6,27 +6,30 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:04:02 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/21 22:48:38 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:21:09 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ft_env(char **env)
+int ft_env(t_obj *obj)
 {
-    int i;
+    t_env *current;
 
-    i = 0;
-    while (env[i] != NULL)
+    if (!obj)
     {
-        printf("%s\n", env[i]);
-        i++;
+        ft_putstr_fd("minishell: env: invalid shell object\n", STDERR_FILENO);
+        return (1);
     }
-    return (SUCCESS);
+    current = obj->env;
+    while (current != NULL)
+    {
+        if (current->value)
+        {
+            if (ft_strchr(current->value, '='))
+                ft_putendl_fd(current->value, STDOUT_FILENO);
+        }
+        current = current->next;
+    }
+    return (0);
 }
-
-// int main(int ac, char **av, char **env) 
-// {
-//     ft_env(env);
-//     return 0;
-// }
