@@ -6,31 +6,31 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/22 10:13:46 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/22 13:56:32 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void update_env_var(const char *key, const char *value)
-{
-    t_env *env = g_env;
-    while (env)
-    {
-        if (strcmp(env->value, key) == 0) {
-            free(env->value);
-            env->value = strdup(value);
-            return;
-        }
-        env = env->next;
-    }
-    // If not found, add a new entry
-    t_env *new_env = malloc(sizeof(t_env));
-    new_env->value = strdup(key);
-    new_env->value = strdup(value);
-    new_env->next = g_env;
-    g_env = new_env;
-}
+// void update_env_var(const char *key, const char *value)
+// {
+//     t_env *env = g_env;
+//     while (env)
+//     {
+//         if (strcmp(env->value, key) == 0) {
+//             free(env->value);
+//             env->value = strdup(value);
+//             return;
+//         }
+//         env = env->next;
+//     }
+//     // If not found, add a new entry
+//     t_env *new_env = malloc(sizeof(t_env));
+//     new_env->value = strdup(key);
+//     new_env->value = strdup(value);
+//     new_env->next = g_env;
+//     g_env = new_env;
+// }
 int ft_cd(char **args)
 {
     char old_pwd[PATH_MAX];
@@ -53,8 +53,8 @@ int ft_cd(char **args)
     }
     if (getcwd(new_pwd, sizeof(new_pwd)) == NULL)
         return(perror("getcwd"), 1);
-    update_env_var("OLDPWD", old_pwd);
-    update_env_var("PWD", new_pwd);
+    // update_env_var("OLDPWD", old_pwd);
+    // update_env_var("PWD", new_pwd);
     return (0);
 }
 
