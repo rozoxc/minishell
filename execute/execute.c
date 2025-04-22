@@ -87,21 +87,27 @@ int	execute(t_obj *obj)
     t_cmd *cur_cmd;
     int std_in;
     int std_out;
-    char **env = env_to_array(obj->env);
-
+    char **env;
+    
+    env = env_to_array(obj->env);
     std_in = dup_error(obj, dup(STDIN_FILENO));
     std_out = dup_error(obj, dup(STDOUT_FILENO));
     cur_cmd = obj->cmd;
     ft_heredoc(obj);
     if (cur_cmd && cur_cmd->argv[0] && check_build(cur_cmd->argv[0]) && cur_cmd->next == NULL)
-    {
         run_build(obj, cur_cmd->argv, env);
-    }
     else if (cur_cmd && cur_cmd->argv[0])
     {
         execution_loop(obj, std_in, std_out, env);
         ft_wait_all(obj);
     }
+    int i = 0;
+    while (env[i])
+    {
+        free(env[i]);
+        i++;
+    }
+    free(env);
     dup2_error(obj, dup2(std_in, STDIN_FILENO));
     dup2_error(obj, dup2(std_out, STDOUT_FILENO));
     close_fds(std_in, std_out);

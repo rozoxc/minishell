@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
+/*   Updated: 2025/04/22 09:53:34 by ababdoul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	check_equal(char *str)
@@ -27,8 +39,6 @@ char	*get_value(t_obj *obj, char *str)
 	value = NULL;
 	if (*str == '\0')
 		value = ft_strdup("$");
-	else if (*str == '$')
-		value = ft_strjoin2(value, ft_itoa(getpid()), 3);
 	else if (*str == '?')
 		value = ft_strjoin2(value, ft_itoa(obj->exit_code), 3);
 	while (env && value == NULL)

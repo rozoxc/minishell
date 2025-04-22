@@ -73,6 +73,8 @@ typedef struct s_env
 	struct s_env	*next;
 	struct s_env	*prev;
 }	t_env;
+//globale env
+t_env *g_env;
 
 typedef struct s_tool
 {
@@ -130,8 +132,9 @@ int ft_export(char **arg, char ***env);
 int  ft_echo(char **arg , t_obj *obj);
 int ft_env(char **env);
 int ft_pwd();
-int ft_exit(void);
+int ft_exit(char **args);
 int ft_unset(char **args);
+int ft_cd(char **args);
 void update_env_var(const char *key, const char *value);
 
 // free
