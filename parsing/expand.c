@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/22 09:53:34 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:54:04 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,31 +103,38 @@ char	*si_quotes(char **argv, int *i)
 	return (str);
 }
 
-void	expand(t_obj *obj)
+void expand(t_obj *obj)
 {
-    t_token	*token;
-	char	**argv;
-	int		i;
+    t_token *token;
+    char **argv;
+    int i;
 
-	token = obj->token;
-	while (token)
-	{
-		i = 0;
-		argv = ft_split(token->str, ' ');
-		free(token->str);
-		token->str = NULL;
-		while (argv[i])
-		{
-			if (ft_strcmp(argv[i], "\'") == 0)
-				token->str = ft_strjoin2(token->str, si_quotes(argv, &i), 2);
-			else if (ft_strcmp(argv[i], "\"") == 0)
-				token->str = ft_strjoin2(token->str, \
-				do_quotes(obj, argv, &i), 2);
-			else
-				token->str = ft_strjoin2(token->str, \
-				no_quotes(obj, argv, &i), 2);
+    token = obj->token;
+    while (token)
+    {
+        if (token->str && ft_strcmp(token->str, "<<") == 0)
+        {
+            token = token->next;
+            if (token)
+                token = token->next;
+            continue;
 		}
-		free_argv(argv);
-		token = token->next;
-	}
+        i = 0;
+        argv = ft_split(token->str, ' ');
+        free(token->str);
+        token->str = NULL;
+        while (argv[i])
+        {
+            if (ft_strcmp(argv[i], "\'") == 0)
+                token->str = ft_strjoin2(token->str, si_quotes(argv, &i), 2);
+            else if (ft_strcmp(argv[i], "\"") == 0)
+                token->str = ft_strjoin2(token->str, \
+                do_quotes(obj, argv, &i), 2);
+            else
+                token->str = ft_strjoin2(token->str, \
+                no_quotes(obj, argv, &i), 2);
+        }
+        free_argv(argv);
+        token = token->next;
+    }
 }

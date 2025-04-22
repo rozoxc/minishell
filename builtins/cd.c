@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/21 18:22:52 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:13:46 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void update_env_var(const char *key, const char *value)
 }
 int ft_cd(char **args)
 {
-    char old_pwd[1024];
-    char new_pwd[1024];
+    char old_pwd[PATH_MAX];
+    char new_pwd[PATH_MAX];
 
     if (!args[1])
     {

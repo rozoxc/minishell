@@ -131,7 +131,7 @@ void	append_argv(t_cmd **cmd, t_lexer *lexer, char **argv);
 int ft_export(char **arg, char ***env);
 int  ft_echo(char **arg , t_obj *obj);
 int ft_env(char **env);
-int ft_pwd();
+int ft_pwd(char **argv, t_obj *obj);
 int ft_exit(char **args);
 int ft_unset(char **args);
 int ft_cd(char **args);

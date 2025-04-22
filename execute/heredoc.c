@@ -33,35 +33,69 @@ char	*ft_expand(t_obj *obj, char *str)
 	while (argv[i])
 	{
 		if (ft_strrchr(argv[i], '$'))
+		{
 			str = ft_strjoin2(str, get_value(obj, argv[i] + 1), 2);
+			free(argv[i]);
+		}
 		else
 			str = ft_strjoin2(str, argv[i], 2);
 		i++;
 	}
+	free(argv);
 	return (str);
 }
-    
+
+char *remove_all_quotes(const char *s) {
+    size_t len = strlen(s);
+    char *out = malloc(len + 1);
+    if (!out)
+		return NULL;
+    const char *src = s;
+    char *dst = out;
+
+    while (*src) {
+        if (*src != '\'' && *src != '"') {
+            *dst++ = *src;
+        }
+        src++;
+    }
+    *dst = '\0';
+    return out;
+}
+
 char	*ft_run(t_obj *obj, char *stop, int n)
 {
 	char	*str;
 	char	*file;
 	int		fd;
+	char	*s;
 
+	s = remove_all_quotes(stop);
 	file = ft_strjoin2(".f", ft_itoa(n), 3);
 	fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	while (1)
 	{
 		str = readline("> ");
-		if (ft_strcmp(str, stop) == 0)
+		if (ft_strcmp(str, s) == 0)
 		{
 			free(str);
 			close(fd);
+			free(s);
 			break ;
 		}
-		str = ft_expand(obj, str);
-		write(fd, str, ft_strlen(str));
-		write(fd, "\n", 1);
-		free(str);
+		if (ft_strchr(stop, '\'') || ft_strchr(stop, '"'))
+		{
+			write(fd, str, ft_strlen(str));
+			write(fd, "\n", 1);
+			free(str);
+		}
+		else
+		{
+			str = ft_expand(obj, str);
+			write(fd, str, ft_strlen(str));
+			write(fd, "\n", 1);
+			free(str);
+		}
 	}
 	return (file);
 }
