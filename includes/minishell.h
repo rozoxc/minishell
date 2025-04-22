@@ -29,7 +29,7 @@
 # define SUCCESS 0
 # define FAILURE -1
 # define Q_ERROR 127
-# define SYNTAX_ERRROR 1
+# define SYNTAX_ERRROR 2
 
 # define EMPTY 0
 # define COMMAND 1
