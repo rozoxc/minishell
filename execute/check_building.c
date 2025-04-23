@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 16:15:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/23 12:42:16 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/23 13:09:36 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int run_build(t_obj *obj, char **cmd)
         ft_exit(cmd);
     else if (ft_strcmp(cmd[0], "export") == 0)
         ft_export(cmd, obj);
+    else if (ft_strcmp(cmd[0], "unset") == 0)
+        ft_unset(cmd, obj);
     return (0);
 }
  
