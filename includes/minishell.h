@@ -133,7 +133,7 @@ int	ft_echo(char **arg , t_obj *obj);
 int	ft_env(t_obj *obj);
 int	ft_pwd(char **argv, t_obj *obj);
 int	ft_exit(char **args);
-int	ft_unset(char **args);
+int ft_unset(char **args, t_obj *obj);
 int	ft_cd(char **args, t_obj *obj);
 
 // free
