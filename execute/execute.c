@@ -1,9 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
+/*   Updated: 2025/04/23 11:50:23 by hfalati          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	child_process_execution(t_obj *obj, char *path, t_cmd *cur_cmd, char **env)
 {
-    if (access(cur_cmd->argv[0], X_OK) == 0)
-        path = cur_cmd->argv[0];
+	if (cur_cmd->argv[0][0] == '.' && cur_cmd->argv[0][1] == '/' )
+		path = ft_strdup(cur_cmd->argv[0]);
+	else if (cur_cmd->argv[0][0] == '/')
+		path = ft_strdup(cur_cmd->argv[0]);
     else
     {
         path = get_path(obj, cur_cmd->argv[0]);
@@ -35,7 +49,7 @@ void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
     if (set_redirections(cur_cmd) == Q_ERROR)
 		exit(determine_exit_code(obj, Q_ERROR));
     else if (cur_cmd->argv[0] && check_build(cur_cmd->argv[0]))
-		run_build(obj, cur_cmd->argv, env);
+		run_build(obj, cur_cmd->argv);
     else 
         child_process_execution(obj, path, cur_cmd, env);
     exit(determine_exit_code(obj, 130));
@@ -95,7 +109,7 @@ int	execute(t_obj *obj)
     cur_cmd = obj->cmd;
     ft_heredoc(obj);
     if (cur_cmd && cur_cmd->argv[0] && check_build(cur_cmd->argv[0]) && cur_cmd->next == NULL)
-        run_build(obj, cur_cmd->argv, env);
+        run_build(obj, cur_cmd->argv);
     else if (cur_cmd && cur_cmd->argv[0])
     {
         execution_loop(obj, std_in, std_out, env);

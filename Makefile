@@ -22,6 +22,8 @@ SRC = parsing/create_list.c \
       builtins/pwd.c \
       builtins/cd.c \
       builtins/exit.c \
+      builtins/export.c \
+      builtins/utils.c \
       utils/append.c \
       utils/utils.c \
       utils/free_mem.c \

@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   check_building.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 16:15:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/22 14:50:36 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:42:16 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int run_build(t_obj *obj, char **cmd, char **env)
+int run_build(t_obj *obj, char **cmd)
 {
-    (void)env;
     if (ft_strcmp(cmd[0], "echo") == 0)
         ft_echo(cmd, obj);
     else if (ft_strcmp(cmd[0], "pwd") == 0)
@@ -22,11 +21,14 @@ int run_build(t_obj *obj, char **cmd, char **env)
     else if (ft_strcmp(cmd[0], "env") == 0)
         ft_env(obj);
     else if (ft_strcmp(cmd[0], "cd") == 0)
-        ft_cd(cmd);
+        ft_cd(cmd, obj);
     else if (ft_strcmp(cmd[0], "exit") == 0)
         ft_exit(cmd);
-    return (obj->exit_code);
+    else if (ft_strcmp(cmd[0], "export") == 0)
+        ft_export(cmd, obj);
+    return (0);
 }
+ 
 int check_build(char *cmd)
 {
     if (cmd == NULL)

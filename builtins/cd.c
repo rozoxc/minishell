@@ -6,77 +6,72 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/22 13:56:32 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/23 12:15:40 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// void update_env_var(const char *key, const char *value)
-// {
-//     t_env *env = g_env;
-//     while (env)
-//     {
-//         if (strcmp(env->value, key) == 0) {
-//             free(env->value);
-//             env->value = strdup(value);
-//             return;
-//         }
-//         env = env->next;
-//     }
-//     // If not found, add a new entry
-//     t_env *new_env = malloc(sizeof(t_env));
-//     new_env->value = strdup(key);
-//     new_env->value = strdup(value);
-//     new_env->next = g_env;
-//     g_env = new_env;
-// }
-int ft_cd(char **args)
+void update_env(t_obj *obj)
 {
-    char old_pwd[PATH_MAX];
-    char new_pwd[PATH_MAX];
-
-    if (!args[1])
-    {
-        printf("missing argument !!\n");
-        return (1);
-    }
-    if (getcwd(old_pwd, sizeof(old_pwd)) == NULL)
-    {
-        perror("getcwd");
-        return (1);
-    }
-    if (chdir(args[1]) != 0)
-    {
-        perror("cd");
-        return (1);
-    }
-    if (getcwd(new_pwd, sizeof(new_pwd)) == NULL)
-        return(perror("getcwd"), 1);
-    // update_env_var("OLDPWD", old_pwd);
-    // update_env_var("PWD", new_pwd);
-    return (0);
+    char *pwd;
+    char *oldpwd;
+    
+    pwd = ft_strdup("pwd=");
+    oldpwd = ft_strdup("OLDPWD=");
+    pwd = ft_strjoin2(pwd, obj->tool.pwd, 1);
+    oldpwd = ft_strjoin2(oldpwd, obj->tool.oldpwd, 1);
+    add_env(pwd, &obj->env);
+    add_env(oldpwd, &obj->env);
+    free(pwd);
+    free(oldpwd);
 }
 
-// int main()
-// {
-//     char *args[] = {"cd", "/tmp", NULL};  // Test cd to /tmp
-//     char *args_invalid[] = {"cd", "nonexistent", NULL};  // Test invalid path
+void swap_path(char **s1, char **s2)
+{
+    char *tmp;
 
-//     printf("Testing ft_cd with valid path (cd /tmp):\n");
-//     printf("Before cd:\n");
-//     char cwd[1024];
-//     if (getcwd(cwd, sizeof(cwd)) != NULL)
-//         printf("Current directory: %s\n", cwd);
+    tmp = ft_strdup(*s1);
+    free(*s1);
+    *s1 = ft_strdup(*s2);
+    free(*s2);
+    *s2 = ft_strdup(tmp);
+}
 
-//     ft_cd(args);  // Call ft_cd with valid path
+int ft_chdir(char *path)
+{
+    if (chdir(path) != 0)
+    {
+        printf("cd: no such file or directory: %s\n", path);
+        return (FAILURE);
+    }
+    return (SUCCESS);
+}
 
-//     printf("After cd:\n");
-//     if (getcwd(cwd, sizeof(cwd)) != NULL)
-//         printf("Current directory: %s\n", cwd);
-
-//     printf("\nTesting ft_cd with invalid path (cd nonexistent):\n");
-//     ft_cd(args_invalid);  // Call ft_cd with invalid path
-//     return 0;
-// }
-
+int ft_cd(char **av, t_obj *obj)
+{
+    if (av[1] == NULL)
+        return (SUCCESS);
+    else if (av[2] != NULL)
+    {
+        printf("cd: no such file or derectory: %s\n", av[1]);
+        return (FAILURE);
+    }
+    if (ft_strcmp(av[1], "-") == 0)
+    {
+        if (ft_chdir(obj->tool.oldpwd) == FAILURE)
+            return (FAILURE);
+        swap_path(&obj->tool.oldpwd, &obj->tool.pwd);
+    }
+    else
+    {
+        if (ft_chdir(av[1]) == FAILURE)
+            return (FAILURE);
+        free(obj->tool.oldpwd);
+        obj->tool.oldpwd = ft_strdup(obj->tool.pwd);
+        free(obj->tool.pwd);
+        obj->tool.pwd = ft_strdup(av[1]);
+    }
+    update_env(obj);
+    return (SUCCESS);
+}

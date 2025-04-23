@@ -128,14 +128,13 @@ void	append_lexer(t_lexer **lexer, char *str, int i);
 void	append_argv(t_cmd **cmd, t_lexer *lexer, char **argv);
 
 //builtuin function
-int ft_export(char **arg, char ***env);
-int  ft_echo(char **arg , t_obj *obj);
-int ft_env(t_obj *obj);
-int ft_pwd(char **argv, t_obj *obj);
-int ft_exit(char **args);
-int ft_unset(char **args);
-int ft_cd(char **args);
-void update_env_var(const char *key, const char *value);
+int	ft_export(char **av, t_obj *obj);
+int	ft_echo(char **arg , t_obj *obj);
+int	ft_env(t_obj *obj);
+int	ft_pwd(char **argv, t_obj *obj);
+int	ft_exit(char **args);
+int	ft_unset(char **args);
+int	ft_cd(char **args, t_obj *obj);
 
 // free
 void	free_argv(char **argv);
@@ -146,9 +145,11 @@ void	free_env(t_env **env);
 
 // utlis
 char	*get_value(t_obj *obj, char *str);
-int check_build(char *cmd);
-int check_build(char *cmd);
-int run_build(t_obj *obj, char **cmd, char **env);
-char **env_to_array(t_env *env);
-
+int		check_build(char *cmd);
+int		check_build(char *cmd);
+int		run_build(t_obj *obj, char **cmd);
+char	**env_to_array(t_env *env);
+void	add_env(char *str, t_env **env);
+void	get_env(t_env **env, char *str);
+int		check_fond(char *str);
 #endif
