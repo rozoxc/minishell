@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -fsanitize=address
 LIBFT_DIR = libft
 LIBFT_LIB = libft/libft.a
 HEADER = includes/minishell.h libft/libft.h
@@ -30,6 +30,7 @@ SRC = parsing/create_list.c \
       utils/free_mem.c \
       utils/ft_strcmp.c \
       utils/ft_strjoin2.c \
+      utils/signals.c \
       src/main.c
 
 OBJ = $(SRC:.c=.o)

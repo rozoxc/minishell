@@ -24,6 +24,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <termios.h>
 # include "../libft/libft.h"
 
 # define SUCCESS 0
@@ -152,4 +153,10 @@ char	**env_to_array(t_env *env);
 void	add_env(char *str, t_env **env);
 void	get_env(t_env **env, char *str);
 int		check_fond(char *str);
+
+//signals
+void sigint_handler(int sig);
+void sigquit_handler(int sig);
+void signal_handler();
+void hide_ctrl_characters();
 #endif
