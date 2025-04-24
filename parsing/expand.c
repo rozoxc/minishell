@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/24 13:08:07 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/24 13:10:32 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ void expand(t_obj *obj)
         token->str = NULL;
         while (argv[i])
         {
-			printf ("%s\n",argv[i]);
             if (ft_strcmp(argv[i], "\'") == 0)
                 token->str = ft_strjoin2(token->str, si_quotes(argv, &i), 2);
 			else if (ft_strcmp(argv[i], "\"") == 0)
