@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/24 13:10:32 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/24 16:00:18 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*do_quotes(t_obj *obj, char **argv, int *i)
 			str = ft_strjoin2(str, argv[*i], 1);
 		(*i)++;
 	}
-	(*i)++;
+	// (*i)++;
 	return (str);
 }
 
@@ -100,7 +100,7 @@ char	*si_quotes(char **argv, int *i)
 		str = ft_strjoin2(str, argv[*i], 1);
 		(*i)++;
 	}
-	(*i)++;
+	// (*i)++;
 	return (str);
 }
 
