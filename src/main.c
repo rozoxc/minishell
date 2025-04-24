@@ -1,13 +1,16 @@
-#include "../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/24 10:30:42 by ababdoul          #+#    #+#             */
+/*   Updated: 2025/04/24 10:30:42 by ababdoul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void sigint_handler(int sig)
-{
-	(void)sig; // this canst for pass the error "unused parameter"
-	write(STDOUT_FILENO, "\n", 1);  // Print a newline
-	rl_replace_line("", 0);         // Clear the line buffer
-	rl_on_new_line();               // Move to the new line
-	rl_redisplay();                 // Display the prompt
-}
+#include "../includes/minishell.h"
 
 void	get_env(t_env **env, char *str)
 {
@@ -79,7 +82,8 @@ int	main(int args, char **argv, char **env)
 	init_obj(&obj, env);
 	while (1)
 	{
-		signal(SIGINT, sigint_handler); // this for in the test click ctrl + C
+		signal_handler();
+		hide_ctrl_characters();
 		obj.str = readline("minishell-1.0$~ ");
 		if (obj.str == NULL) // This happens on Ctrl+D (EOF)
 		{
