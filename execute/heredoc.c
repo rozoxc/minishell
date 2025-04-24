@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/23 11:42:48 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/24 11:11:50 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,10 @@ char	*ft_run(t_obj *obj, char *stop, int n)
 	while (1)
 	{
 		str = readline("> ");
-		if (ft_strcmp(str, s) == 0)
+		if (str == NULL || ft_strcmp(str, s) == 0)
 		{
+			if (str == NULL)
+				printf("herdoc detect NULL!!!\n");
 			free(str);
 			close(fd);
 			free(s);

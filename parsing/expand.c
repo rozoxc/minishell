@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/22 14:03:14 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/24 13:08:07 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ int	check_equal(char *str)
 }
 
 char	*get_value(t_obj *obj, char *str)
-{
-	char	*value;
+{ char	*value;
 	int		equal;
 	t_env	*env;
 
@@ -123,13 +122,14 @@ void expand(t_obj *obj)
 		}
         i = 0;
         argv = ft_split(token->str, ' ');
-        free(token->str);
+		free(token->str);
         token->str = NULL;
         while (argv[i])
         {
+			printf ("%s\n",argv[i]);
             if (ft_strcmp(argv[i], "\'") == 0)
                 token->str = ft_strjoin2(token->str, si_quotes(argv, &i), 2);
-            else if (ft_strcmp(argv[i], "\"") == 0)
+			else if (ft_strcmp(argv[i], "\"") == 0)
                 token->str = ft_strjoin2(token->str, \
                 do_quotes(obj, argv, &i), 2);
             else
