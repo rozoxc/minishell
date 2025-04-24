@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 12:56:59 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/12 17:28:50 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/24 14:19:52 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,6 @@ t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 char	*ft_strjoin2(char *s1, char *s2, int n);
 int		ft_strcmp(const char *s1, const char *s2);
+char 	*ft_strcat(char *dest, char *src);
+char    *ft_strcpy(char *s1, char *s2);
 #endif

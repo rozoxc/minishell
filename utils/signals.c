@@ -6,7 +6,7 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:00:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/24 13:01:04 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:30:01 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void sigint_handler(int sig)
 void sigquit_handler(int sig)
 {
     (void)sig;
-    // printf("zbi");
     rl_replace_line("", 0);
     rl_on_new_line();
     rl_redisplay();

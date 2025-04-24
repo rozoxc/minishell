@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split-2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 09:00:21 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/24 12:53:25 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/24 14:21:40 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,15 @@ static size_t  word_len(const char *s, char delim) {
     return len;
 }
 
-static void free_split(char **arr, size_t used) {
+static void free_split(char **arr, size_t used) 
+{
     while (used--)
         free(arr[used]);
     free(arr);
 }
 
-char    **ft_split(const char *s, char delim) {
+char    **ft_split(const char *s, char delim)
+{
     size_t  words = count_words(s, delim);
     char    **res = malloc((words + 1) * sizeof *res);
     size_t  i = 0;

@@ -74,8 +74,6 @@ typedef struct s_env
 	struct s_env	*next;
 	struct s_env	*prev;
 }	t_env;
-//globale env
-t_env *g_env;
 
 typedef struct s_tool
 {
