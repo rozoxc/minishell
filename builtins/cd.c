@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/26 11:29:42 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/26 15:04:22 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int ft_chdir(char *path)
 
 int ft_cd(char **av, t_obj *obj)
 {
+    char pwd[PATH_MAX];
+
     if (av[1] == NULL)
         return (SUCCESS);
     else if (av[2] != NULL)
@@ -71,7 +73,8 @@ int ft_cd(char **av, t_obj *obj)
         free(obj->tool.oldpwd);
         obj->tool.oldpwd = ft_strdup(obj->tool.pwd);
         free(obj->tool.pwd);
-        obj->tool.pwd = ft_strdup(av[1]);
+        getcwd(pwd, PATH_MAX);
+        obj->tool.pwd = ft_strdup(pwd);
     }
     update_env(obj);
     return (SUCCESS);

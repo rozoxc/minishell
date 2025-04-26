@@ -44,7 +44,7 @@ void	init_obj(t_obj *obj, char **env)
 	char pwd[PATH_MAX];
 	char pwd_var[PATH_MAX];
 
-	getcwd(pwd, 200);
+	getcwd(pwd, PATH_MAX);
 	obj->str = NULL;
 	obj->tool.pwd = ft_strdup(pwd);
 	obj->tool.oldpwd = ft_strdup(pwd);
@@ -58,7 +58,7 @@ void	init_obj(t_obj *obj, char **env)
 		get_env(&obj->env, pwd_var);
 		get_env(&obj->env, "SHLVL=1");
 		get_env(&obj->env, "_=/usr/bin/env");
-		get_env(&obj->env, "PATH=/bin/");
+		get_env(&obj->env, "PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 	}
 	else
 	{

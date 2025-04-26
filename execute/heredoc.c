@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/26 10:30:36 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/26 16:33:48 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,75 @@ char	*ft_expand(t_obj *obj, char *str)
 	return (str);
 }
 
-char *remove_all_quotes(const char *s) {
-    size_t len = strlen(s);
-    char *out = malloc(len + 1);
-    if (!out)
-		return NULL;
-    const char *src = s;
-    char *dst = out;
+#include <stdlib.h>
 
-    while (*src) {
-        if (*src != '\'' && *src != '"') {
-            *dst++ = *src;
+size_t  ft_strlen(const char *s);  /* your libft strlen */
+
+char    *remove_all_quotes(const char *s)
+{
+    size_t  len;
+    char    *out;
+    const char *src;
+    char    *dst;
+
+    len = ft_strlen(s);
+    out = malloc(len + 1);
+    if (!out)
+        return (NULL);
+    src = s;
+    dst = out;
+    while (*src)
+    {
+        if (*src == '$')
+        {
+            const char  *p = src;
+            size_t      dollar_count = 0;
+            size_t      to_copy;
+            size_t      i;
+
+            while (*p == '$')
+            {
+                dollar_count++;
+                p++;
+            }
+            if (*p == '\'')
+            {
+                if (dollar_count % 2 == 1)
+                    to_copy = dollar_count - 1;
+                else
+                    to_copy = dollar_count;
+                i = 0;
+                while (i < to_copy)
+                {
+                    *dst = '$';
+                    dst++;
+                    i++;
+                }
+                src = p + 1;
+                while (*src && *src != '\'')
+                {
+                    *dst = *src;
+                    dst++;
+                    src++;
+                }
+                if (*src == '\'')
+                    src++;
+                continue;
+            }
         }
-        src++;
+        if (*src != '\'' && *src != '"')
+        {
+            *dst = *src;
+            dst++;
+            src++;
+        }
+        else
+            src++;
     }
     *dst = '\0';
-    return out;
+    return (out);
 }
+
 
 char	*ft_run(t_obj *obj, char *stop, int n)
 {
@@ -83,8 +135,6 @@ char	*ft_run(t_obj *obj, char *stop, int n)
 	char	*s;
 
 	s = remove_all_quotes(stop);
-	if (s[0] == '$')
-		s++;
 	file = ft_strjoin2(".f", ft_itoa(n), 3);
 	fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	while (1)
@@ -94,7 +144,7 @@ char	*ft_run(t_obj *obj, char *stop, int n)
 		{
 			free(str);
 			close(fd);
-			free(--s);
+			free(s);
 			break ;
 		}
 		if (ft_strchr(stop, '\'') || ft_strchr(stop, '"'))
