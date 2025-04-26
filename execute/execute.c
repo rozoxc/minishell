@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/23 11:50:23 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/26 10:02:15 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,11 @@ int	execute(t_obj *obj)
     cur_cmd = obj->cmd;
     ft_heredoc(obj);
     if (cur_cmd && cur_cmd->argv[0] && check_build(cur_cmd->argv[0]) && cur_cmd->next == NULL)
+    {
+        if (set_redirections(cur_cmd) == Q_ERROR)
+			return (determine_exit_code(obj, Q_ERROR), Q_ERROR);
         run_build(obj, cur_cmd->argv);
+    }
     else if (cur_cmd && cur_cmd->argv[0])
     {
         execution_loop(obj, std_in, std_out, env);

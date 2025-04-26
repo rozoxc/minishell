@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/23 12:15:40 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/26 11:29:42 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void update_env(t_obj *obj)
     char *pwd;
     char *oldpwd;
     
-    pwd = ft_strdup("pwd=");
+    pwd = ft_strdup("PWD=");
     oldpwd = ft_strdup("OLDPWD=");
     pwd = ft_strjoin2(pwd, obj->tool.pwd, 1);
     oldpwd = ft_strjoin2(oldpwd, obj->tool.oldpwd, 1);
@@ -36,6 +36,7 @@ void swap_path(char **s1, char **s2)
     *s1 = ft_strdup(*s2);
     free(*s2);
     *s2 = ft_strdup(tmp);
+    free(tmp);
 }
 
 int ft_chdir(char *path)

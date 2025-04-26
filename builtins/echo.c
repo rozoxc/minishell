@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:39:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/22 14:01:47 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/26 11:46:57 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,3 @@ int  ft_echo(char **arg , t_obj *obj)
     }
     return (EXIT_SUCCESS);
 }
-
-// int main()
-// {
-//     ft_echo((char *[]){"echo", NULL}); // prints \n
-//     ft_echo((char *[]){"echo", "hello", NULL}); // hello\n
-//     ft_echo((char *[]){"echo", "-n", "hello", NULL}); // hello
-//     ft_echo((char *[]){"echo", "-n", NULL}); // (prints nothing)
-
-// }

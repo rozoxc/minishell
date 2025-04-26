@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc 
-FLAGS = -Wall -Werror -Wextra -fsanitize=address
+FLAGS = -Wall -Werror -Wextra
 LIBFT_DIR = libft
 LIBFT_LIB = libft/libft.a
 HEADER = includes/minishell.h libft/libft.h

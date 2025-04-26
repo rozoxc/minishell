@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/24 16:00:18 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/26 11:38:30 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	check_equal(char *str)
 }
 
 char	*get_value(t_obj *obj, char *str)
-{ char	*value;
+{ 
+	char	*value;
 	int		equal;
 	t_env	*env;
 
@@ -38,6 +39,8 @@ char	*get_value(t_obj *obj, char *str)
 	value = NULL;
 	if (*str == '\0')
 		value = ft_strdup("$");
+	else if (*str == '%')
+		value = ft_strdup("$%");
 	else if (*str == '?')
 		value = ft_strjoin2(value, ft_itoa(obj->exit_code), 3);
 	else if (*str == '.')

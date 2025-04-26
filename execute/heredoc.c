@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/24 11:11:50 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/26 10:30:36 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ char	*ft_run(t_obj *obj, char *stop, int n)
 	char	*s;
 
 	s = remove_all_quotes(stop);
+	if (s[0] == '$')
+		s++;
 	file = ft_strjoin2(".f", ft_itoa(n), 3);
 	fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	while (1)
@@ -90,11 +92,9 @@ char	*ft_run(t_obj *obj, char *stop, int n)
 		str = readline("> ");
 		if (str == NULL || ft_strcmp(str, s) == 0)
 		{
-			if (str == NULL)
-				printf("herdoc detect NULL!!!\n");
 			free(str);
 			close(fd);
-			free(s);
+			free(--s);
 			break ;
 		}
 		if (ft_strchr(stop, '\'') || ft_strchr(stop, '"'))
