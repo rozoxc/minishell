@@ -9,6 +9,7 @@ SRC = parsing/create_list.c \
       parsing/expand.c \
       parsing/parsing.c \
       parsing/syntax.c \
+      parsing/shell_level.c \
       execute/error_handle.c \
       execute/execute_utilis.c \
       execute/execute.c \

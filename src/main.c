@@ -80,6 +80,7 @@ int	main(int args, char **argv, char **env)
 		return (1);
 	}
 	init_obj(&obj, env);
+	shell_level(&obj);
 	while (1)
 	{
 		signal_handler();

@@ -151,7 +151,7 @@ char	**env_to_array(t_env *env);
 void	add_env(char *str, t_env **env);
 void	get_env(t_env **env, char *str);
 int		check_fond(char *str);
-
+void	shell_level(t_obj *obj);
 //signals
 void sigint_handler(int sig);
 void sigquit_handler(int sig);
