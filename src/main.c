@@ -53,8 +53,8 @@ void	init_obj(t_obj *obj, char **env)
 	obj->cmd = NULL;
 	obj->env = NULL;
 	if (!env || !*env) {
-		strcpy(pwd_var, "PWD=");
-        strcat(pwd_var, pwd);
+		ft_strcpy(pwd_var, "PWD=");
+        ft_strcat(pwd_var, pwd);
 		get_env(&obj->env, pwd_var);
 		get_env(&obj->env, "SHLVL=1");
 		get_env(&obj->env, "_=/usr/bin/env");
