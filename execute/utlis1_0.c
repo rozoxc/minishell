@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utlis.c                                            :+:      :+:    :+:   */
+/*   utlis1_0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:56:04 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/23 11:43:04 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/27 17:28:44 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,40 +85,4 @@ char	**ft_split_simple(char const *str, char charset)
 	}
 	array[size] = 0;
 	return (array);
-}
-
-char **env_to_array(t_env *env)
-{
-    t_env *current;
-    char **array;
-    int count;
-    int i;
-
-    count = 0;
-    current = env;
-    while (current)
-    {
-        count++;
-        current = current->next;
-    }
-    array = (char **)malloc(sizeof(char *) * (count + 1));
-    if (!array)
-        return (NULL);
-    i = 0;
-    current = env;
-    while (current)
-    {
-        array[i] = ft_strdup(current->value);
-        if (!array[i])
-        {
-            while (--i >= 0)
-                free(array[i]);
-            free(array);
-            return (NULL);
-        }
-        current = current->next;
-        i++;
-    }
-    array[count] = NULL;
-    return (array);
 }

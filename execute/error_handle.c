@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:30 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/23 11:42:31 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/27 17:19:19 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,12 @@ int	determine_exit_code(t_obj *obj, int exit_code)
 
 void	pipe_error(t_obj *obj, int pid)
 {
-	
-    if (pid == -1)
-    {
-        ft_putstr_fd("minishell error : ", 2);
-        perror("pipe error");
-        exit(determine_exit_code(obj, 130));
-    }
+	if (pid == -1)
+	{
+		ft_putstr_fd("minishell error : ", 2);
+		perror("pipe error");
+		exit(determine_exit_code(obj, 130));
+	}
 }
 
 int	fork_error(t_obj *obj, int pid)

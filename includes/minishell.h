@@ -111,6 +111,7 @@ void	ft_wait_all(t_obj *obj);
 int		ft_heredoc(t_obj *obj);
 int		set_redirections(t_cmd *cmd);
 char	**ft_split_simple(char const *str, char charset);
+void	cleanup_execution(t_obj *obj, int std_in, int std_out, char **env);
 
 // parsing utlis function
 int		parsing(t_obj *obj);
@@ -151,6 +152,7 @@ void	add_env(char *str, t_env **env);
 void	get_env(t_env **env, char *str);
 int		check_fond(char *str);
 void	shell_level(t_obj *obj);
+int		check_equal(char *str);
 //signals
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 10:40:26 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/27 15:22:31 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:38:44 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	shell_level(t_obj *obj)
 	char	*str;
 	int	level;
 
-	if (shell_level == NULL)
+	shell_level = getenv("SHLVL"); if (shell_level == NULL)
 		level = 1;
 	else
 		level = ft_atoi(shell_level) + 1;

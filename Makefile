@@ -16,7 +16,8 @@ SRC = parsing/create_list.c \
       execute/find_path.c \
       execute/heredoc.c \
       execute/set_redirections.c \
-      execute/utlis.c \
+      execute/utlis1_0.c \
+      execute/utlis1_1.c \
       execute/check_building.c \
       builtins/echo.c \
       builtins/env.c \
