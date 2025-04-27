@@ -6,13 +6,12 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:17:32 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/09 13:17:32 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/26 18:47:47 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
 
 # include <stdio.h>
 # include <limits.h>
@@ -58,11 +57,11 @@ typedef struct s_lexer
 
 typedef struct s_cmd
 {
-	char	**argv;
-	char	*intfile;
-	char	*outfile;
-	int		append;
-	int 	heredoc;
+	char			**argv;
+	char			*intfile;
+	char			*outfile;
+	int				append;
+	int				heredoc;
 	t_lexer			*lexer;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -127,13 +126,13 @@ void	append_lexer(t_lexer **lexer, char *str, int i);
 void	append_argv(t_cmd **cmd, t_lexer *lexer, char **argv);
 
 //builtuin function
-int	ft_export(char **av, t_obj *obj);
-int	ft_echo(char **arg , t_obj *obj);
-int	ft_env(t_obj *obj);
-int	ft_pwd(char **argv, t_obj *obj);
-int	ft_exit(char **args);
-int ft_unset(char **args, t_obj *obj);
-int	ft_cd(char **args, t_obj *obj);
+int		ft_export(char	**av, t_obj *obj);
+int		ft_echo(char	**arg, t_obj *obj);
+int		ft_env(t_obj	*obj);
+int		ft_pwd(char		**argv, t_obj *obj);
+int		ft_exit(char	**args);
+int		ft_unset(char	**args, t_obj *obj);
+int		ft_cd(char		**args, t_obj *obj);
 
 // free
 void	free_argv(char **argv);
@@ -153,8 +152,8 @@ void	get_env(t_env **env, char *str);
 int		check_fond(char *str);
 void	shell_level(t_obj *obj);
 //signals
-void sigint_handler(int sig);
-void sigquit_handler(int sig);
-void signal_handler();
-void hide_ctrl_characters();
+void	sigint_handler(int sig);
+void	sigquit_handler(int sig);
+void	signal_handler(void);
+void	hide_ctrl_characters(void);
 #endif

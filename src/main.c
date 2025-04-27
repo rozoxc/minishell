@@ -6,7 +6,7 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:42 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/24 10:30:42 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/26 18:40:00 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,8 @@ void	get_env(t_env **env, char *str)
 	}
 }
 
-void	init_obj(t_obj *obj, char **env)
+void	fill_obj(t_obj *obj, char *pwd)
 {
-	char pwd[PATH_MAX];
-	char pwd_var[PATH_MAX];
-
-	getcwd(pwd, PATH_MAX);
 	obj->str = NULL;
 	obj->tool.pwd = ft_strdup(pwd);
 	obj->tool.oldpwd = ft_strdup(pwd);
@@ -52,9 +48,19 @@ void	init_obj(t_obj *obj, char **env)
 	obj->token = NULL;
 	obj->cmd = NULL;
 	obj->env = NULL;
-	if (!env || !*env) {
+}
+
+void	init_obj(t_obj *obj, char **env)
+{
+	char	pwd[PATH_MAX];
+	char	pwd_var[PATH_MAX];
+
+	getcwd(pwd, PATH_MAX);
+	fill_obj(obj, pwd);
+	if (!env || !*env)
+	{
 		ft_strcpy(pwd_var, "PWD=");
-        ft_strcat(pwd_var, pwd);
+		ft_strcat(pwd_var, pwd);
 		get_env(&obj->env, pwd_var);
 		get_env(&obj->env, "SHLVL=1");
 		get_env(&obj->env, "_=/usr/bin/env");
@@ -75,10 +81,7 @@ int	main(int args, char **argv, char **env)
 	t_obj	obj;
 
 	if (args == 2 || argv[1] != NULL)
-	{
-		printf("error : minishell accepts no argumnets.\n");
-		return (1);
-	}
+		return (printf("error \n"), 1);
 	init_obj(&obj, env);
 	shell_level(&obj);
 	while (1)
@@ -86,7 +89,7 @@ int	main(int args, char **argv, char **env)
 		signal_handler();
 		hide_ctrl_characters();
 		obj.str = readline("minishell-1.0$~ ");
-		if (obj.str == NULL) // This happens on Ctrl+D (EOF)
+		if (obj.str == NULL)
 		{
 			printf("exit\n");
 			exit(0);
@@ -97,5 +100,5 @@ int	main(int args, char **argv, char **env)
 		free(obj.str);
 		free_cmd(&obj.cmd);
 	}
-	return 0;
+	return (0);
 }
