@@ -3,33 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/26 14:53:04 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/27 12:33:08 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_equal(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] != '=')
-	{
-		if (str[i] == ' ' || str[i] == '?')
-			return (-1);
-		i++;
-	}
-	if (str[i] == '\0')
-		return (0);
-	return (i);
-}
-
 char	*get_value(t_obj *obj, char *str)
-{ 
+{
 	char	*value;
 	int		equal;
 	t_env	*env;
@@ -88,7 +72,6 @@ char	*do_quotes(t_obj *obj, char **argv, int *i)
 			str = ft_strjoin2(str, argv[*i], 1);
 		(*i)++;
 	}
-	// (*i)++;
 	return (str);
 }
 
@@ -103,54 +86,53 @@ char	*si_quotes(char **argv, int *i)
 		str = ft_strjoin2(str, argv[*i], 1);
 		(*i)++;
 	}
-	// (*i)++;
 	return (str);
 }
 
-void expand(t_obj *obj)
+void	expand(t_obj *obj)
 {
-    t_token *token;
-    char **argv;
-    int i;
+	t_token	*token;
+	char	**argv;
+	int	i;
 
-    token = obj->token;
-    while (token)
-    {
-        if (token->str && ft_strcmp(token->str, "<<") == 0)
-        {
-            token = token->next;
-            if (token)
-                token = token->next;
-            continue;
+	token = obj->token;
+	while (token)
+	{
+		if (token->str && ft_strcmp(token->str, "<<") == 0)
+		{
+			token = token->next;
+			if (token)
+				token = token->next;
+			continue ;
 		}
-        i = 0;
-        argv = ft_split(token->str, ' ');
+		i = 0;
+		argv = ft_split(token->str, ' ');
 		free(token->str);
-        token->str = NULL;
-        while (argv[i])
-        {
-            if (argv[i][0] == '$' && argv[i][1] == '\0' && argv[i+1] && !ft_strcmp(argv[i+1], "\'"))
-            {
-                i++;
-                i++;
-                while (argv[i] && ft_strcmp(argv[i], "\'"))
-                {
-                    token->str = ft_strjoin2(token->str, argv[i], 1);
-                    i++;
-                }
-                if (argv[i] && !ft_strcmp(argv[i], "\'"))
-                    i++;
-            }
-            else if (ft_strcmp(argv[i], "\'") == 0)
-                token->str = ft_strjoin2(token->str, si_quotes(argv, &i), 2);
+		token->str = NULL;
+		while (argv[i])
+		{
+			if (argv[i][0] == '$' && argv[i][1] == '\0' && argv[i+1] && !ft_strcmp(argv[i+1], "\'"))
+			{
+				i++;
+				i++;
+				while (argv[i] && ft_strcmp(argv[i], "\'"))
+				{
+					token->str = ft_strjoin2(token->str, argv[i], 1);
+					i++;
+				}
+				if (argv[i] && !ft_strcmp(argv[i], "\'"))
+					i++;
+			}
+			else if (ft_strcmp(argv[i], "\'") == 0)
+				token->str = ft_strjoin2(token->str, si_quotes(argv, &i), 2);
 			else if (ft_strcmp(argv[i], "\"") == 0)
-                token->str = ft_strjoin2(token->str, \
-                do_quotes(obj, argv, &i), 2);
-            else
-                token->str = ft_strjoin2(token->str, \
-                no_quotes(obj, argv, &i), 2);
-        }
-        free_argv(argv);
-        token = token->next;
-    }
+				token->str = ft_strjoin2(token->str, \
+						do_quotes(obj, argv, &i), 2);
+			else
+				token->str = ft_strjoin2(token->str, \
+						no_quotes(obj, argv, &i), 2);
+		}
+		free_argv(argv);
+		token = token->next;
+	}
 }

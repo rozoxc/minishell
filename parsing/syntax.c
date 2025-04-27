@@ -6,13 +6,13 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:42:20 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/21 14:42:25 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/27 15:24:31 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int check_redirection(t_token *token)
+int	check_redirection(t_token *token)
 {
 	while (token)
 	{
@@ -35,7 +35,7 @@ int check_redirection(t_token *token)
 
 int	syntax(t_token *token)
 {
-	int i;
+	int	i;
 
 	i = check_redirection(token);
 	if (i != 0)
