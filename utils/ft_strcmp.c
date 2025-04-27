@@ -6,12 +6,11 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 13:50:24 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/15 11:41:51 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/27 15:29:32 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
-#include <stdio.h>
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
