@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/27 17:44:25 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/28 10:21:49 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,14 @@ void	parent_process(t_obj *obj, t_cmd *curr_cmd, int fd_pipe[2])
 {
 	close(fd_pipe[1]);
 	if (curr_cmd->next == NULL)
+	{
+		close(fd_pipe[0]);
 		close(STDIN_FILENO);
+	}
 	else
 	{
 		dup2_error(obj, dup2(fd_pipe[0], STDIN_FILENO));
 		close(fd_pipe[0]);
-		close(fd_pipe[1]);
 	}
 }
 
