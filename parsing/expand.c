@@ -3,14 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/27 12:33:08 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/29 21:38:35 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_token *create_token(char *str)
+{
+    t_token *tok = malloc(sizeof(t_token));
+    if (!tok) return NULL;
+    tok->str = str;
+    tok->next = NULL;
+    return tok;
+}
+
+void split_expanded(t_token *token)
+{
+    if (!token->str)
+        return;
+    char **parts = ft_split(token->str, ' ');
+    if (!parts)
+		return;
+    free(token->str);
+     token->str = ft_strdup(parts[0]);
+    // insert remaining parts as new tokens
+    t_token *curr = token;
+    for (int i = 1; parts[i]; i++)
+    {
+		if (!(ft_strchr(parts[i], ' ')))
+		{
+			t_token *new_tok = create_token(ft_strdup(parts[i]));
+    	    new_tok->next = curr->next;
+        	curr->next = new_tok;
+        	curr = new_tok;
+		}
+	}
+    free_argv(parts);
+}
 
 char	*get_value(t_obj *obj, char *str)
 {
@@ -42,7 +75,7 @@ char	*get_value(t_obj *obj, char *str)
 	return (value);
 }
 
-char	*no_quotes(t_obj *obj, char **argv, int *i)
+char	*no_quotes(t_obj *obj, char **argv, int *i, int *j)
 {
 	char	*str;
 
@@ -50,7 +83,10 @@ char	*no_quotes(t_obj *obj, char **argv, int *i)
 	while (argv[*i] && ft_strcmp(argv[*i], "\"") && ft_strcmp(argv[*i], "\'"))
 	{
 		if (ft_strchr(argv[*i], '$'))
+		{
 			str = ft_strjoin2(str, get_value(obj, argv[*i] + 1), 2);
+			(*j)++;
+		}
 		else
 			str = ft_strjoin2(str, argv[*i], 1);
 		(*i)++;
@@ -58,7 +94,7 @@ char	*no_quotes(t_obj *obj, char **argv, int *i)
 	return (str);
 }
 
-char	*do_quotes(t_obj *obj, char **argv, int *i)
+char	*do_quotes(t_obj *obj, char **argv, int *i, int *j)
 {
 	char	*str;
 
@@ -67,7 +103,10 @@ char	*do_quotes(t_obj *obj, char **argv, int *i)
 	while (argv[*i] && ft_strcmp(argv[*i], "\""))
 	{
 		if (ft_strchr(argv[*i], '$'))
+		{
 			str = ft_strjoin2(str, get_value(obj, argv[*i] + 1), 2);
+			(*j)++;
+		}
 		else
 			str = ft_strjoin2(str, argv[*i], 1);
 		(*i)++;
@@ -94,7 +133,9 @@ void	expand(t_obj *obj)
 	t_token	*token;
 	char	**argv;
 	int	i;
+	int j;
 
+	j = 0;
 	token = obj->token;
 	while (token)
 	{
@@ -127,11 +168,13 @@ void	expand(t_obj *obj)
 				token->str = ft_strjoin2(token->str, si_quotes(argv, &i), 2);
 			else if (ft_strcmp(argv[i], "\"") == 0)
 				token->str = ft_strjoin2(token->str, \
-						do_quotes(obj, argv, &i), 2);
+						do_quotes(obj, argv, &i, &j), 2);
 			else
 				token->str = ft_strjoin2(token->str, \
-						no_quotes(obj, argv, &i), 2);
+						no_quotes(obj, argv, &i, &j), 2);
 		}
+		if (j == 1)
+			split_expanded(token);
 		free_argv(argv);
 		token = token->next;
 	}

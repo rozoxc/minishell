@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/28 10:21:49 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/29 20:28:34 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	child_process_execution(t_obj *obj, char *path, \
 		t_cmd *cur_cmd, char **env)
 {
+	printf("%s ------ %s\n",cur_cmd->argv[0],cur_cmd->argv[1]);
 	if (cur_cmd->argv[0][0] == '.' && cur_cmd->argv[0][1] == '/' )
 		path = ft_strdup(cur_cmd->argv[0]);
 	else if (cur_cmd->argv[0][0] == '/')
