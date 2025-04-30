@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/29 21:38:35 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/30 10:31:02 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_token *create_token(char *str)
 
 void split_expanded(t_token *token)
 {
+	int i;
     if (!token->str)
         return;
     char **parts = ft_split(token->str, ' ');
@@ -30,9 +31,9 @@ void split_expanded(t_token *token)
 		return;
     free(token->str);
      token->str = ft_strdup(parts[0]);
-    // insert remaining parts as new tokens
     t_token *curr = token;
-    for (int i = 1; parts[i]; i++)
+	i = 1;
+	while (parts[i])
     {
 		if (!(ft_strchr(parts[i], ' ')))
 		{
@@ -41,6 +42,7 @@ void split_expanded(t_token *token)
         	curr->next = new_tok;
         	curr = new_tok;
 		}
+		i++;
 	}
     free_argv(parts);
 }
