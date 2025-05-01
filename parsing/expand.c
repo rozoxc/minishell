@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/30 10:31:02 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/01 13:33:55 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ t_token *create_token(char *str)
 void split_expanded(t_token *token)
 {
 	int i;
+	if (ft_strchr(token->str, '='))
+		return ;
+	if (!(ft_strchr(token->str, ' ')))
+		return ;
     if (!token->str)
         return;
     char **parts = ft_split(token->str, ' ');

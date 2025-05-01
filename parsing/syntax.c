@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:42:20 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/27 15:24:31 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:40:49 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	syntax(t_token *token)
 			printf("bash: syntax error near unexpected token `|'\n");
 		else if (i == -3)
 			printf("bash: syntax error near unexpected token `newline'\n");
+	else if (i == -4)
+			printf("bash: syntax error near unexpected token `>>'\n");
 		return (FAILURE);
 	}
 	return (SUCCESS);

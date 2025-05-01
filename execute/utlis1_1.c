@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:23:42 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/27 17:43:46 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/30 10:55:06 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,46 @@ void	cleanup_execution(t_obj *obj, int std_in, int std_out, char **env)
 	dup2_error(obj, dup2(std_in, STDIN_FILENO));
 	dup2_error(obj, dup2(std_out, STDOUT_FILENO));
 	close_fds(std_in, std_out);
+}
+
+int	is_heredoc(t_cmd *cmd)
+{
+	t_lexer	*lexer;
+
+	lexer = NULL;
+	while (cmd)
+	{
+		lexer = cmd->lexer;
+		while (lexer)
+		{
+			if (lexer->i == HEREDOC)
+				return (1);
+			lexer = lexer->next;
+		}
+		cmd = cmd->next;
+	}
+	return (0);
+}
+
+size_t	count_and_prep_dollars(const char **src, size_t *to_copy)
+{
+	const char	*p;
+	size_t		dollar_count;
+
+	p = *src;
+	dollar_count = 0;
+	while (*p == '$')
+	{
+		dollar_count++;
+		p++;
+	}
+	if (*p == '\'')
+	{
+		if (dollar_count % 2 == 1)
+			*to_copy = dollar_count - 1;
+		else
+			*to_copy = dollar_count;
+		return (1);
+	}
+	return (0);
 }

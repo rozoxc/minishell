@@ -153,6 +153,14 @@ void	get_env(t_env **env, char *str);
 int		check_fond(char *str);
 void	shell_level(t_obj *obj);
 int		check_equal(char *str);
+int		is_heredoc(t_cmd *cmd);
+size_t	count_and_prep_dollars(const char **src, size_t *to_copy);
+void	process_characters(const char **src, char **dst);
+char	*remove_all_quotes(const char *s);
+size_t	handle_dollars(const char **src, char **dst);
+void	copy_content(const char **src, char **dst, \
+	const char *p, size_t to_copy);
+char	*ft_expand(t_obj *obj, char *str);
 //signals
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
