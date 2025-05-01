@@ -17,9 +17,10 @@ void	shell_level(t_obj *obj)
 	char	*shell_level;
 	char	*new_level;
 	char	*str;
-	int	level;
+	int		level;
 
-	shell_level = getenv("SHLVL"); if (shell_level == NULL)
+	shell_level = getenv("SHLVL");
+	if (shell_level == NULL)
 		level = 1;
 	else
 		level = ft_atoi(shell_level) + 1;

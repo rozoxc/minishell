@@ -44,7 +44,7 @@ int	syntax(t_token *token)
 			printf("bash: syntax error near unexpected token `|'\n");
 		else if (i == -3)
 			printf("bash: syntax error near unexpected token `newline'\n");
-	else if (i == -4)
+		else if (i == -4)
 			printf("bash: syntax error near unexpected token `>>'\n");
 		return (FAILURE);
 	}

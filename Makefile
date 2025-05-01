@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -fsanitize=address
 LIBFT_DIR = libft
 LIBFT_LIB = libft/libft.a
 HEADER = includes/minishell.h libft/libft.h
@@ -10,6 +10,9 @@ SRC = parsing/create_list.c \
       parsing/parsing.c \
       parsing/syntax.c \
       parsing/shell_level.c \
+      parsing/expand_utlis.c \
+      parsing/expand_utlis_2.c \
+      parsing/expand_utlis_3.c \
       execute/error_handle.c \
       execute/execute_utilis.c \
       execute/execute.c \

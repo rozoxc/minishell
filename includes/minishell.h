@@ -166,4 +166,17 @@ void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
 void	signal_handler(void);
 void	hide_ctrl_characters(void);
+
+//expand utlis 
+char	*no_quotes(t_obj *obj, char **argv, int *i, int *j);
+char	*do_quotes(t_obj *obj, char **argv, int *i, int *j);
+char	*si_quotes(char **argv, int *i);
+t_token	*create_token(char *str);
+char	*get_special_value(t_obj *obj, char *str);
+void	process_quotes(t_obj *obj, t_token *token, char **argv, int *ij);
+void	process_token(t_obj *obj, t_token *token, int *j);
+void	handle_special_tokens(t_token **token_ptr);
+void	split_expanded(t_token *token);
+char	*handle_special_chars(t_obj *obj, char *str);
+char	*lookup_env_value(t_obj *obj, char *str);
 #endif
