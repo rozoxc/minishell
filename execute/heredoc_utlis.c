@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:45:03 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/30 10:54:57 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/01 15:54:35 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ size_t	handle_dollars(const char **src, char **dst)
 	return (1);
 }
 
+void	process_characters(const char **src, char **dst)
+{
+	if (**src != '\'' && **src != '"')
+	{
+		*(*dst) = **src;
+		(*dst)++;
+		(*src)++;
+	}
+	else
+		(*src)++;
+}
+
 char	*remove_all_quotes(const char *s)
 {
 	size_t		len;
@@ -74,18 +86,6 @@ char	*remove_all_quotes(const char *s)
 	}
 	*dst = '\0';
 	return (out);
-}
-
-void	process_characters(const char **src, char **dst)
-{
-	if (**src != '\'' && **src != '"')
-	{
-		*(*dst) = **src;
-		(*dst)++;
-		(*src)++;
-	}
-	else
-		(*src)++;
 }
 
 char	*ft_expand(t_obj *obj, char *str)

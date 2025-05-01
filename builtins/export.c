@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:13:28 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/30 17:49:37 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/01 15:23:08 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,12 @@ int	print_envs(t_obj *obj)
 		if (current->value)
 		{
 			ft_putstr_fd("declare -x ", STDOUT_FILENO);
-			
-			// Find the equals sign position
 			i = 0;
 			while (current->value[i] && current->value[i] != '=')
 				i++;
-			
-			// Print the variable name
 			name = ft_substr(current->value, 0, i);
 			ft_putstr_fd(name, STDOUT_FILENO);
 			free(name);
-			
-			// If there's a value, print it with quotes
 			if (current->value[i] == '=')
 			{
 				ft_putstr_fd("=\"", STDOUT_FILENO);
@@ -50,7 +44,6 @@ int	print_envs(t_obj *obj)
 				free(value);
 				ft_putstr_fd("\"", STDOUT_FILENO);
 			}
-			
 			ft_putstr_fd("\n", STDOUT_FILENO);
 		}
 		current = current->next;
@@ -69,8 +62,13 @@ int	ft_export(char **av, t_obj *obj)
 	{
 		while (av[i])
 		{
+			if (!(ft_strchr(av[i], '=')) && av[i + 1] && av[i + 1][0] == '=')
+			{
+				ft_putstr_fd("export: not a valid identifier: ", STDERR_FILENO);
+				ft_putendl_fd(av[i + 1], STDERR_FILENO);
+				return (FAILURE);
+			}
 			fond = check_fond(av[i]);
-			fond = 2;
 			if (fond == -1)
 			{
 				ft_putstr_fd("export: not a valid identifier: ", STDERR_FILENO);

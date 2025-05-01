@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:22:24 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/29 21:14:17 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/01 15:26:14 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ int	check_fond(char *str)
 	int	i;
 
 	i = 0;
+	if (str[0] == '=')
+		return (-1);
+	if (str[0] == '+')
+		return (-1);
 	while (str[i] && str[i] != '=')
 	{
 		if (str[i] == ' ' || str[i] == '?')
