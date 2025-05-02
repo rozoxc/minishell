@@ -86,6 +86,8 @@ int	main(int args, char **argv, char **env)
 	shell_level(&obj);
 	while (1)
 	{
+		if (!isatty(0) || !isatty(1))
+			return (0);
 		signal_handler();
 		hide_ctrl_characters();
 		obj.str = readline("minishell-1.0$~ ");
