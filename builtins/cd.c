@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/27 18:37:15 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/03 18:38:13 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,10 @@ void	update_env(t_obj *obj)
 	free(oldpwd);
 }
 
-void	swap_path(char **s1, char **s2)
+void	update_oldpwd(char **s1, char **s2)
 {
-	char	*tmp;
-
-	tmp = ft_strdup(*s1);
 	free(*s1);
 	*s1 = ft_strdup(*s2);
-	free(*s2);
-	*s2 = ft_strdup(tmp);
-	free(tmp);
 }
 
 int	ft_chdir(char *path)
@@ -49,22 +43,67 @@ int	ft_chdir(char *path)
 	return (SUCCESS);
 }
 
+int	cd_no_av(t_obj *obj)
+{
+	char	*pwd;
+	char	old_pwd[PATH_MAX];
+
+	pwd = ft_getenv(obj->env, "HOME");
+	if (!pwd)
+		return(ft_putstr_fd("cd: HOME not set\n", 2), FAILURE);
+	if (!getcwd(old_pwd, PATH_MAX))
+		return(FAILURE);
+	if (chdir(pwd) != 0)
+		return (FAILURE);
+	obj->tool.pwd = pwd;
+	return (SUCCESS);
+}
+
 int	ft_cd(char **av, t_obj *obj)
 {
 	char	pwd[PATH_MAX];
+	int		i;
 
-	if (av[1] == NULL)
-		return (SUCCESS);
-	else if (av[2] != NULL)
+	i = 0;
+	while (av[i])
+		i++;
+	if (i >= 2)
 	{
-		printf("cd: no such file or derectory: %s\n", av[1]);
-		return (FAILURE);
-	}
-	if (ft_strcmp(av[1], "-") == 0)
-	{
-		if (ft_chdir(obj->tool.oldpwd) == FAILURE)
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 			return (FAILURE);
-		swap_path(&obj->tool.oldpwd, &obj->tool.pwd);
+	}
+	if (!getcwd(pwd, PATH_MAX))
+	{
+		if (!ft_strcmp("..", av[1]))
+		{
+			update_oldpwd(&obj->tool.oldpwd, &obj->tool.pwd);
+			obj->tool.pwd = ft_strjoin2(obj->tool.pwd, "/..", 1);
+		}
+		else if (!ft_strcmp(".", av[1]))
+		{
+			update_oldpwd(&obj->tool.oldpwd, &obj->tool.pwd);
+			obj->tool.pwd = ft_strjoin2(obj->tool.pwd, "/.", 1);
+		}
+		ft_chdir(av[1]);
+		if (getcwd(pwd, PATH_MAX))
+		{
+			free(obj->tool.pwd);
+			obj->tool.pwd = NULL;
+			obj->tool.pwd = ft_strdup(pwd);
+		}
+		ft_putstr_fd("cd :error\n", 2);
+	}
+	if (!av[1])
+	{
+		if (cd_no_av(obj) == FAILURE)
+			return (FAILURE);
+	}
+	else if (chdir(av[1]) != 0)
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(av[1], 2);
+		ft_putstr_fd(": no such file or directory\n", 2);
+		return (FAILURE);
 	}
 	else
 	{

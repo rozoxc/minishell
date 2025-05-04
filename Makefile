@@ -20,7 +20,8 @@ SRC = parsing/create_list.c \
 	execute/execute.c \
 	execute/find_path.c \
 	execute/heredoc.c \
-	execute/heredoc_utlis.c \
+	execute/heredoc_utlis0_1.c \
+	execute/heredoc_utlis1_1.c \
 	execute/set_redirections.c \
 	execute/utlis1_0.c \
 	execute/utlis1_1.c \

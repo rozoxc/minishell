@@ -25,6 +25,8 @@
 # include <signal.h>
 # include <termios.h>
 # include "../libft/libft.h"
+# include <errno.h>
+# include <sys/stat.h>
 
 # define SUCCESS 0
 # define FAILURE -1
@@ -112,7 +114,8 @@ int		ft_heredoc(t_obj *obj);
 int		set_redirections(t_cmd *cmd);
 char	**ft_split_simple(char const *str, char charset);
 void	cleanup_execution(t_obj *obj, int std_in, int std_out, char **env);
-
+int		handle_double_quote(const char *str, int *i, char *res, int *pos);
+int		handle_single_quote(const char *str, int *i, char *res, int *pos);
 // parsing utlis function
 int		parsing(t_obj *obj);
 t_cmd	*create_list(t_token *token);
@@ -130,7 +133,7 @@ void	append_argv(t_cmd **cmd, t_lexer *lexer, char **argv);
 int		ft_export(char	**av, t_obj *obj);
 int		ft_echo(char	**arg, t_obj *obj);
 int		ft_env(t_obj	*obj);
-int		ft_pwd(char		**argv, t_obj *obj);
+int		ft_pwd(t_env *env);
 int		ft_exit(char	**args);
 int		ft_unset(char	**args, t_obj *obj);
 int		ft_cd(char		**args, t_obj *obj);
@@ -161,6 +164,7 @@ size_t	handle_dollars(const char **src, char **dst);
 void	copy_content(const char **src, char **dst, \
 	const char *p, size_t to_copy);
 char	*ft_expand(t_obj *obj, char *str);
+char	*ft_getenv(t_env *env, char *key);
 //signals
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);

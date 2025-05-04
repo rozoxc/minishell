@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_utlis.c                                    :+:      :+:    :+:   */
+/*   heredoc_utlis0_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:45:03 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/02 10:38:15 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/03 11:40:42 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,61 +64,31 @@ void	process_characters(const char **src, char **dst)
 
 char	*remove_all_quotes(const char *input)
 {
-    if (!input || !*input) {
-        return strdup("");
-    }
-    int len = strlen(input);
-    char* work = strdup(input);
-    if (!work)
-		return NULL;
-    char* result = malloc(len + 1);
-    if (!result) {
-        free(work);
-        return NULL;
-    }
-    int result_pos = 0;
-    for (int i = 0; i < len; i++)
+	char	*result;
+	int		pos;
+	int		i;
+	int		len;
+
+	if (!input || !*input)
+		return (strdup(""));
+	len = strlen(input);
+	result = malloc(len + 1);
+	if (!result)
+		return (NULL);
+	pos = 0;
+	i = 0;
+	while (i < len)
 	{
-        if (work[i] == '\'')
-		{
-            int end = i + 1;
-            while (end < len && work[end] != '\'')
-			{
-                end++;
-            }
-            if (end < len)
-			{
-                for (int j = i + 1; j < end; j++)
-				{
-                    result[result_pos++] = work[j];
-                }
-                i = end;
-            }
-			else
-                result[result_pos++] = work[i];
-        }
-        else if (work[i] == '"')
-		{
-            int end = i + 1;
-            while (end < len && work[end] != '"')
-                end++;
-            if (end < len)
-			{
-                for (int j = i + 1; j < end; j++)
-				{
-                    result[result_pos++] = work[j];
-                }
-                i = end;
-            }
-			else
-                result[result_pos++] = work[i];
-        }
-        else
-            result[result_pos++] = work[i];
-    }
-    result[result_pos] = '\0';
-    free(work);
-    return result;
+		if (input[i] == '\'')
+			handle_single_quote(input, &i, result, &pos);
+		else if (input[i] == '"')
+			handle_double_quote(input, &i, result, &pos);
+		else
+			result[pos++] = input[i];
+		i++;
+	}
+	result[pos] = '\0';
+	return (result);
 }
 
 char	*ft_expand(t_obj *obj, char *str)

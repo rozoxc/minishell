@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/30 12:42:51 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/04 10:53:52 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	child_process_execution(t_obj *obj, char *path, \
 		t_cmd *cur_cmd, char **env)
 {
+	struct stat fs;
+
 	if (cur_cmd->argv[0][0] == '.' && cur_cmd->argv[0][1] == '/' )
 		path = ft_strdup(cur_cmd->argv[0]);
 	else if (cur_cmd->argv[0][0] == '/')
@@ -30,11 +32,42 @@ void	child_process_execution(t_obj *obj, char *path, \
 	}
 	if (cur_cmd->argv[0][0] == '\0')
 		exit(determine_exit_code(obj, 0));
-	execve(path, cur_cmd->argv, env);
-	determine_exit_code(obj, 130);
-	perror("execve err");
-	free(path);
-	exit(determine_exit_code(obj, 126));
+	if (execve(path, cur_cmd->argv, env) == -1)
+	{
+		if (errno == ENOENT)
+		{
+			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd(cur_cmd->argv[0], 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
+			free(path);
+			exit(determine_exit_code(obj, 127));
+		} 
+		else if (errno == ENOEXEC)
+		{
+			if (stat(cur_cmd->argv[0], &fs) == 0)
+			{
+				char *sh_args[] = {"/bin/sh", path, NULL};
+            	execve("/bin/sh", sh_args, env);
+				ft_putstr_fd("bash: ", 2);
+				ft_putstr_fd(cur_cmd->argv[0], 2);
+				ft_putstr_fd(": Is a directory\n", 2);
+			}
+			else
+			{
+				ft_putstr_fd("bash: ", 2);
+				ft_putstr_fd(cur_cmd->argv[0], 2);
+				ft_putstr_fd(": Permission denied\n", 2);
+			}
+			free(path);
+			exit(determine_exit_code(obj, 126));
+		}
+		else
+		{
+			perror("bash");
+			free(path);
+			exit(determine_exit_code(obj, 126));
+		}
+	}
 }
 
 void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
