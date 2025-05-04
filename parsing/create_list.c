@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:20:04 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/04 22:31:44 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/04 22:50:58 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_cmd	*creat_list_loop(t_token *token, t_cmd *cmd, \
 			t_lexer *lexer, char **argv)
 {
 	int	i;
+	int fd;
 
 	while (token)
 	{
@@ -60,7 +61,11 @@ t_cmd	*creat_list_loop(t_token *token, t_cmd *cmd, \
 				ft_redirection(&lexer, &token);
 			token = token->next;
 			if (token && token->type == ARG && argv[0] == NULL)
+			{
+				fd = open(token->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
+				close(fd);
 				token = token->next;
+			}
 			if (token && token->type == PIPE && argv[0] == NULL)
 				token = token->next;
 		}

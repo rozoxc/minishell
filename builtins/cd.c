@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/04 22:36:31 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/04 22:51:18 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	cd_no_av(t_obj *obj)
 int	ft_cd(char **av, t_obj *obj)
 {
 	char	pwd[PATH_MAX];
-	int		i;
 
 	if (av[2])
 	{
