@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:13:28 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/04 10:55:18 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/04 12:44:49 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	ft_export(char **av, t_obj *obj)
 	fond = 0;
 	if (av[1])
 	{
-		printf("-->%s<--\n", av[i]);
 		while (av[i])
 		{
 			if (!(ft_strchr(av[i], '=')) && av[i + 1] && av[i + 1][0] == '=')

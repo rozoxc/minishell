@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:20:04 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/29 20:05:22 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/04 22:31:44 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,13 @@ t_cmd	*creat_list_loop(t_token *token, t_cmd *cmd, \
 		{
 			if (token && token->type <= 3)
 				argv[i++] = ft_strdup(token->str);
-			else if (token && token->type > 3)
+			else if ((token && token->type > 3 && argv[0] != NULL) || (token && token->type == HEREDOC))
 				ft_redirection(&lexer, &token);
 			token = token->next;
+			if (token && token->type == ARG && argv[0] == NULL)
+				token = token->next;
+			if (token && token->type == PIPE && argv[0] == NULL)
+				token = token->next;
 		}
 		append_argv(&cmd, lexer, argv);
 		if (token)

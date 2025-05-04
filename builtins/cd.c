@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/03 18:38:13 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/04 22:36:31 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	cd_no_av(t_obj *obj)
 		return(ft_putstr_fd("cd: HOME not set\n", 2), FAILURE);
 	if (!getcwd(old_pwd, PATH_MAX))
 		return(FAILURE);
-	if (chdir(pwd) != 0)
+	if (ft_chdir(pwd) != 0)
 		return (FAILURE);
 	obj->tool.pwd = pwd;
 	return (SUCCESS);
@@ -64,10 +64,7 @@ int	ft_cd(char **av, t_obj *obj)
 	char	pwd[PATH_MAX];
 	int		i;
 
-	i = 0;
-	while (av[i])
-		i++;
-	if (i >= 2)
+	if (av[2])
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 			return (FAILURE);
@@ -91,24 +88,16 @@ int	ft_cd(char **av, t_obj *obj)
 			obj->tool.pwd = NULL;
 			obj->tool.pwd = ft_strdup(pwd);
 		}
-		ft_putstr_fd("cd :error\n", 2);
+		ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
 	}
-	if (!av[1])
+	else if (!av[1])
 	{
 		if (cd_no_av(obj) == FAILURE)
 			return (FAILURE);
 	}
-	else if (chdir(av[1]) != 0)
-	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(av[1], 2);
-		ft_putstr_fd(": no such file or directory\n", 2);
-		return (FAILURE);
-	}
 	else
 	{
-		if (ft_chdir(av[1]) == FAILURE)
-			return (FAILURE);
+		ft_chdir(av[1]);
 		free(obj->tool.oldpwd);
 		obj->tool.oldpwd = ft_strdup(obj->tool.pwd);
 		free(obj->tool.pwd);

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/01 15:40:21 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/04 12:06:44 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	*ft_run(t_obj *obj, char *stop, int n)
 	file = ft_strjoin2(".f", ft_itoa(n), 3);
 	fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	process_input(obj, s, fd, stop);
+	close(fd);
 	return (file);
 }
 
