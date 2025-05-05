@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 12:04:37 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/04 21:37:58 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/05 10:52:51 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,9 @@ int	parsing(t_obj *obj)
 		return (determine_exit_code(obj, SYNTAX_ERRROR));
 	}
 	expand(obj);
-	obj->cmd = create_list(obj->token);
+	obj->cmd = create_list(obj);
 	free_token(&obj->token);
-	return (determine_exit_code(obj, SUCCESS));
+	if (obj->cmd != NULL)
+		return (determine_exit_code(obj, SUCCESS));
+	return (determine_exit_code(obj, FAILURE));
 }

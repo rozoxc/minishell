@@ -29,7 +29,7 @@
 # include <sys/stat.h>
 
 # define SUCCESS 0
-# define FAILURE -1
+# define FAILURE 1
 # define Q_ERROR 127
 # define SYNTAX_ERRROR 2
 
@@ -118,7 +118,7 @@ int		handle_double_quote(const char *str, int *i, char *res, int *pos);
 int		handle_single_quote(const char *str, int *i, char *res, int *pos);
 // parsing utlis function
 int		parsing(t_obj *obj);
-t_cmd	*create_list(t_token *token);
+t_cmd	*create_list(t_obj *obj);
 int		alloc_mem(char *str);
 void	append_token(t_token **token, char *str);
 void	skip_space(char **str);
@@ -183,4 +183,5 @@ void	handle_special_tokens(t_token **token_ptr);
 void	split_expanded(t_token *token);
 char	*handle_special_chars(t_obj *obj, char *str);
 char	*lookup_env_value(t_obj *obj, char *str);
+
 #endif

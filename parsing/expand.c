@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/01 16:13:00 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/04 23:39:36 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	should_split_token(t_token *token)
 	return (1);
 }
 
-/* Create new tokens from parts and attach to list */
 void	create_new_tokens(t_token *token, char **parts)
 {
 	t_token	*curr;

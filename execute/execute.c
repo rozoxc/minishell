@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/04 21:52:48 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/05 12:00:07 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
 		close(fd_pipe[0]);
 	}
 	if (set_redirections(cur_cmd) == Q_ERROR)
-		exit(determine_exit_code(obj, Q_ERROR));
+		exit(determine_exit_code(obj, 1));
 	if (cur_cmd->argv[0] && check_build(cur_cmd->argv[0]))
 		run_build(obj, cur_cmd->argv);
 	else
@@ -150,7 +150,7 @@ int	execute(t_obj *obj)
 		cur_cmd->next == NULL)
 	{
 		if (set_redirections(cur_cmd) == Q_ERROR)
-			return (determine_exit_code(obj, Q_ERROR), Q_ERROR);
+			return (determine_exit_code(obj, 1), 1);
 		run_build(obj, cur_cmd->argv);
 	}
 	else if (cur_cmd && cur_cmd->argv[0])
