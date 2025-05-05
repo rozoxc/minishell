@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/04 23:39:36 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/05 16:49:56 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	should_split_token(t_token *token)
 {
-	if (ft_strchr(token->str, '='))
-		return (0);
 	if (!(ft_strchr(token->str, ' ')))
 		return (0);
 	if (!token->str)
