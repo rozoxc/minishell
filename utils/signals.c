@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:00:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/06 16:10:32 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/06 20:59:56 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ void	hide_ctrl_characters(void)
 
 void	sigint_handler(int sig)
 {
-	(void)sig;
+	get_signal = sig;
+	if (waitpid(-1, &sig, WNOHANG) == 0)
+        return ;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -32,7 +34,7 @@ void	sigint_handler(int sig)
 
 void	sigquit_handler(int sig)
 {
-	(void)sig;
+	get_signal = sig;
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();

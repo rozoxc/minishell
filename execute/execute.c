@@ -6,68 +6,87 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/05 12:00:07 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/06 16:51:43 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	child_process_execution(t_obj *obj, char *path, \
-		t_cmd *cur_cmd, char **env)
+char	*get_command_path(t_obj *obj, char *cmd)
 {
-	struct stat fs;
+	char *path;
 
-	if (cur_cmd->argv[0][0] == '.' && cur_cmd->argv[0][1] == '/' )
-		path = ft_strdup(cur_cmd->argv[0]);
-	else if (cur_cmd->argv[0][0] == '/')
-		path = ft_strdup(cur_cmd->argv[0]);
+	if (cmd[0] == '.' && cmd[1] == '/')
+		path = ft_strdup(cmd);
+	else if (cmd[0] == '/')
+		path = ft_strdup(cmd);
 	else
 	{
-		path = get_path(obj, cur_cmd->argv[0]);
+		path = get_path(obj, cmd);
 		if (path == NULL)
 		{
 			perror("command not found");
 			exit(determine_exit_code(obj, 127));
 		}
 	}
-	if (cur_cmd->argv[0][0] == '\0')
+	if (cmd[0] == '\0')
 		exit(determine_exit_code(obj, 0));
-	if (execve(path, cur_cmd->argv, env) == -1)
+	return (path);
+}
+
+void handle_no_file_error(t_obj *obj, char *cmd_name, char *path)
+{
+    ft_putstr_fd("minishell: ", 2);
+    ft_putstr_fd(cmd_name, 2);
+    ft_putstr_fd(": No such file or directory\n", 2);
+    free(path);
+    exit(determine_exit_code(obj, 127));
+}
+
+void	handle_exec_format_error(t_obj *obj, char *cmd_name, char *path, char **env)
+{
+	struct stat	fs;
+	char		*sh_args[3];
+
+	if (errno == ENOEXEC)
 	{
-		if (errno == ENOENT)
+		if (stat(cmd_name, &fs) == 0)
 		{
-			ft_putstr_fd("bash: ", 2);
-			ft_putstr_fd(cur_cmd->argv[0], 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
-			free(path);
-			exit(determine_exit_code(obj, 127));
-		} 
-		else if (errno == ENOEXEC)
-		{
-			if (stat(cur_cmd->argv[0], &fs) == 0)
-			{
-				char *sh_args[] = {"/bin/sh", path, NULL};
-            	execve("/bin/sh", sh_args, env);
-				ft_putstr_fd("bash: ", 2);
-				ft_putstr_fd(cur_cmd->argv[0], 2);
-				ft_putstr_fd(": Is a directory\n", 2);
-			}
-			else
-			{
-				ft_putstr_fd("bash: ", 2);
-				ft_putstr_fd(cur_cmd->argv[0], 2);
-				ft_putstr_fd(": Permission denied\n", 2);
-			}
-			free(path);
-			exit(determine_exit_code(obj, 126));
+			sh_args[0] = "/bin/sh";
+			sh_args[1] = path;
+			sh_args[2] = NULL;
+			execve("/bin/sh", sh_args, env);
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd_name, 2);
+			ft_putstr_fd(": Is a directory\n", 2);
 		}
 		else
 		{
-			perror("bash");
-			free(path);
-			exit(determine_exit_code(obj, 126));
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd_name, 2);
+			ft_putstr_fd(": Permission denied\n", 2);
 		}
 	}
+	else
+		perror("minishell: ");
+	free(path);
+	exit(determine_exit_code(obj, 126));
+}
+
+
+void handle_execution_error(t_obj *obj, char *cmd_name, char *path, char **env)
+{
+    if (errno == ENOENT)
+        handle_no_file_error(obj, cmd_name, path);
+    else
+        handle_exec_format_error(obj, cmd_name, path, env);
+}
+
+void child_process_execution(t_obj *obj, char *path, t_cmd *cur_cmd, char **env)
+{
+	path = get_command_path(obj, cur_cmd->argv[0]);
+	if (execve(path, cur_cmd->argv, env) == -1)
+		handle_execution_error(obj, cur_cmd->argv[0], path, env);
 }
 
 void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)

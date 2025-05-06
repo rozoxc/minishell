@@ -42,6 +42,8 @@
 # define HEREDOC 7 // <<
 # define PIPE 8 // |
 
+int get_signal;
+
 typedef struct s_token
 {
 	char			*str;
