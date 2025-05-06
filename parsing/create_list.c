@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:20:04 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/05 11:34:05 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/06 11:39:59 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,57 +39,54 @@ void	ft_redirection(t_lexer **lexer, t_token **token)
 	}
 }
 
-t_cmd	*creat_list_loop(t_obj *obj, t_cmd *cmd, \
+t_cmd	*creat_list_loop(t_token *token, t_cmd *cmd, \
 			t_lexer *lexer, char **argv)
 {
 	int	i;
 	int fd;
 
-	while (obj->token)
+	while (token)
 	{
 		lexer = NULL;
-		argv = (char **)malloc(sizeof(char *) * (argv_len(obj->token) + 1));
+		argv = (char **)malloc(sizeof(char *) * (argv_len(token) + 1));
 		if (!argv)
 			return (NULL);
-		argv[argv_len(obj->token)] = NULL;
+		argv[argv_len(token)] = NULL;
 		i = 0;
-		while (obj->token && obj->token->type != PIPE)
+		while (token && token->type != PIPE)
 		{
-			if (obj->token && obj->token->type <= 3)
-				argv[i++] = ft_strdup(obj->token->str);
-			else if ((obj->token && obj->token->type > 3 && argv[0] != NULL) || (obj->token && obj->token->type == HEREDOC))
-				ft_redirection(&lexer, &obj->token);
-			obj->token = obj->token->next;
-			if (obj->token && obj->token->type == ARG && argv[0] == NULL)
+			if (token && token->type <= 3)
+				argv[i++] = ft_strdup(token->str);
+			else if ((token && token->type > 3 && argv[0] != NULL) || (token && token->type == HEREDOC))
+				ft_redirection(&lexer, &token);
+			token = token->next;
+			if (token && token->type == ARG && argv[0] == NULL)
 			{
-				if (obj->token->str[0] == '\0' && (!ft_strchr(++obj->token->str, '"') && !ft_strchr(obj->token->str, '\'')))
+				if (token->str[0] == '\0' && (!ft_strchr(++token->str, '"') && !ft_strchr(token->str, '\'')))
 				{
 					ft_putstr_fd("minishell: ", 2);
-					ft_putstr_fd(obj->token->str, 2);
-					obj->token->str--;
+					ft_putstr_fd(token->str, 2);
+					token->str--;
 					ft_putstr_fd(": ambiguous redirect\n", 2);
-					determine_exit_code(obj, 1);
-					return (NULL);
+					continue;
 				}
-				obj->token->str--;
-				if (obj->token->str[0] == '\0' && (ft_strchr(++obj->token->str, '"') || ft_strchr(obj->token->str, '\'')))
+				token->str--;
+				if (token->str[0] == '\0' && (ft_strchr(++token->str, '"') || ft_strchr(token->str, '\'')))
 				{
-					obj->token->str--;
+					token->str--;
 					ft_putstr_fd("minishell: : No such file or directory\n", 2);
-					determine_exit_code(obj, 1);
-					return (NULL);
+					continue;
 				}
-				obj->token->str--;
-				fd = open(obj->token->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
+				fd = open(token->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
 				close(fd);
-				obj->token = obj->token->next;
+				token = token->next;
 			}
-			if (obj->token && obj->token->type == PIPE && argv[0] == NULL)
-				obj->token = obj->token->next;
+			if (token && token->type == PIPE && argv[0] == NULL)
+				token = token->next;
 		}
 		append_argv(&cmd, lexer, argv);
-		if (obj->token)
-			obj->token = obj->token->next;
+		if (token)
+			token = token->next;
 	}
 	return (cmd);
 }
@@ -103,5 +100,5 @@ t_cmd	*create_list(t_obj *obj)
 	cmd = NULL;
 	lexer = NULL;
 	argv = NULL;
-	return (creat_list_loop(obj, cmd, lexer, argv));
+	return (creat_list_loop(obj->token, cmd, lexer, argv));
 }
