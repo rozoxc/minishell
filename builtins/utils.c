@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:22:24 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/05 16:40:32 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/06 13:58:19 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	add_env(char *str, t_env **env)
 		if ((ft_strncmp(str, tmp_env->value, check_fond(str)) == 0 \
 			&& ft_strncmp(tmp_env->value, str, fond) == 0))
 		{
-			if (!ft_strchr(tmp_env->value, '='))
+			if (ft_strchr(tmp_env->value, '='))
 			{
 				free(tmp_env->value);
 				tmp_env->value = NULL;
