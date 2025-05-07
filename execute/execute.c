@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/07 16:28:26 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/07 23:09:10 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int	execute(t_obj *obj)
 	std_out = dup_error(obj, dup(STDOUT_FILENO));
 	cur_cmd = obj->cmd;
 	if (ft_heredoc(obj) == FAILURE)
-		return (1);
+		return (determine_exit_code(obj, 1), 1);
 	if (cur_cmd && cur_cmd->argv[0] && check_build(cur_cmd->argv[0]) && \
 		cur_cmd->next == NULL)
 	{

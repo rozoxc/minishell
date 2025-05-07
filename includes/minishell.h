@@ -172,7 +172,7 @@ void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
 void	signal_handler(void);
 void	hide_ctrl_characters(void);
-
+void	heredoc_signal(int sig);
 //expand utlis 
 char	*no_quotes(t_obj *obj, char **argv, int *i, int *j);
 char	*do_quotes(t_obj *obj, char **argv, int *i, int *j);
@@ -185,5 +185,6 @@ void	handle_special_tokens(t_token **token_ptr);
 void	split_expanded(t_token *token);
 char	*handle_special_chars(t_obj *obj, char *str);
 char	*lookup_env_value(t_obj *obj, char *str);
-
+void	write_input_line(t_obj *obj, char *str, int fd, char *stop);
+void	process_child(t_obj *obj, char *s, int fd, char *stop);
 #endif

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:00:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/06 20:59:56 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/08 00:32:44 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@ void	hide_ctrl_characters(void)
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+void heredoc_signal(int sig)
+{
+	(void)sig;
+	get_signal = 1;
+	write(1, "\n", 1);
+	exit(1);
 }
 
 void	sigint_handler(int sig)
