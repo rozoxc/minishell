@@ -8,6 +8,7 @@ HEADER = includes/minishell.h
 ALL_HEADERS = $(HEADER) $(LIBFT_HEADER)
 
 SRC = parsing/create_list.c \
+	parsing/creat_list_utlis.c \
 	parsing/expand.c \
 	parsing/parsing.c \
 	parsing/syntax.c \
@@ -34,6 +35,8 @@ SRC = parsing/create_list.c \
 	builtins/export.c \
 	builtins/utils.c \
 	builtins/unset.c \
+	builtins/cd_utlis.c \
+	builtins/export_utlis.c \
 	utils/append.c \
 	utils/utils.c \
 	utils/free_mem.c \

@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:13:28 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/06 14:50:22 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/07 23:07:20 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/* Print all environment variables */
 int	print_envs(t_obj *obj)
 {
 	t_env	*current;
-	int		i;
-	char	*name;
-	char	*value;
 
 	if (!obj)
 	{
@@ -27,61 +25,67 @@ int	print_envs(t_obj *obj)
 	current = obj->env;
 	while (current != NULL)
 	{
-		if (current->value)
-		{
-			ft_putstr_fd("declare -x ", STDOUT_FILENO);
-			i = 0;
-			while (current->value[i] && current->value[i] != '=')
-				i++;
-			name = ft_substr(current->value, 0, i);
-			ft_putstr_fd(name, STDOUT_FILENO);
-			free(name);
-			if (current->value[i] == '=')
-			{
-				ft_putstr_fd("=\"", STDOUT_FILENO);
-				value = ft_substr(current->value, i + 1, ft_strlen(current->value) - i - 1);
-				ft_putstr_fd(value, STDOUT_FILENO);
-				free(value);
-				ft_putstr_fd("\"", STDOUT_FILENO);
-			}
-			ft_putstr_fd("\n", STDOUT_FILENO);
-		}
+		print_env_var(current);
 		current = current->next;
 	}
 	return (0);
 }
 
+/* Handle error messages for export command */
+void	export_error(char *arg)
+{
+	ft_putstr_fd("export: not a valid identifier: ", STDERR_FILENO);
+	ft_putendl_fd(arg, STDERR_FILENO);
+}
+
+/* Process a single export argument */
+int	process_export_arg(char *arg, t_obj *obj)
+{
+	int	fond;
+
+	fond = check_fond(arg);
+	if (fond == -1)
+	{
+		export_error(arg);
+		return (FAILURE);
+	}
+	else if (fond != 0)
+		add_env(arg, &obj->env);
+	return (SUCCESS);
+}
+
+/* Check for invalid export syntax */
+int	check_export_syntax(char **av, int i)
+{
+	if (!(ft_strchr(av[i], '=')) && av[i + 1] && av[i + 1][0] == '=')
+	{
+		export_error(av[i + 1]);
+		return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
+/* Main export function */
 int	ft_export(char **av, t_obj *obj)
 {
 	int	i;
-	int	fond;
 
 	i = 1;
-	fond = 0;
 	if (av[1])
 	{
 		while (av[i])
 		{
-			if (!(ft_strchr(av[i], '=')) && av[i + 1] && av[i + 1][0] == '=')
-			{
-				ft_putstr_fd("export: not a valid identifier: ", STDERR_FILENO);
-				ft_putendl_fd(av[i + 1], STDERR_FILENO);
+			if (check_export_syntax(av, i) == FAILURE)
 				return (FAILURE);
-			}
-			fond = check_fond(av[i]);
-			if (fond == -1)
-			{
-				ft_putstr_fd("export: not a valid identifier: ", STDERR_FILENO);
-				ft_putendl_fd(av[i], STDERR_FILENO);
+			if (process_export_arg(av[i], obj) == FAILURE)
 				return (FAILURE);
-			}
-			else if (fond != 0)
-				add_env(av[i], &obj->env);
 			i++;
 		}
 	}
 	else
+	{
 		if (print_envs(obj))
 			return (FAILURE);
+	}
 	return (SUCCESS);
 }

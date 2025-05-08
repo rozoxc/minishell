@@ -15,7 +15,7 @@
 int	check_fond(char *str)
 {
 	int	i;
-	int count;
+	int	count;
 
 	i = 0;
 	count = 0;

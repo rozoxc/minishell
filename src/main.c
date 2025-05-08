@@ -102,7 +102,8 @@ int	main(int args, char **argv, char **env)
 			exit(0);
 		}
 		parsing(&obj);
-		add_history(obj.str);
+		if(*obj.str)
+			add_history(obj.str);
 		execute(&obj);
 		free(obj.str);
 		free_cmd(&obj.cmd);

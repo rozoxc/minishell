@@ -187,4 +187,18 @@ char	*handle_special_chars(t_obj *obj, char *str);
 char	*lookup_env_value(t_obj *obj, char *str);
 void	write_input_line(t_obj *obj, char *str, int fd, char *stop);
 void	process_child(t_obj *obj, char *s, int fd, char *stop);
+// cd utlis
+void	update_env(t_obj *obj);
+void	update_oldpwd(char **s1, char **s2);
+// export utlis
+void	print_env_var(t_env *current);
+void	print_env_name(char *env_value);
+void	print_env_value(char *env_value, int i);
+
+// creat list utlis
+int		argv_len(t_token *token);
+void	ft_redirection(t_lexer **lexer, t_token **token);
+void	handle_file_open(t_token *token);
+void	handle_ambiguous_redirect(t_token *token);
+void	handle_no_such_file(void);
 #endif

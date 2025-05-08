@@ -3,48 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   create_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:20:04 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/06 11:39:59 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/07 22:34:43 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	argv_len(t_token *token)
+/* Function to process arguments and redirections */
+void	process_args_and_redirects(t_token **token,
+		char **argv, t_lexer **lexer, int *i)
 {
-	int	count;
-
-	count = 0;
-	while (token && token->type != PIPE)
-	{
-		if (token && token->type <= 3)
-		{
-			count++;
-		}
-		else if (token && token->type > 3)
-			token = token->next;
-		token = token->next;
-	}
-	return (count);
+	if (*token && (*token)->type <= 3)
+		argv[(*i)++] = ft_strdup((*token)->str);
+	else if ((*token && (*token)->type > 3 && argv[0] != NULL)
+		|| (*token && (*token)->type == HEREDOC))
+		ft_redirection(lexer, token);
 }
 
-void	ft_redirection(t_lexer **lexer, t_token **token)
+/* Function to handle special token cases */
+void	handle_special_token(t_token **token)
 {
-	if ((*token) && (*token)->next)
+	if ((*token)->str[0] == '\0' && (!ft_strchr(++(*token)->str, '"')
+			&& !ft_strchr((*token)->str, '\'')))
 	{
-		append_lexer(lexer, (*token)->next->str, (*token)->type);
-		(*token) = (*token)->next;
+		handle_ambiguous_redirect(*token);
+		return ;
 	}
+	(*token)->str--;
+	if ((*token)->str[0] == '\0' && (ft_strchr(++(*token)->str, '"')
+			|| ft_strchr((*token)->str, '\'')))
+	{
+		(*token)->str--;
+		handle_no_such_file();
+		return ;
+	}
+	handle_file_open(*token);
+	*token = (*token)->next;
 }
 
-t_cmd	*creat_list_loop(t_token *token, t_cmd *cmd, \
-			t_lexer *lexer, char **argv)
+/* Function to process each command segment */
+int	process_cmd_segment(t_token **token, char **argv, t_lexer **lexer)
 {
 	int	i;
-	int fd;
 
+	i = 0;
+	while (*token && (*token)->type != PIPE)
+	{
+		process_args_and_redirects(token, argv, lexer, &i);
+		*token = (*token)->next;
+		if (*token && (*token)->type == ARG && argv[0] == NULL)
+		{
+			handle_special_token(token);
+			continue ;
+		}
+		if (*token && (*token)->type == PIPE && argv[0] == NULL)
+			*token = (*token)->next;
+	}
+	return (1);
+}
+
+/* Main loop function for creating command list */
+t_cmd	*creat_list_loop(t_token *token, t_cmd *cmd, t_lexer *lexer
+		, char **argv)
+{
 	while (token)
 	{
 		lexer = NULL;
@@ -52,38 +76,8 @@ t_cmd	*creat_list_loop(t_token *token, t_cmd *cmd, \
 		if (!argv)
 			return (NULL);
 		argv[argv_len(token)] = NULL;
-		i = 0;
-		while (token && token->type != PIPE)
-		{
-			if (token && token->type <= 3)
-				argv[i++] = ft_strdup(token->str);
-			else if ((token && token->type > 3 && argv[0] != NULL) || (token && token->type == HEREDOC))
-				ft_redirection(&lexer, &token);
-			token = token->next;
-			if (token && token->type == ARG && argv[0] == NULL)
-			{
-				if (token->str[0] == '\0' && (!ft_strchr(++token->str, '"') && !ft_strchr(token->str, '\'')))
-				{
-					ft_putstr_fd("minishell: ", 2);
-					ft_putstr_fd(token->str, 2);
-					token->str--;
-					ft_putstr_fd(": ambiguous redirect\n", 2);
-					continue;
-				}
-				token->str--;
-				if (token->str[0] == '\0' && (ft_strchr(++token->str, '"') || ft_strchr(token->str, '\'')))
-				{
-					token->str--;
-					ft_putstr_fd("minishell: : No such file or directory\n", 2);
-					continue;
-				}
-				fd = open(token->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
-				close(fd);
-				token = token->next;
-			}
-			if (token && token->type == PIPE && argv[0] == NULL)
-				token = token->next;
-		}
+		if (!process_cmd_segment(&token, argv, &lexer))
+			continue ;
 		append_argv(&cmd, lexer, argv);
 		if (token)
 			token = token->next;
@@ -91,6 +85,7 @@ t_cmd	*creat_list_loop(t_token *token, t_cmd *cmd, \
 	return (cmd);
 }
 
+/* Function to create the command list */
 t_cmd	*create_list(t_obj *obj)
 {
 	t_cmd	*cmd;
