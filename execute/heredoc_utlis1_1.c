@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:38:10 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/08 00:33:50 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/08 16:15:25 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,20 @@ void	write_input_line(t_obj *obj, char *str, int fd, char *stop)
 	}
 }
 
-void process_child(t_obj *obj, char *s, int fd, char *stop)
+void	process_child(t_obj *obj, char *s, int fd, char *stop)
 {
-    char *str;
-    
-    signal(SIGINT, heredoc_signal);
-    while (1)
-    {
-        str = readline("> ");
-        if (str == NULL || ft_strcmp(str, s) == 0)
-        {
-            free(str);
-            close(fd);
-            free(s);
-            exit(0);
-        }
-        write_input_line(obj, str, fd, stop);
-    }
+	char	*str;
+
+	signal(SIGINT, heredoc_signal);
+	while (1)
+	{
+		str = readline("> ");
+		if (str == NULL || ft_strcmp(str, s) == 0)
+		{
+			close(fd);
+			free(s);
+			exit(0);
+		}
+		write_input_line(obj, str, fd, stop);
+	}
 }

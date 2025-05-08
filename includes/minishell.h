@@ -90,6 +90,7 @@ typedef struct s_obj
 	t_cmd	*cmd;
 	t_env	*env;
 	t_tool	tool;
+	int		status;
 	char	*str;
 	int		*pid;
 	int		exit_code;
@@ -187,6 +188,7 @@ char	*handle_special_chars(t_obj *obj, char *str);
 char	*lookup_env_value(t_obj *obj, char *str);
 void	write_input_line(t_obj *obj, char *str, int fd, char *stop);
 void	process_child(t_obj *obj, char *s, int fd, char *stop);
+void	adjust_dollars(char *s);
 // cd utlis
 void	update_env(t_obj *obj);
 void	update_oldpwd(char **s1, char **s2);
