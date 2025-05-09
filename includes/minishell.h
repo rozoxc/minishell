@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
-# include <limits.h>
+# include <linux/limits.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
@@ -42,7 +42,7 @@
 # define HEREDOC 7 // <<
 # define PIPE 8 // |
 
-int get_signal;
+extern int get_signal;
 
 typedef struct s_token
 {
@@ -163,7 +163,6 @@ int		is_heredoc(t_cmd *cmd);
 size_t	count_and_prep_dollars(const char **src, size_t *to_copy);
 void	process_characters(const char **src, char **dst);
 char	*remove_all_quotes(const char *s);
-size_t	handle_dollars(const char **src, char **dst);
 void	copy_content(const char **src, char **dst, \
 	const char *p, size_t to_copy);
 char	*ft_expand(t_obj *obj, char *str);
@@ -188,15 +187,15 @@ char	*handle_special_chars(t_obj *obj, char *str);
 char	*lookup_env_value(t_obj *obj, char *str);
 void	write_input_line(t_obj *obj, char *str, int fd, char *stop);
 void	process_child(t_obj *obj, char *s, int fd, char *stop);
-void	adjust_dollars(char *s);
-// cd utlis
-void	update_env(t_obj *obj);
-void	update_oldpwd(char **s1, char **s2);
-// export utlis
+char	*handle_dollar_quotes(char *input);
 void	print_env_var(t_env *current);
 void	print_env_name(char *env_value);
 void	print_env_value(char *env_value, int i);
-
+//fail execute
+void handle_execution_error(t_obj *obj, char *cmd_name, char *path, char **env);
+// cd utlis
+void	update_env(t_obj *obj);
+void	update_oldpwd(char **s1, char **s2);
 // creat list utlis
 int		argv_len(t_token *token);
 void	ft_redirection(t_lexer **lexer, t_token **token);

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/08 16:14:48 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/09 10:05:47 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ char	*ft_run(t_obj *obj, char *stop, int n)
 	char	*file;
 	int		fd;
 	char	*s;
+	char	*str;
 
-	s = remove_all_quotes(stop);
-	if (ft_strchr(stop, '$'))
-		adjust_dollars(s);
+	str = handle_dollar_quotes(stop);
+	s = remove_all_quotes(str);
+	free(str);
 	while (1)
 	{
 		file = ft_strjoin2(".f", ft_itoa(n), 3);

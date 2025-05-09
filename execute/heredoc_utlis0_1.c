@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:45:03 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/03 11:40:42 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/09 10:03:14 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,6 @@ void	copy_content(const char **src, char **dst, \
 	}
 	if (**src == '\'')
 		(*src)++;
-}
-
-size_t	handle_dollars(const char **src, char **dst)
-{
-	const char	*p;
-	size_t		to_copy;
-
-	p = *src;
-	if (!count_and_prep_dollars(src, &to_copy))
-		return (0);
-	copy_content(src, dst, p, to_copy);
-	return (1);
 }
 
 void	process_characters(const char **src, char **dst)

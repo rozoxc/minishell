@@ -76,6 +76,8 @@ void	init_obj(t_obj *obj, char **env)
 	}
 }
 
+int get_signal;
+
 int	main(int args, char **argv, char **env)
 {
 	t_obj	obj;

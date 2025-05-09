@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utlis_3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:58:30 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/01 15:59:18 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/09 12:22:30 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,16 @@ char	*handle_special_chars(t_obj *obj, char *str)
 		return (ft_strdup("$"));
 	else if (*str == '%')
 		return (ft_strdup("$%"));
+	else if (*str == '+')
+		return (ft_strdup("$+"));
 	else if (*str == '?')
 		return (ft_strjoin2(NULL, ft_itoa(obj->exit_code), 3));
 	else if (*str == '.')
 		return (ft_strdup("$."));
+	else if (*str == ',')
+		return (ft_strdup("$,"));
+	else if (*str == '/')
+		return (ft_strdup("$/"));
 	return (NULL);
 }
 

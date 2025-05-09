@@ -6,48 +6,107 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:03:07 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/08 16:03:40 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/09 10:30:17 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	copy_dollar_sequence(char *s, int read, int *write)
+int even_handler(const char *input, int count, char *out, int *out_pos)
 {
-	int	start;
-	int	run_len;
-	int	to_keep;
-	int	k;
-
-	start = read;
-	while (s[read] == '$')
-		read++;
-	run_len = read - start;
-	to_keep = run_len - (run_len % 2);
-	if (run_len == 1 && s[read] == '\0')
-		to_keep++;
-	k = 0;
-	while (k < to_keep)
-	{
-		s[(*write)++] = '$';
-		k++;
-	}
-	return (read);
+    char quote;
+    int i;
+    int j;
+    
+    quote = input[count];
+    i = count + 1;
+    if (count % 2 != 0)
+        count -= 1;
+    
+    j = 0;
+    while (j < count)
+    {
+        out[(*out_pos)++] = '$';
+        j++;
+    }
+    
+    out[(*out_pos)++] = quote;
+    while (input[i] && input[i] != quote)
+        out[(*out_pos)++] = input[i++];
+    
+    if (input[i] == quote)
+        out[(*out_pos)++] = input[i];
+    
+    if (input[i])
+        return (i + 1);
+    else
+        return (i);
 }
 
-void	adjust_dollars(char *s)
+int handle_quotes(char *input, char *out, int *i, int *out_pos)
 {
-	int	read;
-	int	write;
+    char quote;
+    
+    if (input[*i] == '\'' || input[*i] == '\"')
+    {
+        quote = input[*i];
+        out[(*out_pos)++] = input[(*i)++];
+        
+        while (input[*i] && input[*i] != quote)
+            out[(*out_pos)++] = input[(*i)++];
+        
+        if (input[*i] == quote)
+            out[(*out_pos)++] = input[(*i)++];
+        
+        return (1);
+    }
+    return (0);
+}
 
-	read = 0;
-	write = 0;
-	while (s[read] != '\0')
-	{
-		if (s[read] == '$')
-			read = copy_dollar_sequence(s, read, &write);
-		else
-			s[write++] = s[read++];
-	}
-	s[write] = '\0';
+static int handle_dollars(char *input, char *out, int *i, int *out_pos)
+{
+    int count;
+    int consumed;
+    
+    if (input[*i] == '$')
+    {
+        count = 0;
+        while (input[*i + count] && input[*i + count] == '$')
+            count++;
+        
+        if (input[*i + count] && (input[*i + count] == '\'' || input[*i + count] == '\"'))
+        {
+            consumed = even_handler(input + *i, count, out, out_pos);
+            *i += consumed;
+            return (1);
+        }
+    }
+    return (0);
+}
+
+char *handle_dollar_quotes(char *input)
+{
+    char *out;
+    int out_pos;
+    int i;
+    
+    out = malloc(strlen(input) + 1);
+    if (!out)
+        return (NULL);
+    
+    out_pos = 0;
+    i = 0;
+    
+    while (input[i])
+    {
+        if (handle_quotes(input, out, &i, &out_pos))
+            continue;
+        if (handle_dollars(input, out, &i, &out_pos))
+            continue;
+        
+        out[out_pos++] = input[i++];
+    }
+    
+    out[out_pos] = '\0';
+    return (out);
 }
