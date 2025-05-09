@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:58:30 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/09 12:22:30 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/09 17:19:21 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ char	*lookup_env_value(t_obj *obj, char *str)
 		equal = check_equal(env->value);
 		if ((ft_strncmp(str, env->value, ft_strlen(str)) == 0
 				&& ft_strncmp(env->value, str, equal) == 0))
-			value = ft_strdup(ft_strchr(env->value, '=') + 1);
+		{
+			if (ft_strchr(env->value, '='))
+				value = ft_strdup(ft_strchr(env->value, '=') + 1);
+		}
 		env = env->next;
 	}
 	return (value);
