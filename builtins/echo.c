@@ -6,7 +6,7 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:39:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/01 22:23:47 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:32:26 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,59 @@ int	ft_size(char **arg)
 		i++;
 	return (i);
 }
+int calcul_buffer_size(char **arg, int start_idx, int size)
+{
+	int i;
+	int total_size;
+
+	i = start_idx;
+	while (i < size)
+	{
+		total_size = ft_strlen(arg[i]);
+		if (i < size - 1)
+			total_size +=  1;
+		i++;
+	}
+	return (size);
+}
 
 static void	echo_print_args(char **arg, int start_idx, int size,
 		int no_new_line)
 {
 	int	i;
+	char *buffer;
+	int buffer_pos;
+	int buffer_size;
+	int arg_len;
 
+	buffer_size = calcul_buffer_size(arg, start_idx, size);
+	if (no_new_line == 0)
+		buffer_size += 1;
 	i = start_idx;
+	buffer_pos = 0;
+	buffer = malloc(sizeof(char) * buffer_size);
+	if (!buffer)
+		return ;
 	while (i < size)
 	{
-		ft_putstr_fd(arg[i], 1);
+		arg_len = ft_strlen(arg[i]);
+		ft_memcpy(&buffer[buffer_pos], arg[i], arg_len);
+		buffer_pos += arg_len;
 		if (i < size - 1)
-			write(1, " ", 1);
+		{
+			buffer[buffer_pos] = ' ';
+			buffer_pos++;
+		}
 		i++;
 	}
-	if (!no_new_line)
-		write(1, "\n", 1);
+	if (no_new_line == 0)
+	{
+		buffer[buffer_pos] = '\n';
+		buffer_pos++;
+	}
+	buffer[buffer_pos] = '\0';
+	write(1, buffer, buffer_pos);
+	free(buffer);
 }
 
 int	check_flag(char *str)
