@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:41:15 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/07 16:15:03 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/10 12:58:13 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*no_quotes(t_obj *obj, char **argv, int *i, int *j)
 
 	x = 0;
 	str = NULL;
+	(void)j;
 	while (argv[*i] && ft_strcmp(argv[*i], "\"") && ft_strcmp(argv[*i], "\'"))
 	{
 		if (ft_strchr(argv[*i], '$'))
@@ -26,7 +27,7 @@ char	*no_quotes(t_obj *obj, char **argv, int *i, int *j)
 			if (ft_strchr(argv[*i], '='))
 				x++;
 			str = ft_strjoin2(str, get_value(obj, argv[*i] + 1), 2);
-			(*j)++;
+			// (*j)++;
 			if (x > 0)
 				str = ft_strjoin2(str, "=", 1);
 			x = 0;
@@ -44,12 +45,13 @@ char	*do_quotes(t_obj *obj, char **argv, int *i, int *j)
 
 	str = NULL;
 	(*i)++;
+	(void)j;
 	while (argv[*i] && ft_strcmp(argv[*i], "\""))
 	{
 		if (ft_strchr(argv[*i], '$'))
 		{
 			str = ft_strjoin2(str, get_value(obj, argv[*i] + 1), 2);
-			(*j)++;
+			// (*j)++;
 		}
 		else
 			str = ft_strjoin2(str, argv[*i], 1);

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/09 18:02:38 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/10 14:08:57 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,20 @@ void	expand(t_obj *obj)
 	t_token	*token;
 	int		j;
 
-	j = 0;
+	j = 1;
 	token = obj->token;
 	while (token)
 	{
+		if (token->type == COMMAND)
+			j = 1;
 		if (token->str && ft_strcmp(token->str, "<<") == 0)
 		{
 			handle_special_tokens(&token);
 			continue ;
 		}
+		if (!ft_strncmp(token->str, "export", 7) && (token->prev == NULL \
+			|| (token->prev && token->prev->type == PIPE)))
+			j = 0;
 		process_token(obj, token, &j);
 		token = token->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/09 18:43:59 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/10 14:06:05 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ char	*get_command_path(t_obj *obj, char *cmd)
 	return (path);
 }
 
-void	shift_leading_empty_args(char *argv[])
+void shift_empty_args(char *argv[])
 {
-	
 	int	skip;
 
 	skip = 0;
@@ -58,9 +57,21 @@ void	shift_leading_empty_args(char *argv[])
 	}
 }
 
+void shift_empty_args_cmds(t_cmd *cmd)
+{
+	t_cmd *current;
+	
+	current = cmd;
+	while (current != NULL)
+	{
+		if (current->argv != NULL)
+		shift_empty_args(current->argv);
+		current = current->next;
+	}
+}
+
 void child_process_execution(t_obj *obj, char *path, t_cmd *cur_cmd, char **env)
 {
-	shift_leading_empty_args(cur_cmd->argv);
 	if (cur_cmd->argv[0] == NULL && (ft_strchr(obj->str, '"') || ft_strchr(obj->str, '\'')))
 	{
 		ft_putstr_fd("minishell: : command not found\n", 2);
@@ -146,6 +157,7 @@ int	execute(t_obj *obj)
 	int		std_out;
 	char	**env;
 
+	shift_empty_args_cmds(obj->cmd);
 	env = env_to_array(obj->env);
 	std_in = dup_error(obj, dup(STDIN_FILENO));
 	std_out = dup_error(obj, dup(STDOUT_FILENO));
