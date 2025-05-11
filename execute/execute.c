@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/10 14:06:05 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/11 15:52:38 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,34 +40,52 @@ char	*get_command_path(t_obj *obj, char *cmd)
 
 void shift_empty_args(char *argv[])
 {
-	int	skip;
+    int skip = 0;
 
-	skip = 0;
-	while (argv[skip] != NULL && argv[skip][0] == '\0')
-		skip++;
-	if (skip > 0)
-	{
-		int i = 0;
-		while (argv[skip + i] != NULL)
-		{
-			argv[i] = argv[skip + i];
-			i++;
-		}
-		argv[i] = NULL;
-	}
+    while (argv[skip] != NULL && argv[skip][0] == '\0')
+        skip++;
+    if (skip > 0)
+    {
+        int i = 0;
+        while (argv[skip + i] != NULL)
+        {
+            argv[i] = argv[skip + i];
+            i++;
+        }
+        argv[i] = NULL;
+    }
+}
+
+void shift_env_arg(char *argv[])
+{
+    int i = 0;
+
+    while (argv[i + 1] != NULL)
+    {
+        argv[i] = argv[i + 1];
+        i++;
+    }
+    argv[i] = NULL;
 }
 
 void shift_empty_args_cmds(t_cmd *cmd)
 {
-	t_cmd *current;
-	
-	current = cmd;
-	while (current != NULL)
-	{
-		if (current->argv != NULL)
-		shift_empty_args(current->argv);
-		current = current->next;
-	}
+    t_cmd *current = cmd;
+
+    while (current != NULL)
+    {
+        char **av = current->argv;
+
+        if (av != NULL)
+        {
+            if (av[0] != NULL && strcmp(av[0], "env") == 0 && (av[1] != NULL && av[1][0] != '\0'))
+            {
+                shift_env_arg(av);
+            }
+            shift_empty_args(av);
+        }
+        current = current->next;
+    }
 }
 
 void child_process_execution(t_obj *obj, char *path, t_cmd *cur_cmd, char **env)
