@@ -6,7 +6,7 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:39:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/09 18:32:26 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:47:51 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int calcul_buffer_size(char **arg, int start_idx, int size)
 			total_size +=  1;
 		i++;
 	}
-	return (size);
+	return (total_size + 1);
 }
 
 static void	echo_print_args(char **arg, int start_idx, int size,
