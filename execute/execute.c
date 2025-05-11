@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/11 15:52:38 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/11 17:16:27 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,9 @@
 
 char	*get_command_path(t_obj *obj, char *cmd)
 {
-	char *path;
+	char	*path;
+	char	*str;
 
-	// if (!cmd || cmd[0] == '\0')
-	// {
-	// 	ft_putstr_fd("minishell: : command not found\n", 2);
-	//     exit(determine_exit_code(obj, 0));
-	// }
 	if (cmd[0] == '.' && cmd[1] == '/')
 		path = ft_strdup(cmd);
 	else if (cmd[0] == '/')
@@ -30,8 +26,8 @@ char	*get_command_path(t_obj *obj, char *cmd)
 		path = get_path(obj, cmd);
 		if (path == NULL)
 		{
-			ft_putstr_fd(cmd, 2);
-			ft_putstr_fd(": command not found\n", 2);
+			str = ft_strjoin(cmd, " : command not found\n");
+			ft_putstr_fd(str, 2);
 			exit(determine_exit_code(obj, 127));
 		}
 	}
@@ -101,7 +97,7 @@ void child_process_execution(t_obj *obj, char *path, t_cmd *cur_cmd, char **env)
 	}
 	path = get_command_path(obj, cur_cmd->argv[0]);
 	if (execve(path, cur_cmd->argv, env) == -1)
-		handle_execution_error(obj, cur_cmd->argv[0], path, env);
+		handle_execution_error(obj, path, env);
 }
 
 void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
@@ -195,7 +191,7 @@ int	execute(t_obj *obj)
 		}
 		run_build(obj, cur_cmd->argv);
 	}
-	else if (cur_cmd && cur_cmd->argv[0])
+	else if (cur_cmd)
 	{
 		execution_loop(obj, std_in, std_out, env);
 		ft_wait_all(obj);

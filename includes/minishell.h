@@ -192,7 +192,7 @@ void	print_env_var(t_env *current);
 void	print_env_name(char *env_value);
 void	print_env_value(char *env_value, int i);
 //fail execute
-void handle_execution_error(t_obj *obj, char *cmd_name, char *path, char **env);
+void handle_execution_error(t_obj *obj, char *path, char **env);
 // cd utlis
 void	update_env(t_obj *obj);
 void	update_oldpwd(char **s1, char **s2);
