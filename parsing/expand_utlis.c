@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:41:15 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/12 10:13:57 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/12 14:47:28 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,42 +41,37 @@ char	*no_quotes(t_obj *obj, char **argv, int *i, int *j)
 char	*do_quotes(t_obj *obj, char **argv, int *i, int *j)
 {
 	char	*str;
+	char	*s;
 
 	str = NULL;
-	(*i)++;
 	(void)j;
-	while (argv[*i] && ft_strcmp(argv[*i], "\""))
+	while (argv[*i])
 	{
-		if (!ft_strcmp(argv[*i], "\'"))
-			(*i)++;
-		else if (ft_strchr(argv[*i], '$'))
+		if (ft_strchr(argv[*i], '$'))
 			str = ft_strjoin2(str, get_value(obj, argv[*i] + 1), 2);
 		else
-		{
 			str = ft_strjoin2(str, argv[*i], 1);
-			(*i)++;
-		}
+		(*i)++;
 	}
-	return (str);
+	s = remove_all_quotes(str);
+	free(str);
+	return (s);
 }
 
 char	*si_quotes(char **argv, int *i)
 {
 	char	*str;
+	char	*s;
 
 	str = NULL;
-	(*i)++;
-	while (argv[*i] && ft_strcmp(argv[*i], "\'"))
+	while (argv[*i])
 	{
-		if (!ft_strcmp(argv[*i], "\""))
-			(*i)++;
-		else
-		{
-			str = ft_strjoin2(str, argv[*i], 1);
-			(*i)++;
-		}
+		str = ft_strjoin2(str, argv[*i], 1);
+		(*i)++;
 	}
-	return (str);
+	s = remove_all_quotes(str);
+	free(str);
+	return (s);
 }
 
 t_token	*create_token(char *str)
