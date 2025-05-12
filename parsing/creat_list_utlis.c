@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 22:28:18 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/11 17:20:15 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/11 21:52:50 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,8 @@ void	handle_file_open(t_token *token)
 
 void	handle_ambiguous_redirect(t_token *token)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(token->str, 2);
 	token->str--;
-	ft_putstr_fd(": ambiguous redirect\n", 2);
+	ft_putstr_fd("minishell: ambiguous redirect\n", 2);
 }
 
 void	handle_no_such_file(void)

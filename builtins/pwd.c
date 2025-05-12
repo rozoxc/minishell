@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:16:32 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/07 23:19:02 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/11 22:25:58 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ char	*ft_getenv(t_env *env, char *key)
 		return (NULL);
 	return (search_env_var(env, prefix, prefix_len));
 }
+// fixiha
+// minishell-1.0$~ unset PWD
+// minishell-1.0$~ pwd
+// �#2��
 
 int	ft_pwd(t_env *env)
 {

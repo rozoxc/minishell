@@ -56,6 +56,7 @@ typedef struct s_lexer
 {
 	char			*str;
 	int				i;
+	int				fd;
 	struct s_lexer	*next;
 }	t_lexer;
 

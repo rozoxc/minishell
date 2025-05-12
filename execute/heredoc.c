@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/09 10:05:47 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/12 10:46:35 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,39 +31,68 @@ void	process_input(t_obj *obj, char *s, int fd, char *stop)
 	}
 }
 
-char	*ft_run(t_obj *obj, char *stop, int n)
+char	*generate_random_filename(void)
+{
+	int		fd;
+	char	buffer[256];
+	char	*file;
+	int		i;
+	int		j;
+
+	file = malloc(11);
+	if (!file)
+		return (NULL);
+	fd = open("/dev/random", O_RDONLY);
+	if (fd == -1)
+		return (NULL);
+	read(fd, buffer, sizeof(buffer));
+	close(fd);
+	i = 0;
+	j = 0;
+	while ((size_t)i < ft_strlen(buffer) && j < 10)
+	{
+		if (buffer[i] >= 32 && buffer[i] <= 126)
+			file[j++] = buffer[i];
+		i++;
+	}
+	file[j] = '\0';
+	return (file);
+}
+
+char	*ft_run(t_obj *obj, char *stop)
 {
 	char	*file;
 	int		fd;
 	char	*s;
 	char	*str;
+	int		fd2;
 
 	str = handle_dollar_quotes(stop);
 	s = remove_all_quotes(str);
 	free(str);
 	while (1)
 	{
-		file = ft_strjoin2(".f", ft_itoa(n), 3);
-		if (access(file, F_OK) != 0)
-			break ;
+		file = generate_random_filename();
+		if (!file || access(file, F_OK) != 0)
+			break;
 		free(file);
-		n++;
 	}
 	fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+	fd2 = open(file, O_RDONLY);
+	unlink(file);
 	process_input(obj, s, fd, stop);
-	if (obj->status || obj->cmd->argv[0] == NULL)
-		unlink(file);
 	close(fd);
+	obj->cmd->lexer->fd = fd2;
 	return (file);
 }
 
-void	ft_process_heredoc(t_obj *obj, t_lexer *lexer, int index)
+void	ft_process_heredoc(t_obj *obj, t_lexer *lexer)
 {
 	char	*name;
 
 	if (lexer->i == HEREDOC)
 	{
-		name = ft_run(obj, lexer->str, index);
+		name = ft_run(obj, lexer->str);
 		free(lexer->str);
 		lexer->str = NULL;
 		if (!obj->status)
@@ -84,7 +113,7 @@ void	ft_heredoc_execution(t_obj *obj, t_cmd *cmd_t, t_lexer *lexer)
 		{
 			if (lexer->i == HEREDOC)
 			{
-				ft_process_heredoc(obj, lexer, i);
+				ft_process_heredoc(obj, lexer);
 				i++;
 			}
 			lexer = lexer->next;

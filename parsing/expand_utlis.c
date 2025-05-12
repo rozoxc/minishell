@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:41:15 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/11 17:02:33 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/12 10:13:57 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	*no_quotes(t_obj *obj, char **argv, int *i, int *j)
 			if (ft_strchr(argv[*i], '='))
 				x++;
 			str = ft_strjoin2(str, get_value(obj, argv[*i] + 1), 2);
-			// (*j)++;
 			if (x > 0)
 				str = ft_strjoin2(str, "=", 1);
 			x = 0;
@@ -48,14 +47,15 @@ char	*do_quotes(t_obj *obj, char **argv, int *i, int *j)
 	(void)j;
 	while (argv[*i] && ft_strcmp(argv[*i], "\""))
 	{
-		if (ft_strchr(argv[*i], '$'))
-		{
+		if (!ft_strcmp(argv[*i], "\'"))
+			(*i)++;
+		else if (ft_strchr(argv[*i], '$'))
 			str = ft_strjoin2(str, get_value(obj, argv[*i] + 1), 2);
-			// (*j)++;
-		}
 		else
+		{
 			str = ft_strjoin2(str, argv[*i], 1);
-		(*i)++;
+			(*i)++;
+		}
 	}
 	return (str);
 }
@@ -68,8 +68,13 @@ char	*si_quotes(char **argv, int *i)
 	(*i)++;
 	while (argv[*i] && ft_strcmp(argv[*i], "\'"))
 	{
-		str = ft_strjoin2(str, argv[*i], 1);
-		(*i)++;
+		if (!ft_strcmp(argv[*i], "\""))
+			(*i)++;
+		else
+		{
+			str = ft_strjoin2(str, argv[*i], 1);
+			(*i)++;
+		}
 	}
 	return (str);
 }

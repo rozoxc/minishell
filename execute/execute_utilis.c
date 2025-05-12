@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:36 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/27 17:34:01 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/12 09:57:40 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ int	count_cmds(t_obj *obj)
 int	ft_process_wait_status(pid_t pid, int status, t_obj *obj)
 {
 	if (pid == -1)
-	{
-		perror("waitpid failed");
 		obj->exit_code = 1;
-	}
 	else
 	{
 		if (WIFEXITED(status))
