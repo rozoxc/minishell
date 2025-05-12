@@ -6,7 +6,7 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:39:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/11 15:47:51 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/12 10:09:46 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ int calcul_buffer_size(char **arg, int start_idx, int size)
 	int i;
 	int total_size;
 
+	total_size = 0;
 	i = start_idx;
 	while (i < size)
 	{
-		total_size = ft_strlen(arg[i]);
+		total_size += ft_strlen(arg[i]);
 		if (i < size - 1)
 			total_size +=  1;
 		i++;
