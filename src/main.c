@@ -84,6 +84,7 @@ int	main(int args, char **argv, char **env)
 
 	if (args == 2 || argv[1] != NULL)
 		return (printf("error \n"), 1);
+	tcgetattr(0, &obj.term);
 	init_obj(&obj, env);
 	shell_level(&obj);
 	while (1)
@@ -91,7 +92,6 @@ int	main(int args, char **argv, char **env)
 		if (!isatty(0) || !isatty(1))
 			return (0);
 		signal_handler();
-		hide_ctrl_characters();
 		obj.str = readline("minishell-1.0$~ ");
 		if (get_signal == 2)
 		{
@@ -107,6 +107,7 @@ int	main(int args, char **argv, char **env)
 		if(*obj.str)
 			add_history(obj.str);
 		execute(&obj);
+		tcsetattr(0, TCSANOW, &obj.term);
 		free(obj.str);
 		free_cmd(&obj.cmd);
 	}

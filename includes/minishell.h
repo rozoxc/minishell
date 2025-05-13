@@ -95,6 +95,7 @@ typedef struct s_obj
 	char	*str;
 	int		*pid;
 	int		exit_code;
+	struct termios term;
 }	t_obj;
 
 typedef struct s_bulding
