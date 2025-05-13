@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:41:15 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/12 14:47:28 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/13 14:05:44 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,21 @@ char	*do_quotes(t_obj *obj, char **argv, int *i, int *j)
 	return (s);
 }
 
-char	*si_quotes(char **argv, int *i)
+char	*si_quotes(t_obj *obj, char **argv, int *i)
 {
 	char	*str;
 	char	*s;
+	int		count = 0;
 
+	while (argv[count] && ft_strchr(argv[count], '\''))
+			count++;
 	str = NULL;
 	while (argv[*i])
 	{
-		str = ft_strjoin2(str, argv[*i], 1);
+		if (count % 2 == 0 && ft_strchr(argv[*i], '$'))
+			str = ft_strjoin2(str, get_value(obj, argv[*i] + 1), 2);
+		else
+			str = ft_strjoin2(str, argv[*i], 1);
 		(*i)++;
 	}
 	s = remove_all_quotes(str);

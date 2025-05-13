@@ -177,7 +177,7 @@ void	heredoc_signal(int sig);
 //expand utlis 
 char	*no_quotes(t_obj *obj, char **argv, int *i, int *j);
 char	*do_quotes(t_obj *obj, char **argv, int *i, int *j);
-char	*si_quotes(char **argv, int *i);
+char	*si_quotes(t_obj *obj, char **argv, int *i);
 t_token	*create_token(char *str);
 char	*get_special_value(t_obj *obj, char *str);
 void	process_quotes(t_obj *obj, t_token *token, char **argv, int *ij);

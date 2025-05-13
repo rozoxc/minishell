@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:20:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/12 14:58:05 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/13 14:38:13 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	process_quotes(t_obj *obj, t_token *token, char **argv, int *ij)
 			(*i)++;
 	}
 	else if (ft_strcmp(argv[*i], "\'") == 0)
-		token->str = ft_strjoin2(token->str, si_quotes(argv, i), 2);
+		token->str = ft_strjoin2(token->str, si_quotes(obj, argv, i), 2);
 	else if (ft_strcmp(argv[*i], "\"") == 0)
 		token->str = ft_strjoin2(token->str, do_quotes(obj, argv, i, j), 2);
 	else
