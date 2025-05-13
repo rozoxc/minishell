@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/11 17:16:27 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/13 11:09:33 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 	t_cmd	*cur_cmd;
 	int		pid;
 	int		ft_pipe[2];
+	t_lexer	*lexer = obj->cmd->lexer;
 
 	cur_cmd = obj->cmd;
 	pid = 0;
@@ -157,6 +158,12 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 		}
 		else
 		{
+			while (lexer)
+			{
+				if (lexer->i == HEREDOC)
+					close(lexer->fd);
+				lexer = lexer->next;
+			}
 			parent_process(obj, cur_cmd, ft_pipe);
 			cur_cmd = cur_cmd->next;
 			pid++;

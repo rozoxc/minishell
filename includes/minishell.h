@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
-# include <linux/limits.h>
+# include <limits.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>

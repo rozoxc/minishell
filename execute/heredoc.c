@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/12 10:46:35 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/13 13:30:39 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*generate_random_filename(void)
 	return (file);
 }
 
-char	*ft_run(t_obj *obj, char *stop)
+char	*ft_run(t_obj *obj, t_lexer *lexer)
 {
 	char	*file;
 	int		fd;
@@ -67,22 +67,26 @@ char	*ft_run(t_obj *obj, char *stop)
 	char	*str;
 	int		fd2;
 
-	str = handle_dollar_quotes(stop);
+	str = handle_dollar_quotes(lexer->str);
 	s = remove_all_quotes(str);
 	free(str);
 	while (1)
 	{
 		file = generate_random_filename();
-		if (!file || access(file, F_OK) != 0)
+		if (ft_strchr(file, '/'))
+			continue;
+		else if (!file || access(file, F_OK) != 0)
 			break;
 		free(file);
 	}
 	fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+	if (fd == -1)
+		printf("!!!!-->%s\n", file);
 	fd2 = open(file, O_RDONLY);
 	unlink(file);
-	process_input(obj, s, fd, stop);
+	process_input(obj, s, fd, lexer->str);
 	close(fd);
-	obj->cmd->lexer->fd = fd2;
+	lexer->fd = fd2;
 	return (file);
 }
 
@@ -92,7 +96,7 @@ void	ft_process_heredoc(t_obj *obj, t_lexer *lexer)
 
 	if (lexer->i == HEREDOC)
 	{
-		name = ft_run(obj, lexer->str);
+		name = ft_run(obj, lexer);
 		free(lexer->str);
 		lexer->str = NULL;
 		if (!obj->status)
