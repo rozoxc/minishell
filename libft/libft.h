@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 12:56:59 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/01 13:43:00 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/13 21:31:40 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,11 @@ t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 char	*ft_strjoin2(char *s1, char *s2, int n);
 int		ft_strcmp(const char *s1, const char *s2);
-char 	*ft_strcat(char *dest, char *src);
-char    *ft_strcpy(char *s1, char *s2);
+char	*ft_strcat(char *dest, char *src);
+char	*ft_strcpy(char *s1, char *s2);
 char	*ft_strncpy(char *dest, const char *src, size_t n);
+int		ft_skip(const char **str);
+int		ft_sep2(char c);
+int		dollar_len(const char **str);
+void	free_split(char **arr, int n);
 #endif

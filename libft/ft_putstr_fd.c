@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 09:56:18 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/09 12:47:25 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/13 21:28:26 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 void	ft_putstr_fd(char *s, int fd)
 {
 	if (fd < 0 || !s)
-		return;
+		return ;
 	write(fd, s, ft_strlen(s));
 }

@@ -128,6 +128,7 @@ void	child_process_execution(t_obj *obj, char *path, \
 		t_cmd *cur_cmd, char **env);
 void	shift_empty_args_cmds(t_cmd *cmd);
 void	shift_env_arg(char *argv[]);
+void	process_input(t_obj *obj, char *s, int fd, char *stop);
 // parsing utlis function
 int		parsing(t_obj *obj);
 t_cmd	*create_list(t_obj *obj);
