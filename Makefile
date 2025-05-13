@@ -19,6 +19,7 @@ SRC = parsing/create_list.c \
 	execute/error_handle.c \
 	execute/execute_utilis.c \
 	execute/execute.c \
+	execute/execute_1.c \
 	execute/fail_execute.c \
 	execute/find_path.c \
 	execute/heredoc.c \

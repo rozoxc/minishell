@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 15:39:51 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/09 17:01:21 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/13 15:35:27 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,19 @@ int	check_equal(char *str)
 	if (str[i] == '\0')
 		return (0);
 	return (i);
+}
+
+int	is_only_whitespace(const char *str)
+{
+	if (str == NULL)
+		return (0);
+	if (*str == '\0')
+		return (0);
+	while (*str)
+	{
+		if (*str != ' ' && *str != '\t')
+			return (0);
+		str++;
+	}
+	return (1);
 }

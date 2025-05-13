@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:27:03 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/11 17:16:03 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/13 15:46:49 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	handle_no_file_error(t_obj *obj, char *path)
 void	handle_enoexec_error(t_obj *obj, char *path, char **env)
 {
 	struct stat	fs;
+	char		*sh_args[3];
 
 	if (stat(path, &fs) == 0)
 	{
-		char *sh_args[3];
 		sh_args[0] = "/bin/sh";
 		sh_args[1] = path;
 		sh_args[2] = NULL;

@@ -120,6 +120,13 @@ char	**ft_split_simple(char const *str, char charset);
 void	cleanup_execution(t_obj *obj, int std_in, int std_out, char **env);
 int		handle_double_quote(const char *str, int *i, char *res, int *pos);
 int		handle_single_quote(const char *str, int *i, char *res, int *pos);
+void	shift_empty_args(char *argv[]);
+void	parent_process(t_obj *obj, t_cmd *curr_cmd, int fd_pipe[2]);
+char	*get_command_path(t_obj *obj, char *cmd);
+void	child_process_execution(t_obj *obj, char *path, \
+		t_cmd *cur_cmd, char **env);
+void	shift_empty_args_cmds(t_cmd *cmd);
+void	shift_env_arg(char *argv[]);
 // parsing utlis function
 int		parsing(t_obj *obj);
 t_cmd	*create_list(t_obj *obj);
@@ -166,6 +173,7 @@ void	process_characters(const char **src, char **dst);
 char	*remove_all_quotes(const char *s);
 void	copy_content(const char **src, char **dst, \
 	const char *p, size_t to_copy);
+int		is_only_whitespace(const char *str);
 char	*ft_expand(t_obj *obj, char *str);
 char	*ft_getenv(t_env *env, char *key);
 //signals

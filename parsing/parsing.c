@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 12:04:37 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/12 10:07:36 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/13 15:35:21 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,21 +110,6 @@ t_token	*token(char **str)
 		skip_space(str);
 	}
 	return (token);
-}
-
-int is_only_whitespace(const char *str)
-{
-    if (str == NULL)
-        return 0;
-    if (*str == '\0')
-        return 0;
-    while (*str)
-    {
-        if (*str != ' ' && *str != '\t')
-            return 0;
-        str++;
-    }
-    return 1;
 }
 
 int	parsing(t_obj *obj)

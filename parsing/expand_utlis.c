@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:41:15 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/13 14:05:44 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/13 15:33:25 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,11 @@ char	*si_quotes(t_obj *obj, char **argv, int *i)
 {
 	char	*str;
 	char	*s;
-	int		count = 0;
+	int		count;
 
+	count = 0;
 	while (argv[count] && ft_strchr(argv[count], '\''))
-			count++;
+		count++;
 	str = NULL;
 	while (argv[*i])
 	{

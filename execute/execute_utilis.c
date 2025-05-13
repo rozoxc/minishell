@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:36 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/12 09:57:40 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/13 15:55:22 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,24 @@ void	ft_wait_all(t_obj *obj)
 		i++;
 	}
 	free(obj->pid);
+}
+
+void	shift_empty_args(char *argv[])
+{
+	int	skip;
+	int	i;
+
+	skip = 0;
+	while (argv[skip] != NULL && argv[skip][0] == '\0')
+		skip++;
+	if (skip > 0)
+	{
+		i = 0;
+		while (argv[skip + i] != NULL)
+		{
+			argv[i] = argv[skip + i];
+			i++;
+		}
+		argv[i] = NULL;
+	}
 }
