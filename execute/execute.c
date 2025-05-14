@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/13 16:00:53 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/14 11:58:26 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 	{
 		pipe_error(obj, pipe(ft_pipe));
 		obj->pid[pid] = fork_error(obj, fork());
+		if (obj->pid[pid] == -1)
+			break ;
 		if (obj->pid[pid] == 0)
 		{
 			close(fd_in);
@@ -56,6 +58,7 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 		}
 		else
 		{
+			obj->flag = 1;
 			while (lexer)
 			{
 				if (lexer->i == HEREDOC)

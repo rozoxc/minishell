@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:39:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/12 10:09:46 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:18:47 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,13 @@ int calcul_buffer_size(char **arg, int start_idx, int size)
 	return (total_size + 1);
 }
 
-static void	echo_print_args(char **arg, int start_idx, int size,
-		int no_new_line)
+void	echo_print_args(char **arg, int start_idx, int size, int no_new_line)
 {
-	int	i;
-	char *buffer;
-	int buffer_pos;
-	int buffer_size;
-	int arg_len;
+	int		i;
+	char	*buffer;
+	int		buffer_pos;
+	int		buffer_size;
+	int	arg_len;
 
 	buffer_size = calcul_buffer_size(arg, start_idx, size);
 	if (no_new_line == 0)

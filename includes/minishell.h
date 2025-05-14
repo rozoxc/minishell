@@ -94,6 +94,7 @@ typedef struct s_obj
 	int		status;
 	char	*str;
 	int		*pid;
+	int		flag;
 	int		exit_code;
 	struct termios term;
 }	t_obj;
@@ -147,7 +148,7 @@ int		ft_export(char	**av, t_obj *obj);
 int		ft_echo(char	**arg, t_obj *obj);
 int		ft_env(t_obj	*obj);
 int		ft_pwd(t_env *env);
-int		ft_exit(char	**args);
+int		ft_exit(char	**args, t_obj *obj);
 int		ft_unset(char	**args, t_obj *obj);
 int		ft_cd(char		**args, t_obj *obj);
 

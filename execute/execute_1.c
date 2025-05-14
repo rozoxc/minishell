@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:53:42 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/13 16:03:58 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/14 11:10:19 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*get_command_path(t_obj *obj, char *cmd)
 
 	if (cmd[0] == '.' && cmd[1] == '/')
 		path = ft_strdup(cmd);
-	else if (cmd[0] == '/')
+	else if (ft_strchr(&cmd[0], '/'))
 		path = ft_strdup(cmd);
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/12 15:06:03 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/14 10:46:31 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	expand(t_obj *obj)
 	{
 		if (token->type == COMMAND)
 			j = 0;
+		if (token->type == COMMAND && ft_strchr(token->str, '$'))
+			j = 1;
 		if (token->str && ft_strcmp(token->str, "<<") == 0)
 		{
 			handle_special_tokens(&token);

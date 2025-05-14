@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:23:14 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/27 22:03:31 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/14 11:24:22 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ static int	ft_is_numeric(char *str)
 	return (1);
 }
 
-int	ft_exit(char **args)
+int	ft_exit(char **args, t_obj *obj)
 {
 	int	exit_status;
 
-	printf("exit\n");
+	if (obj->flag != 1)
+		printf("exit\n");
 	if (args[1] == NULL)
 		exit(SUCCESS);
 	if (!ft_is_numeric(args[1]))
