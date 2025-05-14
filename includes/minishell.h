@@ -179,6 +179,7 @@ void	copy_content(const char **src, char **dst, \
 int		is_only_whitespace(const char *str);
 char	*ft_expand(t_obj *obj, char *str);
 char	*ft_getenv(t_env *env, char *key);
+void	open_error(t_obj *obj, int fd1, int fd2, char *file);
 //signals
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
@@ -203,6 +204,7 @@ char	*handle_dollar_quotes(char *input);
 void	print_env_var(t_env *current);
 void	print_env_name(char *env_value);
 void	print_env_value(char *env_value, int i);
+int		ft_process_wait_status(pid_t pid, int status, t_obj *obj);
 //fail execute
 void handle_execution_error(t_obj *obj, char *path, char **env);
 // cd utlis

@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin2.c                                      :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/11 17:47:14 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/14 16:21:18 by hfalati          ###   ########.fr       */
+/*   Created: 2025/05/14 16:21:41 by hfalati           #+#    #+#             */
+/*   Updated: 2025/05/14 18:19:17 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
+#include "../includes/minishell.h"
 
-char	*ft_strjoin2(char *s1, char *s2, int n)
+void	open_error(t_obj *obj, int fd1, int fd2, char *file)
 {
-	char	*str;
-
-	str = ft_strjoin(s1, s2);
-	if (n != 3)
-		free(s1);
-	if (n > 1)
-		free(s2);
-	return (str);
+	unlink(file);
+	if (fd1 == -1 || fd2 == -1)
+	{
+		ft_putstr_fd("file to open the file\n", 2);
+		if (fd1 != -1)
+			close(fd1);
+		if (fd2 != -1)
+			close (fd2);
+		exit(determine_exit_code(obj, 1));
+	}
 }

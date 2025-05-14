@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:00:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/13 16:11:40 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:18:27 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void heredoc_signal(int sig)
+void	heredoc_signal(int sig)
 {
 	(void)sig;
 	get_signal = 1;
@@ -24,7 +24,7 @@ void	sigint_handler(int sig)
 {
 	get_signal = sig;
 	if (waitpid(-1, &sig, WNOHANG) == 0)
-        return ;
+		return ;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();

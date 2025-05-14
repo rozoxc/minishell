@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/13 15:47:57 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/14 16:40:25 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	process_input(t_obj *obj, char *s, int fd, char *stop)
 	{
 		free(s);
 		waitpid(pid, &status, 0);
+		determine_exit_code(obj, status);
 		signal(SIGINT, SIG_DFL);
 		if (WIFSIGNALED(status) || WEXITSTATUS(status) != 0)
 			obj->status = 1;
@@ -80,10 +81,8 @@ char	*ft_run(t_obj *obj, t_lexer *lexer)
 		free(file);
 	}
 	fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
-	if (fd == -1)
-		printf("!!!!-->%s\n", file);
 	fd2 = open(file, O_RDONLY);
-	unlink(file);
+	open_error(obj, fd, fd2, file);
 	process_input(obj, s, fd, lexer->str);
 	close(fd);
 	lexer->fd = fd2;

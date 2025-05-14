@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/14 11:58:26 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/14 16:47:57 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,30 @@ void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
 	exit(determine_exit_code(obj, 130));
 }
 
+void	handle_parent(t_obj *obj, t_cmd **cur_cmd,
+	int *pid, int *ft_pipe)
+{
+	t_lexer	*lexer;
+
+	obj->flag = 1;
+	lexer = obj->cmd->lexer;
+	while (lexer)
+	{
+		if (lexer->i == HEREDOC)
+			close(lexer->fd);
+		lexer = lexer->next;
+	}
+	parent_process(obj, *cur_cmd, ft_pipe);
+	*cur_cmd = (*cur_cmd)->next;
+	(*pid)++;
+}
+
 void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 {
 	t_cmd	*cur_cmd;
 	int		pid;
 	int		ft_pipe[2];
-	t_lexer	*lexer;
 
-	lexer = obj->cmd->lexer;
 	cur_cmd = obj->cmd;
 	pid = 0;
 	obj->pid = malloc(sizeof(t_cmd) * count_cmds(obj));
@@ -57,19 +73,22 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 			child_process(obj, cur_cmd, ft_pipe, env);
 		}
 		else
-		{
-			obj->flag = 1;
-			while (lexer)
-			{
-				if (lexer->i == HEREDOC)
-					close(lexer->fd);
-				lexer = lexer->next;
-			}
-			parent_process(obj, cur_cmd, ft_pipe);
-			cur_cmd = cur_cmd->next;
-			pid++;
-		}
+			handle_parent(obj, &cur_cmd, &pid, ft_pipe);
 	}
+}
+
+int	setup_execution(t_obj *obj, int *std_in, int *std_out, char ***env)
+{
+	shift_empty_args_cmds(obj->cmd);
+	*env = env_to_array(obj->env);
+	*std_in = dup_error(obj, dup(STDIN_FILENO));
+	*std_out = dup_error(obj, dup(STDOUT_FILENO));
+	if (ft_heredoc(obj) == FAILURE)
+	{
+		cleanup_execution(obj, *std_in, *std_out, *env);
+		return (determine_exit_code(obj, 1), 1);
+	}
+	return (0);
 }
 
 int	execute(t_obj *obj)
@@ -79,18 +98,11 @@ int	execute(t_obj *obj)
 	int		std_out;
 	char	**env;
 
-	shift_empty_args_cmds(obj->cmd);
-	env = env_to_array(obj->env);
-	std_in = dup_error(obj, dup(STDIN_FILENO));
-	std_out = dup_error(obj, dup(STDOUT_FILENO));
+	if (setup_execution(obj, &std_in, &std_out, &env) == 1)
+		return (1);
 	cur_cmd = obj->cmd;
-	if (ft_heredoc(obj) == FAILURE)
-	{
-		cleanup_execution(obj, std_in, std_out, env);
-		return (determine_exit_code(obj, 1), 1);
-	}
-	if (cur_cmd && cur_cmd->argv[0] && check_build(cur_cmd->argv[0]) && \
-		cur_cmd->next == NULL)
+	if (cur_cmd && cur_cmd->argv[0] && check_build(cur_cmd->argv[0]) \
+		&& cur_cmd->next == NULL)
 	{
 		if (set_redirections(cur_cmd) == Q_ERROR)
 		{
@@ -105,5 +117,5 @@ int	execute(t_obj *obj)
 		ft_wait_all(obj);
 	}
 	cleanup_execution(obj, std_in, std_out, env);
-	return (130);
+	return (determine_exit_code(obj, 0), 0);
 }

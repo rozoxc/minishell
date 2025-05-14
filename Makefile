@@ -42,6 +42,7 @@ SRC = parsing/create_list.c \
 	builtins/export_utlis.c \
 	utils/append.c \
 	utils/utils.c \
+	utils/utils_2.c \
 	utils/free_mem.c \
 	utils/ft_strcmp.c \
 	utils/ft_strjoin2.c \
