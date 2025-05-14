@@ -6,30 +6,22 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:41:15 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/13 15:33:25 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/14 22:34:18 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*no_quotes(t_obj *obj, char **argv, int *i, int *j)
+char	*no_quotes(t_obj *obj, char **argv, int *i)
 {
 	char	*str;
-	int		x;
 
-	x = 0;
 	str = NULL;
-	(void)j;
 	while (argv[*i] && ft_strcmp(argv[*i], "\"") && ft_strcmp(argv[*i], "\'"))
 	{
 		if (ft_strchr(argv[*i], '$'))
 		{
-			if (ft_strchr(argv[*i], '='))
-				x++;
 			str = ft_strjoin2(str, get_value(obj, argv[*i] + 1), 2);
-			if (x > 0)
-				str = ft_strjoin2(str, "=", 1);
-			x = 0;
 		}
 		else
 			str = ft_strjoin2(str, argv[*i], 1);
@@ -38,13 +30,12 @@ char	*no_quotes(t_obj *obj, char **argv, int *i, int *j)
 	return (str);
 }
 
-char	*do_quotes(t_obj *obj, char **argv, int *i, int *j)
+char	*do_quotes(t_obj *obj, char **argv, int *i)
 {
 	char	*str;
 	char	*s;
 
 	str = NULL;
-	(void)j;
 	while (argv[*i])
 	{
 		if (ft_strchr(argv[*i], '$'))

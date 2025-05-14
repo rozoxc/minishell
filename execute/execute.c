@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/14 16:47:57 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/15 00:20:08 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,19 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 
 int	setup_execution(t_obj *obj, int *std_in, int *std_out, char ***env)
 {
+	t_lexer  *lexer = obj->cmd->lexer;
 	shift_empty_args_cmds(obj->cmd);
 	*env = env_to_array(obj->env);
 	*std_in = dup_error(obj, dup(STDIN_FILENO));
 	*std_out = dup_error(obj, dup(STDOUT_FILENO));
 	if (ft_heredoc(obj) == FAILURE)
 	{
+		while (lexer)
+		{
+			if (lexer->i == HEREDOC)
+				close(lexer->fd);
+			lexer = lexer->next;
+		}
 		cleanup_execution(obj, *std_in, *std_out, *env);
 		return (determine_exit_code(obj, 1), 1);
 	}
@@ -117,5 +124,5 @@ int	execute(t_obj *obj)
 		ft_wait_all(obj);
 	}
 	cleanup_execution(obj, std_in, std_out, env);
-	return (determine_exit_code(obj, 0), 0);
+	return (0);
 }

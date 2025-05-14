@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:20:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/13 14:38:13 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/14 23:17:58 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	process_quotes(t_obj *obj, t_token *token, char **argv, int *ij)
 	else if (ft_strcmp(argv[*i], "\'") == 0)
 		token->str = ft_strjoin2(token->str, si_quotes(obj, argv, i), 2);
 	else if (ft_strcmp(argv[*i], "\"") == 0)
-		token->str = ft_strjoin2(token->str, do_quotes(obj, argv, i, j), 2);
+		token->str = ft_strjoin2(token->str, do_quotes(obj, argv, i), 2);
 	else
-		token->str = ft_strjoin2(token->str, no_quotes(obj, argv, i, j), 2);
+		token->str = ft_strjoin2(token->str, no_quotes(obj, argv, i), 2);
 }
 
 void	process_token(t_obj *obj, t_token *token, int *j)
@@ -54,7 +54,10 @@ void	process_token(t_obj *obj, t_token *token, int *j)
 		process_quotes(obj, token, argv, ij);
 	*j = ij[1];
 	if (*j == 1)
+	{
+		printf("1\n");
 		split_expanded(token);
+	}
 	free_argv(argv);
 }
 

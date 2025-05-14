@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:58:30 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/14 11:12:58 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/14 22:57:36 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,7 @@ char	*lookup_env_value(t_obj *obj, char *str)
 
 	value = get_env_variable(obj, str, &suffix);
 	if (!value)
-	{
-		free(suffix);
 		return (NULL);
-	}
 	if (suffix[0] != '\0')
 	{
 		result = ft_strjoin(value, suffix);

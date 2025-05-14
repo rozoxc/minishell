@@ -42,7 +42,7 @@
 # define HEREDOC 7 // <<
 # define PIPE 8 // |
 
-extern int get_signal;
+int get_signal;
 
 typedef struct s_token
 {
@@ -187,8 +187,8 @@ void	signal_handler(void);
 void	hide_ctrl_characters(void);
 void	heredoc_signal(int sig);
 //expand utlis 
-char	*no_quotes(t_obj *obj, char **argv, int *i, int *j);
-char	*do_quotes(t_obj *obj, char **argv, int *i, int *j);
+char	*no_quotes(t_obj *obj, char **argv, int *i);
+char	*do_quotes(t_obj *obj, char **argv, int *i);
 char	*si_quotes(t_obj *obj, char **argv, int *i);
 t_token	*create_token(char *str);
 char	*get_special_value(t_obj *obj, char *str);
