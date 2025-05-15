@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:20:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/15 10:07:50 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/15 22:04:14 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,15 @@ void	process_quotes(t_obj *obj, t_token *token, char **argv, int *ij)
 	i = &ij[0];
 	j = &ij[1];
 	if (argv[*i][0] == '$' && argv[*i][1] == '\0' && argv[*i + 1]
-			&& !ft_strcmp(argv[*i + 1], "\'"))
+		&& (!ft_strcmp(argv[*i + 1], "\'") || !ft_strcmp(argv[*i + 1], "\"")))
 	{
 		(*i)++;
-		(*i)++;
-		while (argv[*i] && ft_strcmp(argv[*i], "\'"))
+		while (argv[*i])
 		{
 			token->str = ft_strjoin2(token->str, argv[*i], 1);
 			(*i)++;
 		}
-		if (argv[*i] && !ft_strcmp(argv[*i], "\'"))
-			(*i)++;
+		token->str = remove_all_quotes(token->str);
 	}
 	else if (ft_strcmp(argv[*i], "\'") == 0)
 		token->str = ft_strjoin2(token->str, si_quotes(obj, argv, i), 2);

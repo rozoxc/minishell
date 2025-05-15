@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:00:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/15 12:07:58 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/15 22:06:15 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void handle_special_char(void)
 void	heredoc_signal(int sig)
 {
 	(void)sig;
-	get_signal = 1;
+	g_signal = 1;
 	write(1, "\n", 1);
 	exit(1);
 }
 
 void	sigint_handler(int sig)
 {
-	get_signal = sig;
+	g_signal = sig;
 	if (waitpid(-1, &sig, WNOHANG) == 0)
 		return ;
 	write(STDOUT_FILENO, "\n", 1);
@@ -40,7 +40,7 @@ void	sigint_handler(int sig)
 
 void	sigquit_handler(int sig)
 {
-	get_signal = sig;
+	g_signal = sig;
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:20:04 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/15 20:57:35 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/15 22:04:41 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ t_cmd	*creat_list_loop(t_token *token, t_cmd *cmd, t_lexer *lexer
 		argv = (char **)malloc(sizeof(char *) * (argv_len(token) + 1));
 		if (!argv)
 			return (NULL);
-		// printf("%d\n", argv_len(token));
 		argv[argv_len(token)] = NULL;
 		if (!process_cmd_segment(&token, argv, &lexer))
 			continue ;

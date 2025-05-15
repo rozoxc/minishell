@@ -42,7 +42,7 @@
 # define HEREDOC 7 // <<
 # define PIPE 8 // |
 
-int get_signal;
+int	g_signal;
 
 typedef struct s_token
 {
@@ -87,16 +87,16 @@ typedef struct s_tool
 
 typedef struct s_obj
 {
-	t_token	*token;
-	t_cmd	*cmd;
-	t_env	*env;
-	t_tool	tool;
-	int		status;
-	char	*str;
-	int		*pid;
-	int		flag;
-	int		exit_code;
-	struct termios term;
+	t_token			*token;
+	t_cmd			*cmd;
+	t_env			*env;
+	t_tool			tool;
+	int				status;
+	char			*str;
+	int				*pid;
+	int				flag;
+	int				exit_code;
+	struct termios	term;
 }	t_obj;
 
 typedef struct s_bulding
@@ -182,7 +182,7 @@ char	*ft_getenv(t_env *env, char *key);
 void	open_error(t_obj *obj, int fd1, int fd2, char *file);
 int		ft_size(char **arg);
 int		check_flag(char *str);
-int	is_valid_varname_char(char c, int is_first_char);
+int		is_valid_varname_char(char c, int is_first_char);
 void	export_error(char *arg);
 //signals
 void	sigint_handler(int sig);
@@ -209,9 +209,9 @@ void	print_env_var(t_env *current);
 void	print_env_name(char *env_value);
 void	print_env_value(char *env_value, int i);
 int		ft_process_wait_status(pid_t pid, int status, t_obj *obj);
-void handle_special_char(void);
+void	handle_special_char(void);
 //fail execute
-void handle_execution_error(t_obj *obj, char *path, char **env);
+void	handle_execution_error(t_obj *obj, char *path, char **env);
 // cd utlis
 void	update_env(t_obj *obj);
 void	update_oldpwd(char **s1, char **s2);

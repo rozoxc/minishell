@@ -77,8 +77,6 @@ void	init_obj(t_obj *obj, char **env)
 	}
 }
 
-int get_signal;
-
 int	main(int args, char **argv, char **env)
 {
 	t_obj	obj;
@@ -94,10 +92,10 @@ int	main(int args, char **argv, char **env)
 		signal_handler();
 		handle_special_char();
 		obj.str = readline("minishell-1.0$~ ");
-		if (get_signal == 2)
+		if (g_signal == 2)
 		{
 			determine_exit_code(&obj, 1);
-			get_signal = 0;
+			g_signal = 0;
 		}
 		if (obj.str == NULL)
 		{
