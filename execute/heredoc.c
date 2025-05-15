@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/14 23:55:39 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/15 11:46:47 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,15 @@ void	process_input(t_obj *obj, char *s, int fd, char *stop)
 	int		status;
 
 	signal(SIGINT, SIG_IGN);
-	pid = fork();
+	pid = fork_error(obj, fork());
 	if (pid == 0)
 		process_child(obj, s, fd, stop);
 	else
 	{
 		free(s);
 		waitpid(pid, &status, 0);
-		determine_exit_code(obj, status);
 		signal(SIGINT, SIG_DFL);
-		if (WIFSIGNALED(status) || WEXITSTATUS(status) != 0)
+		if (status != 0)
 			obj->status = 1;
 	}
 }

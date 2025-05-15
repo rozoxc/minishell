@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:53:42 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/14 11:10:19 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/15 15:28:12 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,11 @@ void	shift_empty_args_cmds(t_cmd *cmd)
 void	child_process_execution(t_obj *obj, char *path, \
 		t_cmd *cur_cmd, char **env)
 {
-	if (cur_cmd->argv[0] == NULL && (ft_strchr(obj->str, '"') \
-	|| ft_strchr(obj->str, '\'')))
+	if (obj->cmd && obj->cmd->argv[0] == NULL && (ft_strchr(obj->str, '"') \
+		|| ft_strchr(obj->str, '\'')))
 	{
 		ft_putstr_fd("minishell: : command not found\n", 2);
 		exit(determine_exit_code(obj, 127));
-	}
-	else if (cur_cmd->argv[0][0] == '\0' && !cur_cmd->argv[1])
-	{
-		exit(determine_exit_code(obj, 0));
 	}
 	path = get_command_path(obj, cur_cmd->argv[0]);
 	if (execve(path, cur_cmd->argv, env) == -1)
