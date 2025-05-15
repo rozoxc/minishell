@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:35:29 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/27 22:02:12 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/15 13:13:09 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static	int	is_valid_env_key(const char *key)
+int	is_valid_env_key(const char *key)
 {
 	int	i;
 
@@ -28,7 +28,7 @@ static	int	is_valid_env_key(const char *key)
 	return (1);
 }
 
-static void	remove_env_node(t_env **env_list, t_env *to_remove)
+void	remove_env_node(t_env **env_list, t_env *to_remove)
 {
 	if (!env_list || !*env_list || !to_remove)
 		return ;
@@ -42,7 +42,7 @@ static void	remove_env_node(t_env **env_list, t_env *to_remove)
 	free(to_remove);
 }
 
-static void	process_unset_arg(t_obj *obj, char *arg, int *ret)
+void	process_unset_arg(t_obj *obj, char *arg, int *ret)
 {
 	size_t	key_len;
 	t_env	*current;

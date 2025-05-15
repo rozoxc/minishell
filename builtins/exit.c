@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:23:14 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/14 11:24:22 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/15 20:47:10 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,64 @@ static int	ft_is_numeric(char *str)
 	return (1);
 }
 
+void	show_error(char *str)
+{
+	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+}
+
+char	*skip_zero(char *str)
+{
+	int		i;
+	char	*p;
+	int		j;
+
+	j = 0;
+	i = 0;
+	if (str[i] != '0')
+		return (str);
+	p = malloc(sizeof(char) * ft_strlen(str) + 1);
+	while (str[i] == '0')
+	{
+		i++;
+	}
+	while (str[i] != '\0')
+	{
+		p[j] = str[i];
+		j++;
+		i++;
+	}
+	p[j] = '\0';
+	return (p);
+}
+
+int	ft_is_valid(char *str)
+{
+	int		n;
+	char	*new_str;
+
+	new_str = skip_zero(str);
+	n = ft_atoi(str);
+	if (!ft_strcmp(new_str, "9223372036854775807"))
+	{
+		free(str);
+		return (1);
+	}
+	// else if (n == 0)
+	// // {
+	// // 	free(str);
+	// // 	return (1);
+	// // }// 
+	else if (n == 1)
+	{
+		free(str);
+		return (1);
+	}
+	free(str);
+	return (0);
+}
+
 int	ft_exit(char **args, t_obj *obj)
 {
 	int	exit_status;
@@ -33,16 +91,14 @@ int	ft_exit(char **args, t_obj *obj)
 		printf("exit\n");
 	if (args[1] == NULL)
 		exit(SUCCESS);
-	if (!ft_is_numeric(args[1]))
+	if (!ft_is_numeric(args[1]) || !ft_is_valid(args[1]))
 	{
-		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-		ft_putstr_fd(args[1], STDERR_FILENO);
-		ft_putstr_fd("numeric argument required", STDERR_FILENO);
+		show_error(args[1]);
 		exit(255);
 	}
-	if (args[2] != NULL)
+	else if (args[2] != NULL)
 	{
-		ft_putstr_fd("bash: exit: too many arguments\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
 		return (1);
 	}
 	exit_status = ft_atoi(args[1]);

@@ -3,28 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:39:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/14 12:18:47 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/15 11:26:47 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_size(char **arg)
+int	calcul_buffer_size(char **arg, int start_idx, int size)
 {
 	int	i;
-
-	i = 0;
-	while (arg[i] != NULL)
-		i++;
-	return (i);
-}
-int calcul_buffer_size(char **arg, int start_idx, int size)
-{
-	int i;
-	int total_size;
+	int	total_size;
 
 	total_size = 0;
 	i = start_idx;
@@ -32,28 +23,33 @@ int calcul_buffer_size(char **arg, int start_idx, int size)
 	{
 		total_size += ft_strlen(arg[i]);
 		if (i < size - 1)
-			total_size +=  1;
+			total_size += 1;
 		i++;
 	}
 	return (total_size + 1);
 }
 
-void	echo_print_args(char **arg, int start_idx, int size, int no_new_line)
+char	*allocate_echo_buffer(char **arg, int start_idx, int size
+		, int no_new_line)
 {
-	int		i;
-	char	*buffer;
-	int		buffer_pos;
 	int		buffer_size;
-	int	arg_len;
+	char	*buffer;
 
 	buffer_size = calcul_buffer_size(arg, start_idx, size);
 	if (no_new_line == 0)
 		buffer_size += 1;
-	i = start_idx;
-	buffer_pos = 0;
 	buffer = malloc(sizeof(char) * buffer_size);
-	if (!buffer)
-		return ;
+	return (buffer);
+}
+
+int	fill_echo_buffer(char **arg, char *buffer, int start_idx, int size)
+{
+	int	i;
+	int	buffer_pos;
+	int	arg_len;
+
+	buffer_pos = 0;
+	i = start_idx;
 	while (i < size)
 	{
 		arg_len = ft_strlen(arg[i]);
@@ -66,6 +62,18 @@ void	echo_print_args(char **arg, int start_idx, int size, int no_new_line)
 		}
 		i++;
 	}
+	return (buffer_pos);
+}
+
+void	echo_print_args(char **arg, int start_idx, int size, int no_new_line)
+{
+	int		buffer_pos;
+	char	*buffer;
+
+	buffer = allocate_echo_buffer(arg, start_idx, size, no_new_line);
+	if (!buffer)
+		return ;
+	buffer_pos = fill_echo_buffer(arg, buffer, start_idx, size);
 	if (no_new_line == 0)
 	{
 		buffer[buffer_pos] = '\n';
@@ -74,22 +82,6 @@ void	echo_print_args(char **arg, int start_idx, int size, int no_new_line)
 	buffer[buffer_pos] = '\0';
 	write(1, buffer, buffer_pos);
 	free(buffer);
-}
-
-int	check_flag(char *str)
-{
-	int	i;
-
-	if (ft_strcmp(str, "-n") != 0 && ft_strncmp(str, "-n", 2) != 0)
-		return (0);
-	i = 2;
-	while (str[i] != '\0')
-	{
-		if (str[i] != 'n')
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 int	ft_echo(char **arg, t_obj *obj)

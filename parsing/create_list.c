@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   create_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:20:04 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/12 09:56:32 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/15 20:57:35 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* Function to process arguments and redirections */
 void	process_args_and_redirects(t_token **token,
 		char **argv, t_lexer **lexer, int *i)
 {
@@ -23,7 +22,6 @@ void	process_args_and_redirects(t_token **token,
 		ft_redirection(lexer, token);
 }
 
-/* Function to handle special token cases */
 void	handle_special_token(t_token **token)
 {
 	if ((*token)->str[0] == '\0' && (!ft_strchr(++(*token)->str, '"')
@@ -44,7 +42,6 @@ void	handle_special_token(t_token **token)
 	*token = (*token)->next;
 }
 
-/* Function to process each command segment */
 int	process_cmd_segment(t_token **token, char **argv, t_lexer **lexer)
 {
 	int	i;
@@ -65,7 +62,6 @@ int	process_cmd_segment(t_token **token, char **argv, t_lexer **lexer)
 	return (1);
 }
 
-/* Main loop function for creating command list */
 t_cmd	*creat_list_loop(t_token *token, t_cmd *cmd, t_lexer *lexer
 		, char **argv)
 {
@@ -75,6 +71,7 @@ t_cmd	*creat_list_loop(t_token *token, t_cmd *cmd, t_lexer *lexer
 		argv = (char **)malloc(sizeof(char *) * (argv_len(token) + 1));
 		if (!argv)
 			return (NULL);
+		// printf("%d\n", argv_len(token));
 		argv[argv_len(token)] = NULL;
 		if (!process_cmd_segment(&token, argv, &lexer))
 			continue ;
@@ -85,7 +82,6 @@ t_cmd	*creat_list_loop(t_token *token, t_cmd *cmd, t_lexer *lexer
 	return (cmd);
 }
 
-/* Function to create the command list */
 t_cmd	*create_list(t_obj *obj)
 {
 	t_cmd	*cmd;

@@ -87,12 +87,12 @@ int	main(int args, char **argv, char **env)
 		return (printf("error \n"), 1);
 	tcgetattr(0, &obj.term);
 	init_obj(&obj, env);
-	shell_level(&obj);
 	while (1)
 	{
 		if (!isatty(0) || !isatty(1))
 			return (0);
 		signal_handler();
+		handle_special_char();
 		obj.str = readline("minishell-1.0$~ ");
 		if (get_signal == 2)
 		{
