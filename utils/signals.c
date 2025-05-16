@@ -3,22 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:00:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/15 22:06:15 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 02:01:09 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void handle_special_char(void)
+void	handle_special_char(void)
 {
-	struct termios term;
+	struct termios	term;
+
 	tcgetattr(0, &term);
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
+
 void	heredoc_signal(int sig)
 {
 	(void)sig;
@@ -29,7 +31,7 @@ void	heredoc_signal(int sig)
 
 void	sigint_handler(int sig)
 {
-	g_signal = sig;
+	sig = g_signal;
 	if (waitpid(-1, &sig, WNOHANG) == 0)
 		return ;
 	write(STDOUT_FILENO, "\n", 1);

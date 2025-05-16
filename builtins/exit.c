@@ -6,7 +6,7 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:23:14 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/15 20:47:10 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/15 22:11:58 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,6 @@ int	ft_is_valid(char *str)
 		free(str);
 		return (1);
 	}
-	// else if (n == 0)
-	// // {
-	// // 	free(str);
-	// // 	return (1);
-	// // }// 
 	else if (n == 1)
 	{
 		free(str);
@@ -88,7 +83,7 @@ int	ft_exit(char **args, t_obj *obj)
 	int	exit_status;
 
 	if (obj->flag != 1)
-		printf("exit\n");
+		ft_putstr_fd("exit\n", 1);
 	if (args[1] == NULL)
 		exit(SUCCESS);
 	if (!ft_is_numeric(args[1]) || !ft_is_valid(args[1]))

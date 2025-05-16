@@ -151,7 +151,9 @@ int		ft_pwd(t_env *env);
 int		ft_exit(char	**args, t_obj *obj);
 int		ft_unset(char	**args, t_obj *obj);
 int		ft_cd(char		**args, t_obj *obj);
-
+int		print_envs(t_obj *obj);
+void	export_error(char *arg);
+int		is_valid_varname_char(char c, int is_first_char);
 // free
 void	free_argv(char **argv);
 void	free_lexer(t_lexer **lexer);

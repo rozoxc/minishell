@@ -12,7 +12,6 @@
 
 #include "../includes/minishell.h"
 
-
 int	check_fond(char *str)
 {
 	int	i;
@@ -64,5 +63,3 @@ void	add_env(char *str, t_env **env)
 	}
 	get_env(env, str);
 }
-
-
