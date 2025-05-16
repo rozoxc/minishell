@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:00:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 19:22:33 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 21:42:32 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,12 @@ void	sigquit_handler(int sig)
 	g_signal = sig;
 	if (waitpid(-1, &sig, WNOHANG) == 0)
 		return ;
-	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 }
 
 void	signal_handler(void)
 {
-	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
+	signal(SIGINT, sigint_handler);
 }
