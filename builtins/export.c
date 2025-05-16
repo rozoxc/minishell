@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:13:28 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 16:30:12 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 18:46:00 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	ft_export(char **av, t_obj *obj)
 	int	i;
 
 	i = 1;
-	if (av[1])
+	if (av[1] && av[1][0] != '\0')
 	{
 		while (av[i])
 		{
@@ -119,7 +119,7 @@ int	ft_export(char **av, t_obj *obj)
 			i++;
 		}
 	}
-	else
+	else if ((av[0] != NULL) && (av[1] == NULL || av[1][0] == '\0'))
 	{
 		if (print_envs(obj))
 			return (FAILURE);

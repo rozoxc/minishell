@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:04:02 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/27 22:03:11 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 18:38:09 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	ft_env(t_obj *obj)
 		return (1);
 	}
 	current = obj->env;
-	while (current != NULL)
+	while ((current != NULL && obj->cmd->argv[1] == NULL) || \
+		(current != NULL && obj->cmd->argv[1][0] == '\0'))
 	{
 		if (current->value)
 		{

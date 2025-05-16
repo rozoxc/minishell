@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:00:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 16:11:25 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 19:22:33 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ void	handle_special_char(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-void	heredoc_signal(int sig)
+void	signal_child(int sig)
 {
 	(void)sig;
-	g_signal = 1;
 	write(1, "\n", 1);
 	exit(1);
 }

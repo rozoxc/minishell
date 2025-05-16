@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/16 16:30:57 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 19:22:48 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	child_process(t_obj *obj, t_cmd *cur_cmd, int fd_pipe[2], char **env)
 	char	*path;
 
 	path = NULL;
+	signal(SIGINT, signal_child);
 	close(fd_pipe[0]);
 	if (cur_cmd->next != NULL)
 	{
@@ -58,6 +59,7 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 
 	cur_cmd = obj->cmd;
 	pid = 0;
+	signal(SIGINT, SIG_IGN);
 	obj->pid = malloc(sizeof(t_cmd) * count_cmds(obj));
 	while (cur_cmd)
 	{
@@ -120,6 +122,7 @@ int	execute(t_obj *obj)
 	{
 		execution_loop(obj, std_in, std_out, env);
 		ft_wait_all(obj);
+		signal(SIGINT, SIG_DFL);
 	}
 	cleanup_execution(obj, std_in, std_out, env);
 	return (0);

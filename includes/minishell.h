@@ -186,8 +186,8 @@ void	open_error(t_obj *obj, int fd1, int fd2, char *file);
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
 void	signal_handler(void);
-void	hide_ctrl_characters(void);
 void	heredoc_signal(int sig);
+void	signal_child(int sig);
 //expand utlis 
 char	*no_quotes(t_obj *obj, char **argv, int *i);
 char	*do_quotes(t_obj *obj, char **argv, int *i);
