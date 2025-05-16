@@ -1,0 +1,43 @@
+minishell-1.0$~ cat 
+minishell-1.0$~ echo $?
+1
+minishell-1.0$~ 
+
+-------------------------------
+
+ctr+ \
+
+-------------------------------
+
+ctr+ \
+minishell-1.0$~ cat
+minishell-1.0$~ minishell-1.0$~ echo $?
+131
+
+
+ctr+ c
+minishell-1.0$~ cat
+minishell-1.0$~ echo $?
+1
+
+-------------------------------
+
+env djwaijdiw
+
+minishell-1.0$~ export $idjwai
+export: not a valid identifier: 
+
+
+split export
+
+ctr+ c
+minishell-1.0$~ cat | cat | ls
+1               libft
+Makefile        minishell
+builtins        parsing
+execute         src
+file            utils
+includes
+
+minishell-1.0$~ minishell-1.0$~ echo $?
+1

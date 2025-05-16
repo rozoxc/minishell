@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/11 22:22:55 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 10:54:11 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,30 @@ int	ft_chdir(char *path)
 	return (SUCCESS);
 }
 
-int	cd_no_av(t_obj *obj)
+int cd_no_av(t_obj *obj)
 {
-	char	*pwd;
-	char	old_pwd[PATH_MAX];
+    char  old_pwd_buf[PATH_MAX];
+    char *home;
 
-	pwd = ft_getenv(obj->env, "HOME");
-	if (!pwd)
-	{
-		ft_putstr_fd("cd: HOME not set\n", 2);
-		return (FAILURE);
-	}
-	if (!getcwd(old_pwd, PATH_MAX))
-		return (FAILURE);
-	if (ft_chdir(pwd) != 0)
-		return (FAILURE);
-	obj->tool.pwd = pwd;
-	return (SUCCESS);
+    home = ft_getenv(obj->env, "HOME");
+    if (!home)
+    {
+        ft_putstr_fd("cd: HOME not set\n", 2);
+        return (FAILURE);
+    }
+    if (!getcwd(old_pwd_buf, PATH_MAX))
+        return (FAILURE);
+    free(obj->tool.oldpwd);
+    obj->tool.oldpwd = ft_strdup(old_pwd_buf);
+    if (chdir(home) != 0)
+    {
+        ft_putstr_fd("cd: no such file or directory: ", 2);
+        ft_putendl_fd(home, 2);
+        return (FAILURE);
+    }
+    free(obj->tool.pwd);
+    obj->tool.pwd = ft_strdup(home);
+    return (SUCCESS);
 }
 
 int	handle_getcwd_failure(char **av, t_obj *obj, char *pwd)
@@ -82,9 +89,9 @@ int	ft_cd(char **av, t_obj *obj)
 {
 	char	pwd[PATH_MAX];
 
-	if (av[2])
+	if (av[1] && av[2])
 	{
-		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
+        ft_putstr_fd("too many arguments\n", 2);
 		return (FAILURE);
 	}
 	if (!getcwd(pwd, PATH_MAX))

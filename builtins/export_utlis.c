@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utlis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 23:07:26 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 01:11:33 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:07:48 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	print_env_name(char *env_value)
 	name = ft_substr(env_value, 0, i);
 	ft_putstr_fd(name, STDOUT_FILENO);
 	free(name);
-	name = NULL;
 }
 
+/* Extract and print variable value */
 void	print_env_value(char *env_value, int i)
 {
 	char	*value;
@@ -36,12 +36,12 @@ void	print_env_value(char *env_value, int i)
 		value = ft_substr(env_value, i + 1, ft_strlen(env_value) - i - 1);
 		ft_putstr_fd(value, STDOUT_FILENO);
 		free(value);
-		value = NULL;
 		ft_putstr_fd("\"", STDOUT_FILENO);
 	}
 	ft_putstr_fd("\n", STDOUT_FILENO);
 }
 
+/* Print single environment variable */
 void	print_env_var(t_env *current)
 {
 	int		i;

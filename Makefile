@@ -40,7 +40,6 @@ SRC = parsing/create_list.c \
 	builtins/unset.c \
 	builtins/cd_utlis.c \
 	builtins/export_utlis.c \
-	builtins/export_utlis_2.c \
 	utils/append.c \
 	utils/utils.c \
 	utils/utils_2.c \

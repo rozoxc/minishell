@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:00:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 02:01:09 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/16 10:27:26 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	heredoc_signal(int sig)
 
 void	sigint_handler(int sig)
 {
-	sig = g_signal;
+	g_signal = sig;
 	if (waitpid(-1, &sig, WNOHANG) == 0)
 		return ;
 	write(STDOUT_FILENO, "\n", 1);
