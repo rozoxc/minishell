@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:38:10 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/14 16:33:11 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 20:17:22 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	process_child(t_obj *obj, char *s, int fd, char *stop)
 {
 	char	*str;
 
-	signal(SIGINT, heredoc_signal);
+	signal(SIGINT, signal_child);
 	while (1)
 	{
 		str = readline("> ");

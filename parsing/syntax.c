@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:42:20 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/11 18:27:24 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 21:35:14 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	check_redirection(t_token *token)
 	while (token)
 	{
 		if (token->type == PIPE && (!token->next || !token->prev))
+			return (-2);
+		if (token->type == PIPE && token->next->type == PIPE)
 			return (-2);
 		if ((token->type == APPEND || token->type == INPUT \
 				|| token->type == TRUNC \

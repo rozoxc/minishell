@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 16:12:35 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 21:57:11 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	cd_no_av(t_obj *obj)
 	if (!home)
 	{
 		ft_putstr_fd("cd: HOME not set\n", 2);
-		return (FAILURE);
+		return (determine_exit_code(obj, 1), FAILURE);
 	}
 	if (!getcwd(old_pwd_buf, PATH_MAX))
 		return (FAILURE);

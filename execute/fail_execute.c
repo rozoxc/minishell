@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:27:03 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/13 15:46:49 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 20:24:36 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,12 @@ void	handle_other_exec_errors(t_obj *obj, char *path)
 	struct stat	fs;
 
 	if (stat(path, &fs) == 0 && S_ISDIR(fs.st_mode))
-		ft_putstr_fd("minishell: Is a directory\n", 2);
+	{
+		if (ft_strchr(obj->cmd->argv[0], '/'))
+			ft_putstr_fd("minishell: Is a directory\n", 2);
+		else
+			ft_putstr_fd("minishell: command not fond\n", 2);
+	}
 	else
 		ft_putstr_fd("minishell: Permission denied\n", 2);
 	free(path);
