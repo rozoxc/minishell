@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:36 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/16 12:10:35 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:28:50 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	ft_wait_all(t_obj *obj)
 		ft_process_wait_status(pid, status, obj);
 		i++;
 	}
+	obj->flag = 0;
 	free(obj->pid);
 }
 

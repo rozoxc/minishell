@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:00:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 10:27:26 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:11:25 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	sigint_handler(int sig)
 void	sigquit_handler(int sig)
 {
 	g_signal = sig;
+	if (waitpid(-1, &sig, WNOHANG) == 0)
+		return ;
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();

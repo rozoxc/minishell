@@ -77,6 +77,32 @@ void	init_obj(t_obj *obj, char **env)
 	}
 }
 
+void	shell_process(t_obj *obj)
+{
+	if (!isatty(0) || !isatty(1))
+		exit(0);
+	signal_handler();
+	handle_special_char();
+	obj->str = readline("minishell-1.0$~ ");
+	if (g_signal == 2)
+	{
+		determine_exit_code(obj, 1);
+		g_signal = 0;
+	}
+	if (obj->str == NULL)
+	{
+		printf("exit\n");
+		exit(0);
+	}
+	parsing(obj);
+	if (*obj->str)
+		add_history(obj->str);
+	execute(obj);
+	tcsetattr(0, TCSANOW, &obj->term);
+	free(obj->str);
+	free_cmd(&obj->cmd);
+}
+
 int	main(int args, char **argv, char **env)
 {
 	t_obj	obj;
@@ -87,28 +113,6 @@ int	main(int args, char **argv, char **env)
 	init_obj(&obj, env);
 	while (1)
 	{
-		if (!isatty(0) || !isatty(1))
-			return (0);
-		signal_handler();
-		handle_special_char();
-		obj.str = readline("minishell-1.0$~ ");
-		if (g_signal == 2)
-		{
-			determine_exit_code(&obj, 1);
-			g_signal = 0;
-		}
-		if (obj.str == NULL)
-		{
-			printf("exit\n");
-			exit(0);
-		}
-		parsing(&obj);
-		if(*obj.str)
-			add_history(obj.str);
-		execute(&obj);
-		tcsetattr(0, TCSANOW, &obj.term);
-		free(obj.str);
-		free_cmd(&obj.cmd);
+		shell_process(&obj);
 	}
-	return (0);
 }

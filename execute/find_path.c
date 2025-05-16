@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:43 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/15 21:19:51 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/04/27 17:04:48 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_path(t_obj *obj, char *cmd)
 	}
 	if (!path_array)
 	{
-		ft_putstr_fd("minishell: No such file or directory\n", 2);
+		perror("couldns find path variables");
 		exit (determine_exit_code(obj, Q_ERROR));
 	}
 	return (pp_path_cheker(path_array, cmd));

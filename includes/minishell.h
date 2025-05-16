@@ -151,9 +151,9 @@ int		ft_pwd(t_env *env);
 int		ft_exit(char	**args, t_obj *obj);
 int		ft_unset(char	**args, t_obj *obj);
 int		ft_cd(char		**args, t_obj *obj);
-int		print_envs(t_obj *obj);
-void	export_error(char *arg);
-int		is_valid_varname_char(char c, int is_first_char);
+int		check_flag(char *str);
+int		ft_size(char **arg);
+void	handle_special_char(void);
 // free
 void	free_argv(char **argv);
 void	free_lexer(t_lexer **lexer);
@@ -182,10 +182,6 @@ int		is_only_whitespace(const char *str);
 char	*ft_expand(t_obj *obj, char *str);
 char	*ft_getenv(t_env *env, char *key);
 void	open_error(t_obj *obj, int fd1, int fd2, char *file);
-int		ft_size(char **arg);
-int		check_flag(char *str);
-int		is_valid_varname_char(char c, int is_first_char);
-void	export_error(char *arg);
 //signals
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
@@ -211,7 +207,6 @@ void	print_env_var(t_env *current);
 void	print_env_name(char *env_value);
 void	print_env_value(char *env_value, int i);
 int		ft_process_wait_status(pid_t pid, int status, t_obj *obj);
-void	handle_special_char(void);
 //fail execute
 void	handle_execution_error(t_obj *obj, char *path, char **env);
 // cd utlis
@@ -223,4 +218,6 @@ void	ft_redirection(t_lexer **lexer, t_token **token);
 void	handle_file_open(t_token *token);
 void	handle_ambiguous_redirect(t_token *token);
 void	handle_no_such_file(void);
+void	export_error(char *arg);
+int		is_valid_varname_char(char c, int is_first_char);
 #endif

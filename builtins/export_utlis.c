@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 23:07:26 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 15:07:48 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:30:17 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	print_env_name(char *env_value)
 	free(name);
 }
 
-/* Extract and print variable value */
 void	print_env_value(char *env_value, int i)
 {
 	char	*value;
@@ -41,7 +40,6 @@ void	print_env_value(char *env_value, int i)
 	ft_putstr_fd("\n", STDOUT_FILENO);
 }
 
-/* Print single environment variable */
 void	print_env_var(t_env *current)
 {
 	int		i;
@@ -55,4 +53,17 @@ void	print_env_var(t_env *current)
 		print_env_name(current->value);
 		print_env_value(current->value, i);
 	}
+}
+
+void	export_error(char *arg)
+{
+	ft_putstr_fd("export: not a valid identifier: ", STDERR_FILENO);
+	ft_putendl_fd(arg, STDERR_FILENO);
+}
+
+int	is_valid_varname_char(char c, int is_first_char)
+{
+	if (is_first_char)
+		return (ft_isalpha(c) || c == '_');
+	return (ft_isalnum(c) || c == '_');
 }

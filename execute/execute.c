@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/15 11:10:03 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:30:57 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	handle_parent(t_obj *obj, t_cmd **cur_cmd,
 {
 	t_lexer	*lexer;
 
-	obj->flag = 1;
 	lexer = obj->cmd->lexer;
 	while (lexer)
 	{
@@ -59,7 +58,6 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 
 	cur_cmd = obj->cmd;
 	pid = 0;
-	shift_empty_args_cmds(obj->cmd);
 	obj->pid = malloc(sizeof(t_cmd) * count_cmds(obj));
 	while (cur_cmd)
 	{
@@ -71,6 +69,7 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 		{
 			close(fd_in);
 			close(fd_out);
+			obj->flag = 1;
 			child_process(obj, cur_cmd, ft_pipe, env);
 		}
 		else
@@ -117,7 +116,7 @@ int	execute(t_obj *obj)
 		}
 		run_build(obj, cur_cmd->argv);
 	}
-	else if (cur_cmd && cur_cmd->argv[0])
+	else if (cur_cmd)
 	{
 		execution_loop(obj, std_in, std_out, env);
 		ft_wait_all(obj);

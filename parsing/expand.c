@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 15:08:23 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:34:31 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ void	expand(t_obj *obj)
 			continue ;
 		}
 		if ((!ft_strcmp(token->str, "export") && (token->prev != NULL)) \
-			|| (!ft_strncmp(token->str, "export", 6) && (ft_strchr(token->str, '\'') || ft_strchr(token->str, '"'))))
+			|| (!ft_strncmp(token->str, "export", 6) && \
+			(ft_strchr(token->str, '\'') || ft_strchr(token->str, '"'))))
 			j = 1;
 		process_token(obj, token, &j);
 		token = token->next;
