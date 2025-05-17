@@ -6,30 +6,11 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/16 16:22:14 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 15:50:25 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	process_input(t_obj *obj, char *s, int fd, char *stop)
-{
-	pid_t	pid;
-	int		status;
-
-	signal(SIGINT, SIG_IGN);
-	pid = fork_error(obj, fork());
-	if (pid == 0)
-		process_child(obj, s, fd, stop);
-	else
-	{
-		free(s);
-		waitpid(pid, &status, 0);
-		signal(SIGINT, SIG_DFL);
-		if (status != 0)
-			obj->status = 1;
-	}
-}
 
 char	*generate_random_filename(void)
 {
@@ -51,7 +32,7 @@ char	*generate_random_filename(void)
 	j = 0;
 	while ((size_t)i < ft_strlen(buffer) && j < 10)
 	{
-		if (buffer[i] >= 32 && buffer[i] <= 126)
+		if (buffer[i] >= 97 && buffer[i] <= 122)
 			file[j++] = buffer[i];
 		i++;
 	}
@@ -73,9 +54,7 @@ char	*ft_run(t_obj *obj, t_lexer *lexer)
 	while (1)
 	{
 		file = generate_random_filename();
-		if (ft_strchr(file, '/'))
-			continue ;
-		else if (!file || access(file, F_OK) != 0)
+		if (!file || access(file, F_OK) != 0)
 			break ;
 		free(file);
 	}

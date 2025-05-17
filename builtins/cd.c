@@ -6,18 +6,18 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 21:57:11 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 02:14:56 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_chdir(char *path)
+int	ft_chdir(char *path, t_obj *obj)
 {
 	if (chdir(path) != 0)
 	{
 		printf("cd: no such file or directory: %s\n", path);
-		return (FAILURE);
+		return (determine_exit_code(obj, 1), FAILURE);
 	}
 	return (SUCCESS);
 }
@@ -60,7 +60,7 @@ int	handle_getcwd_failure(char **av, t_obj *obj, char *pwd)
 		update_oldpwd(&obj->tool.oldpwd, &obj->tool.pwd);
 		obj->tool.pwd = ft_strjoin2(obj->tool.pwd, "/.", 1);
 	}
-	ft_chdir(av[1]);
+	ft_chdir(av[1], obj);
 	if (getcwd(pwd, PATH_MAX))
 	{
 		free(obj->tool.pwd);
@@ -70,14 +70,14 @@ int	handle_getcwd_failure(char **av, t_obj *obj, char *pwd)
 	else
 		ft_putstr_fd("cd: error retrieving current directory: getcwd: \
 cannot access parent directories: No such file or directory\n", 2);
-	return (SUCCESS);
+	return (determine_exit_code(obj, 0), SUCCESS);
 }
 
 void	cd_to_dir(char *dir, t_obj *obj)
 {
 	char	pwd[PATH_MAX];
 
-	ft_chdir(dir);
+	ft_chdir(dir, obj);
 	free(obj->tool.oldpwd);
 	obj->tool.oldpwd = ft_strdup(obj->tool.pwd);
 	free(obj->tool.pwd);
@@ -92,14 +92,14 @@ int	ft_cd(char **av, t_obj *obj)
 	if (av[1] && av[2])
 	{
 		ft_putstr_fd("too many arguments\n", 2);
-		return (FAILURE);
+		return (determine_exit_code(obj, 1), FAILURE);
 	}
 	if (!getcwd(pwd, PATH_MAX))
 		handle_getcwd_failure(av, obj, pwd);
 	else if (!av[1])
 	{
 		if (cd_no_av(obj) == FAILURE)
-			return (FAILURE);
+			return (determine_exit_code(obj, 1), FAILURE);
 	}
 	else
 		cd_to_dir(av[1], obj);

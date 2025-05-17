@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:21:41 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/14 18:19:17 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 15:40:44 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,10 @@ void	open_error(t_obj *obj, int fd1, int fd2, char *file)
 			close (fd2);
 		exit(determine_exit_code(obj, 1));
 	}
+}
+
+void	exit_code_pipe(t_obj *obj, t_token *token)
+{
+	obj->exit_code = 0;
+	token->type = PIPE;
 }

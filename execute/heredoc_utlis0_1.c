@@ -6,49 +6,11 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:45:03 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/09 10:03:14 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 15:15:36 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	copy_content(const char **src, char **dst, \
-	const char *p, size_t to_copy)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < to_copy)
-	{
-		*(*dst) = '$';
-		(*dst)++;
-		i++;
-	}
-	*src = p;
-	while (**src != '\'')
-		(*src)++;
-	(*src)++;
-	while (**src && **src != '\'')
-	{
-		*(*dst) = **src;
-		(*dst)++;
-		(*src)++;
-	}
-	if (**src == '\'')
-		(*src)++;
-}
-
-void	process_characters(const char **src, char **dst)
-{
-	if (**src != '\'' && **src != '"')
-	{
-		*(*dst) = **src;
-		(*dst)++;
-		(*src)++;
-	}
-	else
-		(*src)++;
-}
 
 char	*remove_all_quotes(const char *input)
 {

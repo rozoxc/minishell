@@ -31,7 +31,7 @@
 # define SUCCESS 0
 # define FAILURE 1
 # define Q_ERROR 127
-# define SYNTAX_ERRROR 2
+# define SYNTAX_ERRROR 258
 
 # define EMPTY 0
 # define COMMAND 1
@@ -130,6 +130,7 @@ void	child_process_execution(t_obj *obj, char *path, \
 void	shift_empty_args_cmds(t_cmd *cmd);
 void	shift_env_arg(char *argv[]);
 void	process_input(t_obj *obj, char *s, int fd, char *stop);
+void	process_input(t_obj *obj, char *s, int fd, char *stop);
 // parsing utlis function
 int		parsing(t_obj *obj);
 t_cmd	*create_list(t_obj *obj);
@@ -147,7 +148,7 @@ void	append_argv(t_cmd **cmd, t_lexer *lexer, char **argv);
 int		ft_export(char	**av, t_obj *obj);
 int		ft_echo(char	**arg, t_obj *obj);
 int		ft_env(t_obj	*obj);
-int		ft_pwd(t_env *env);
+int		ft_pwd(t_env *env, t_obj *obj);
 int		ft_exit(char	**args, t_obj *obj);
 int		ft_unset(char	**args, t_obj *obj);
 int		ft_cd(char		**args, t_obj *obj);
@@ -164,7 +165,6 @@ void	free_env(t_env **env);
 // utlis
 char	*get_value(t_obj *obj, char *str);
 int		check_build(char *cmd);
-int		check_build(char *cmd);
 int		run_build(t_obj *obj, char **cmd);
 char	**env_to_array(t_env *env);
 void	add_env(char *str, t_env **env);
@@ -173,28 +173,24 @@ int		check_fond(char *str);
 void	shell_level(t_obj *obj);
 int		check_equal(char *str);
 int		is_heredoc(t_cmd *cmd);
-size_t	count_and_prep_dollars(const char **src, size_t *to_copy);
-void	process_characters(const char **src, char **dst);
 char	*remove_all_quotes(const char *s);
-void	copy_content(const char **src, char **dst, \
-	const char *p, size_t to_copy);
 int		is_only_whitespace(const char *str);
 char	*ft_expand(t_obj *obj, char *str);
 char	*ft_getenv(t_env *env, char *key);
 void	open_error(t_obj *obj, int fd1, int fd2, char *file);
+void	exit_code_pipe(t_obj *obj, t_token *token);
 //signals
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
 void	signal_handler(void);
 void	signal_child(int sig);
 //expand utlis 
-char	*no_quotes(t_obj *obj, char **argv, int *i);
-char	*do_quotes(t_obj *obj, char **argv, int *i);
+char	*no_quotes(t_obj *obj, char **argv, int *i, int *j);
+char	*do_quotes(t_obj *obj, char **argv, int *i, int *j);
 char	*si_quotes(t_obj *obj, char **argv, int *i);
 t_token	*create_token(char *str);
-char	*get_special_value(t_obj *obj, char *str);
 void	process_quotes(t_obj *obj, t_token *token, char **argv, int *ij);
-void	process_token(t_obj *obj, t_token *token, int *j);
+void	process_token(t_obj *obj, t_token *token, int *j, char *str);
 void	handle_special_tokens(t_token **token_ptr);
 void	split_expanded(t_token *token);
 char	*handle_special_chars(t_obj *obj, char *str);
@@ -217,6 +213,6 @@ void	ft_redirection(t_lexer **lexer, t_token **token);
 void	handle_file_open(t_token *token);
 void	handle_ambiguous_redirect(t_token *token);
 void	handle_no_such_file(void);
-void	export_error(char *arg);
+void	export_error(char *arg, t_obj *obj);
 int		is_valid_varname_char(char c, int is_first_char);
 #endif

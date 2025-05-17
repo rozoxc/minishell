@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:20:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 16:02:13 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 15:42:15 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,17 @@ void	process_quotes(t_obj *obj, t_token *token, char **argv, int *ij)
 	else if (ft_strcmp(argv[*i], "\'") == 0)
 		token->str = ft_strjoin2(token->str, si_quotes(obj, argv, i), 2);
 	else if (ft_strcmp(argv[*i], "\"") == 0)
-		token->str = ft_strjoin2(token->str, do_quotes(obj, argv, i), 2);
+		token->str = ft_strjoin2(token->str, do_quotes(obj, argv, i, j), 2);
 	else
-		token->str = ft_strjoin2(token->str, no_quotes(obj, argv, i), 2);
+		token->str = ft_strjoin2(token->str, no_quotes(obj, argv, i, j), 2);
 }
 
-void	process_token(t_obj *obj, t_token *token, int *j)
+void	process_token(t_obj *obj, t_token *token, int *j, char *str)
 {
 	int		ij[2];
 	char	**argv;
 
+	free(str);
 	argv = ft_split(token->str, ' ');
 	free(token->str);
 	token->str = NULL;
@@ -53,7 +54,7 @@ void	process_token(t_obj *obj, t_token *token, int *j)
 	while (argv[ij[0]])
 		process_quotes(obj, token, argv, ij);
 	*j = ij[1];
-	if (*j == 1)
+	if (*j == 2)
 		split_expanded(token);
 	free_argv(argv);
 }

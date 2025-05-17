@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:36 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/16 20:55:55 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 15:19:32 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	ft_wait_all(t_obj *obj)
 	}
 	obj->flag = 0;
 	free(obj->pid);
+	signal(SIGINT, SIG_DFL);
 }
 
 void	shift_empty_args(char *argv[])

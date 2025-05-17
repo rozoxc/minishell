@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:04:02 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 18:38:09 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 14:17:57 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	ft_env(t_obj *obj)
 
 	if (!obj)
 	{
-		ft_putstr_fd("minishell: env: invalid shell object\n", STDERR_FILENO);
-		return (1);
+		ft_putstr_fd("minishell: env: No such file or directory\n", 2);
+		return (determine_exit_code(obj, 1), 1);
 	}
 	current = obj->env;
 	while ((current != NULL && obj->cmd->argv[1] == NULL) || \
@@ -32,5 +32,5 @@ int	ft_env(t_obj *obj)
 		}
 		current = current->next;
 	}
-	return (0);
+	return (determine_exit_code(obj, 0), SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:35:29 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/27 22:02:12 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 02:59:57 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	process_unset_arg(t_obj *obj, char *arg, int *ret)
 		ft_putstr_fd(arg, STDERR_FILENO);
 		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 		*ret = 1;
+		determine_exit_code(obj, 1);
 		return ;
 	}
 	key_len = ft_strlen(arg);

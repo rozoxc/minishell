@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:39:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 15:59:37 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 02:15:40 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,5 @@ int	ft_echo(char **arg, t_obj *obj)
 		start_idx++;
 	}
 	echo_print_args(arg, start_idx, size, no_new_line);
-	return (EXIT_SUCCESS);
+	return (determine_exit_code(obj, 0), SUCCESS);
 }

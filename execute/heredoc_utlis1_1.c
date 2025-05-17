@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:38:10 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/16 20:17:22 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 14:17:40 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,24 @@ void	process_child(t_obj *obj, char *s, int fd, char *stop)
 			exit(0);
 		}
 		write_input_line(obj, str, fd, stop);
+	}
+}
+
+void	process_input(t_obj *obj, char *s, int fd, char *stop)
+{
+	pid_t	pid;
+	int		status;
+
+	signal(SIGINT, SIG_IGN);
+	pid = fork_error(obj, fork());
+	if (pid == 0)
+		process_child(obj, s, fd, stop);
+	else
+	{
+		free(s);
+		waitpid(pid, &status, 0);
+		signal(SIGINT, SIG_DFL);
+		if (status != 0)
+			obj->status = 1;
 	}
 }

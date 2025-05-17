@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 16:34:31 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 15:41:32 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	*get_value(t_obj *obj, char *str)
 void	expand(t_obj *obj)
 {
 	t_token	*token;
+	char	*str;
 	int		j;
 
 	j = 1;
@@ -87,11 +88,12 @@ void	expand(t_obj *obj)
 			handle_special_tokens(&token);
 			continue ;
 		}
-		if ((!ft_strcmp(token->str, "export") && (token->prev != NULL)) \
-			|| (!ft_strncmp(token->str, "export", 6) && \
-			(ft_strchr(token->str, '\'') || ft_strchr(token->str, '"'))))
+		str = remove_all_quotes(token->str);
+		if ((!ft_strcmp(str, "export") && (token->prev != NULL)) \
+		|| (!ft_strcmp(str, "export") && (ft_strchr(token->str, '\'') \
+		|| ft_strchr(token->str, '"'))))
 			j = 1;
-		process_token(obj, token, &j);
+		process_token(obj, token, &j, str);
 		token = token->next;
 	}
 }

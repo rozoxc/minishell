@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 12:04:37 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/13 15:35:21 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 15:40:38 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*get_token(char **str)
 	return (line);
 }
 
-void	token_type(t_token **token)
+void	token_type(t_token **token, t_obj *obj)
 {
 	t_token	*token_tmp;
 
@@ -72,7 +72,7 @@ void	token_type(t_token **token)
 	if (ft_strcmp(token_tmp->str, "") == 0)
 		token_tmp->type = EMPTY;
 	else if (ft_strcmp(token_tmp->str, "|") == 0)
-		token_tmp->type = PIPE;
+		exit_code_pipe(obj, token_tmp);
 	else if (ft_strcmp(token_tmp->str, ">") == 0)
 		token_tmp->type = TRUNC;
 	else if (ft_strcmp(token_tmp->str, "<") == 0)
@@ -89,7 +89,7 @@ void	token_type(t_token **token)
 		token_tmp->type = ARG;
 }
 
-t_token	*token(char **str)
+t_token	*token(char **str, t_obj *obj)
 {
 	t_token	*token;
 	char	*line;
@@ -101,7 +101,7 @@ t_token	*token(char **str)
 		skip_space(str);
 		line = get_token(str);
 		append_token(&token, line);
-		token_type(&token);
+		token_type(&token, obj);
 		free(line);
 		line = NULL;
 		if (*(*str) == '\0')
@@ -118,10 +118,12 @@ int	parsing(t_obj *obj)
 
 	str = obj->str;
 	if (str == NULL || is_only_whitespace(str))
+	{
 		return (determine_exit_code(obj, SUCCESS));
+	}
 	else if (quotes(str) == FAILURE)
-		return (determine_exit_code(obj, Q_ERROR));
-	obj->token = token(&str);
+		return (determine_exit_code(obj, SYNTAX_ERRROR));
+	obj->token = token(&str, obj);
 	if (syntax(obj->token) == FAILURE)
 	{
 		free_token(&obj->token);
@@ -132,5 +134,5 @@ int	parsing(t_obj *obj)
 	free_token(&obj->token);
 	if (obj->cmd != NULL)
 		return (determine_exit_code(obj, SUCCESS));
-	return (determine_exit_code(obj, FAILURE));
+	return (determine_exit_code(obj, 0));
 }

@@ -6,22 +6,21 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:16:32 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/11 22:25:58 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 02:54:22 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* Create environment variable prefix for searching */
-char	*create_env_prefix(char *key, int *prefix_len)
+char	*create_env_prefix(char *key, int *key_len)
 {
 	char	*prefix;
 	int		i;
 
-	*prefix_len = 0;
-	while (key[*prefix_len])
-		(*prefix_len)++;
-	prefix = malloc(*prefix_len + 2);
+	*key_len = 0;
+	while (key[*key_len])
+		(*key_len)++;
+	prefix = malloc(*key_len + 2);
 	if (!prefix)
 		return (NULL);
 	i = 0;
@@ -35,8 +34,7 @@ char	*create_env_prefix(char *key, int *prefix_len)
 	return (prefix);
 }
 
-/* Search for environment variable by key */
-char	*search_env_var(t_env *env, char *prefix, int prefix_len)
+char	*search_env_var(t_env *env, char *prefix, int key_len)
 {
 	t_env	*current;
 	char	*result;
@@ -45,9 +43,9 @@ char	*search_env_var(t_env *env, char *prefix, int prefix_len)
 	while (current)
 	{
 		if (current->value
-			&& ft_strncmp(current->value, prefix, prefix_len + 1) == 0)
+			&& ft_strncmp(current->value, prefix, key_len + 1) == 0)
 		{
-			result = current->value + prefix_len + 1;
+			result = current->value + key_len + 1;
 			free(prefix);
 			return (result);
 		}
@@ -57,29 +55,23 @@ char	*search_env_var(t_env *env, char *prefix, int prefix_len)
 	return (NULL);
 }
 
-/* Get environment variable value by key */
 char	*ft_getenv(t_env *env, char *key)
 {
 	char	*prefix;
-	int		prefix_len;
+	int		key_len;
 
 	if (!env || !key)
 		return (NULL);
-	prefix = create_env_prefix(key, &prefix_len);
+	prefix = create_env_prefix(key, &key_len);
 	if (!prefix)
 		return (NULL);
-	return (search_env_var(env, prefix, prefix_len));
+	return (search_env_var(env, prefix, key_len));
 }
-// fixiha
-// minishell-1.0$~ unset PWD
-// minishell-1.0$~ pwd
-// �#2��
 
-int	ft_pwd(t_env *env)
+int	ft_pwd(t_env *env, t_obj *obj)
 {
 	char		*buf;
 	char		*node;
-	static char	*save;
 
 	buf = getcwd(NULL, 0);
 	if (!buf)
@@ -87,17 +79,15 @@ int	ft_pwd(t_env *env)
 		node = ft_getenv(env, "PWD");
 		if (!node)
 		{
-			printf("%s\n", save);
-			return (0);
+			ft_putstr_fd("minishell: PWD not set", 2);
+			return (determine_exit_code(obj, 1), 1);
 		}
-		save = buf;
 		printf("%s\n", node);
 	}
 	else if (buf)
 	{
 		printf("%s\n", buf);
-		save = buf;
 		free(buf);
 	}
-	return (0);
+	return (determine_exit_code(obj, 0), 0);
 }

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:23:42 by hfalati           #+#    #+#             */
-/*   Updated: 2025/04/30 10:55:06 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 14:27:00 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,29 +87,6 @@ int	is_heredoc(t_cmd *cmd)
 			lexer = lexer->next;
 		}
 		cmd = cmd->next;
-	}
-	return (0);
-}
-
-size_t	count_and_prep_dollars(const char **src, size_t *to_copy)
-{
-	const char	*p;
-	size_t		dollar_count;
-
-	p = *src;
-	dollar_count = 0;
-	while (*p == '$')
-	{
-		dollar_count++;
-		p++;
-	}
-	if (*p == '\'')
-	{
-		if (dollar_count % 2 == 1)
-			*to_copy = dollar_count - 1;
-		else
-			*to_copy = dollar_count;
-		return (1);
 	}
 	return (0);
 }

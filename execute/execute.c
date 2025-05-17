@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/16 19:22:48 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/17 14:15:31 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,21 +108,20 @@ int	execute(t_obj *obj)
 	if (setup_execution(obj, &std_in, &std_out, &env) == 1)
 		return (1);
 	cur_cmd = obj->cmd;
+	shift_empty_args_cmds(obj->cmd);
 	if (cur_cmd && cur_cmd->argv[0] && check_build(cur_cmd->argv[0]) \
 		&& cur_cmd->next == NULL)
 	{
 		if (set_redirections(cur_cmd) == Q_ERROR)
 		{
-			cleanup_execution(obj, std_in, std_out, env);
-			return (determine_exit_code(obj, 1), 1);
+			return (cleanup_execution(obj, std_in, std_out, env), 1);
 		}
 		run_build(obj, cur_cmd->argv);
 	}
-	else if (cur_cmd)
+	else if (cur_cmd && cur_cmd->argv[0])
 	{
 		execution_loop(obj, std_in, std_out, env);
 		ft_wait_all(obj);
-		signal(SIGINT, SIG_DFL);
 	}
 	cleanup_execution(obj, std_in, std_out, env);
 	return (0);
