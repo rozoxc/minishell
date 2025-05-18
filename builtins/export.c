@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:13:28 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/17 02:41:10 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/18 00:35:02 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	check_export_syntax(char **av, int i, t_obj *obj)
 		pos = ft_strchr(av[i], '+') - av[i];
 		if (pos > 0 && av[i][pos - 1] != '+' && av[i][pos + 1] == '=')
 			return (determine_exit_code(obj, 0), SUCCESS);
-		return (determine_exit_code(obj, 1), FAILURE);
+		return (export_error(av[i], obj), FAILURE);
 	}
 	if (ft_strchr(av[i], '=') || av[i][pos] == '\0')
 		return (determine_exit_code(obj, 0), SUCCESS);
