@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/17 14:15:31 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/18 13:34:40 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	execute(t_obj *obj)
 		}
 		run_build(obj, cur_cmd->argv);
 	}
-	else if (cur_cmd && cur_cmd->argv[0])
+	else if (cur_cmd)
 	{
 		execution_loop(obj, std_in, std_out, env);
 		ft_wait_all(obj);

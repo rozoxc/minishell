@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/17 02:14:56 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/18 01:38:39 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ int	cd_no_av(t_obj *obj)
 		ft_putstr_fd("cd: HOME not set\n", 2);
 		return (determine_exit_code(obj, 1), FAILURE);
 	}
-	if (!getcwd(old_pwd_buf, PATH_MAX))
-		return (FAILURE);
-	free(obj->tool.oldpwd);
-	obj->tool.oldpwd = ft_strdup(old_pwd_buf);
 	if (chdir(home) != 0)
 	{
 		ft_putstr_fd("cd: no such file or directory: ", 2);
 		ft_putendl_fd(home, 2);
 		return (FAILURE);
 	}
+	if (!getcwd(old_pwd_buf, PATH_MAX))
+		return (FAILURE);
+	free(obj->tool.oldpwd);
+	obj->tool.oldpwd = ft_strdup(old_pwd_buf);
 	free(obj->tool.pwd);
 	obj->tool.pwd = ft_strdup(home);
 	return (SUCCESS);
@@ -52,6 +52,7 @@ int	handle_getcwd_failure(char **av, t_obj *obj, char *pwd)
 {
 	if (!ft_strcmp("..", av[1]))
 	{
+		
 		update_oldpwd(&obj->tool.oldpwd, &obj->tool.pwd);
 		obj->tool.pwd = ft_strjoin2(obj->tool.pwd, "/..", 1);
 	}
@@ -94,13 +95,13 @@ int	ft_cd(char **av, t_obj *obj)
 		ft_putstr_fd("too many arguments\n", 2);
 		return (determine_exit_code(obj, 1), FAILURE);
 	}
-	if (!getcwd(pwd, PATH_MAX))
-		handle_getcwd_failure(av, obj, pwd);
-	else if (!av[1])
+	if (!av[1])
 	{
 		if (cd_no_av(obj) == FAILURE)
 			return (determine_exit_code(obj, 1), FAILURE);
 	}
+	else if (!getcwd(pwd, PATH_MAX))
+		handle_getcwd_failure(av, obj, pwd);
 	else
 		cd_to_dir(av[1], obj);
 	update_env(obj);

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/17 15:50:25 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/18 13:37:06 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ char	*generate_random_filename(void)
 	j = 0;
 	while ((size_t)i < ft_strlen(buffer) && j < 10)
 	{
-		if (buffer[i] >= 97 && buffer[i] <= 122)
+		if ((buffer[i] >= 97 && buffer[i] <= 122) \
+			|| (buffer[i] >= 65 && buffer[i] <= 90))
 			file[j++] = buffer[i];
 		i++;
 	}

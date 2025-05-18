@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:51 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/13 13:18:23 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/18 13:33:04 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,32 @@
 
 int	set_red_input(t_lexer *red)
 {
-	if (dup2(red->fd, STDIN_FILENO) < 0)
+	int fd;
+
+	if (red->i == INPUT)
 	{
-		ft_putstr_fd("Minishell Error: redirection\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
+		fd = open(red->str, O_RDONLY);
+		if (fd < 0)
+		{
+			ft_putstr_fd("Minishell Err, infile, No such file or directory\n", 2);
+			return (EXIT_FAILURE);
+		}
+		if (dup2(fd, STDIN_FILENO) < 0)
+		{
+			ft_putstr_fd("Minishell Error: redirection\n", STDERR_FILENO);
+			return (EXIT_FAILURE);
+		}
+		close(fd);
 	}
-	close(red->fd);
+	else
+	{
+		if (dup2(red->fd, STDIN_FILENO) < 0)
+		{
+			ft_putstr_fd("Minishell Error: redirection\n", STDERR_FILENO);
+			return (EXIT_FAILURE);
+		}
+		close(red->fd);
+	}
 	return (EXIT_SUCCESS);
 }
 
