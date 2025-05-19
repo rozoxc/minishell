@@ -12,7 +12,6 @@ SRC = parsing/create_list.c \
 	parsing/expand.c \
 	parsing/parsing.c \
 	parsing/syntax.c \
-	parsing/shell_level.c \
 	parsing/expand_utlis.c \
 	parsing/expand_utlis_2.c \
 	parsing/expand_utlis_3.c \

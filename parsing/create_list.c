@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:20:04 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/18 13:33:18 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/18 22:11:47 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,6 @@ void	handle_special_token(t_token **token)
 		return ;
 	}
 	(*token)->str--;
-	if ((*token)->str[0] == '\0' && (ft_strchr(++(*token)->str, '"')
-			|| ft_strchr((*token)->str, '\'')))
-	{
-		(*token)->str--;
-		handle_no_such_file();
-		return ;
-	}
 	handle_file_open(*token);
 	*token = (*token)->next;
 }

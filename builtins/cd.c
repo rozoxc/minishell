@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/18 01:38:39 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/18 13:49:25 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	handle_getcwd_failure(char **av, t_obj *obj, char *pwd)
 {
 	if (!ft_strcmp("..", av[1]))
 	{
-		
 		update_oldpwd(&obj->tool.oldpwd, &obj->tool.pwd);
 		obj->tool.pwd = ft_strjoin2(obj->tool.pwd, "/..", 1);
 	}

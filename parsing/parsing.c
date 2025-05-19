@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 12:04:37 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/17 15:40:38 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/18 21:33:39 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,7 @@ int	parsing(t_obj *obj)
 
 	str = obj->str;
 	if (str == NULL || is_only_whitespace(str))
-	{
 		return (determine_exit_code(obj, SUCCESS));
-	}
 	else if (quotes(str) == FAILURE)
 		return (determine_exit_code(obj, SYNTAX_ERRROR));
 	obj->token = token(&str, obj);

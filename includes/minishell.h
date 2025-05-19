@@ -99,12 +99,6 @@ typedef struct s_obj
 	struct termios	term;
 }	t_obj;
 
-typedef struct s_bulding
-{
-	char	*str;
-	int		(*function)(char **argv, t_obj *obj);
-}	t_bulding;
-
 //executed utils functions
 int		determine_exit_code(t_obj *obj, int exit_code);
 void	pipe_error(t_obj *obj, int pid);
@@ -170,7 +164,6 @@ char	**env_to_array(t_env *env);
 void	add_env(char *str, t_env **env);
 void	get_env(t_env **env, char *str);
 int		check_fond(char *str);
-void	shell_level(t_obj *obj);
 int		check_equal(char *str);
 int		is_heredoc(t_cmd *cmd);
 char	*remove_all_quotes(const char *s);
@@ -187,7 +180,7 @@ void	signal_child(int sig);
 //expand utlis 
 char	*no_quotes(t_obj *obj, char **argv, int *i, int *j);
 char	*do_quotes(t_obj *obj, char **argv, int *i, int *j);
-char	*si_quotes(t_obj *obj, char **argv, int *i);
+char	*si_quotes(t_obj *obj, char **argv, int *i, int *j);
 t_token	*create_token(char *str);
 void	process_quotes(t_obj *obj, t_token *token, char **argv, int *ij);
 void	process_token(t_obj *obj, t_token *token, int *j, char *str);
@@ -212,7 +205,6 @@ int		argv_len(t_token *token);
 void	ft_redirection(t_lexer **lexer, t_token **token);
 void	handle_file_open(t_token *token);
 void	handle_ambiguous_redirect(t_token *token);
-void	handle_no_such_file(void);
 void	export_error(char *arg, t_obj *obj);
 int		is_valid_varname_char(char c, int is_first_char);
 #endif
