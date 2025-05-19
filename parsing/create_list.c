@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:20:04 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/18 22:11:47 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/19 12:54:31 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	handle_special_token(t_token **token)
 		handle_ambiguous_redirect(*token);
 		return ;
 	}
-	(*token)->str--;
 	handle_file_open(*token);
 	*token = (*token)->next;
 }

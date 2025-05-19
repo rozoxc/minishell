@@ -82,7 +82,7 @@ void	shell_process(t_obj *obj)
 	if (!isatty(0) || !isatty(1))
 		exit(0);
 	signal_handler();
-	handle_special_char();    
+	handle_special_char();
 	obj->str = readline("minishell-1.0$~ ");
 	if (g_signal == 2)
 	{

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:36 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/17 15:19:32 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:02:23 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_wait_all(t_obj *obj)
 
 	i = 0;
 	cmd_count = count_cmds(obj);
-	while (i < cmd_count)
+	while (i < cmd_count && obj->cmd->argv[0])
 	{
 		pid = waitpid(obj->pid[i], &status, 0);
 		ft_process_wait_status(pid, status, obj);

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/18 13:34:40 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:01:41 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 	pid = 0;
 	signal(SIGINT, SIG_IGN);
 	obj->pid = malloc(sizeof(t_cmd) * count_cmds(obj));
-	while (cur_cmd)
+	while (cur_cmd && cur_cmd->argv[0])
 	{
 		pipe_error(obj, pipe(ft_pipe));
 		obj->pid[pid] = fork_error(obj, fork());

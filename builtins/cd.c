@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/18 13:49:25 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/19 22:07:22 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@ int	ft_chdir(char *path, t_obj *obj)
 {
 	if (chdir(path) != 0)
 	{
-		printf("cd: no such file or directory: %s\n", path);
-		return (determine_exit_code(obj, 1), FAILURE);
+		if (errno == EACCES)
+			ft_putstr_fd("cd: permission denied", 2);
+		else
+			ft_putstr_fd("cd: no such file or directory", 2);
+		determine_exit_code(obj, 1);
+		return (FAILURE);
 	}
 	return (SUCCESS);
 }
@@ -33,7 +37,7 @@ int	cd_no_av(t_obj *obj)
 		ft_putstr_fd("cd: HOME not set\n", 2);
 		return (determine_exit_code(obj, 1), FAILURE);
 	}
-	if (chdir(home) != 0)
+	if (chdir(home) == FAILURE)
 	{
 		ft_putstr_fd("cd: no such file or directory: ", 2);
 		ft_putendl_fd(home, 2);
@@ -60,7 +64,8 @@ int	handle_getcwd_failure(char **av, t_obj *obj, char *pwd)
 		update_oldpwd(&obj->tool.oldpwd, &obj->tool.pwd);
 		obj->tool.pwd = ft_strjoin2(obj->tool.pwd, "/.", 1);
 	}
-	ft_chdir(av[1], obj);
+	if (ft_chdir(av[1], obj) == FAILURE)
+		return (FAILURE);
 	if (getcwd(pwd, PATH_MAX))
 	{
 		free(obj->tool.pwd);
@@ -73,16 +78,32 @@ cannot access parent directories: No such file or directory\n", 2);
 	return (determine_exit_code(obj, 0), SUCCESS);
 }
 
-void	cd_to_dir(char *dir, t_obj *obj)
+int	handle_cd_getcwd_failure(char **av, t_obj *obj, char *pwd)
 {
-	char	pwd[PATH_MAX];
+	int	fd;
 
-	ft_chdir(dir, obj);
-	free(obj->tool.oldpwd);
-	obj->tool.oldpwd = ft_strdup(obj->tool.pwd);
-	free(obj->tool.pwd);
-	getcwd(pwd, PATH_MAX);
-	obj->tool.pwd = ft_strdup(pwd);
+	if (errno == EACCES)
+	{
+		fd = open(".", O_RDONLY | O_DIRECTORY);
+		if (fd == -1 && errno == EACCES)
+		{
+			if (cd_no_perm(obj) == FAILURE)
+				return (FAILURE);
+		}
+		else
+		{
+			if (fd != -1)
+				close(fd);
+			if (handle_getcwd_failure(av, obj, pwd) == FAILURE)
+				return (FAILURE);
+		}
+	}
+	else
+	{
+		if (handle_getcwd_failure(av, obj, pwd) == FAILURE)
+			return (FAILURE);
+	}
+	return (SUCCESS);
 }
 
 int	ft_cd(char **av, t_obj *obj)
@@ -100,7 +121,10 @@ int	ft_cd(char **av, t_obj *obj)
 			return (determine_exit_code(obj, 1), FAILURE);
 	}
 	else if (!getcwd(pwd, PATH_MAX))
-		handle_getcwd_failure(av, obj, pwd);
+	{
+		if (handle_cd_getcwd_failure(av, obj, pwd) == FAILURE)
+			return (FAILURE);
+	}
 	else
 		cd_to_dir(av[1], obj);
 	update_env(obj);
