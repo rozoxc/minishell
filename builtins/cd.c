@@ -6,25 +6,11 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/19 22:07:22 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/19 22:27:36 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	ft_chdir(char *path, t_obj *obj)
-{
-	if (chdir(path) != 0)
-	{
-		if (errno == EACCES)
-			ft_putstr_fd("cd: permission denied", 2);
-		else
-			ft_putstr_fd("cd: no such file or directory", 2);
-		determine_exit_code(obj, 1);
-		return (FAILURE);
-	}
-	return (SUCCESS);
-}
 
 int	cd_no_av(t_obj *obj)
 {
@@ -104,6 +90,18 @@ int	handle_cd_getcwd_failure(char **av, t_obj *obj, char *pwd)
 			return (FAILURE);
 	}
 	return (SUCCESS);
+}
+
+void	cd_to_dir(char *dir, t_obj *obj)
+{
+	char	pwd[PATH_MAX];
+
+	ft_chdir(dir, obj);
+	free(obj->tool.oldpwd);
+	obj->tool.oldpwd = ft_strdup(obj->tool.pwd);
+	free(obj->tool.pwd);
+	getcwd(pwd, PATH_MAX);
+	obj->tool.pwd = ft_strdup(pwd);
 }
 
 int	ft_cd(char **av, t_obj *obj)

@@ -151,7 +151,7 @@ int		ft_size(char **arg);
 void	handle_special_char(void);
 char	*get_parent_dir(const char *pwd);
 int		cd_no_perm(t_obj *obj);
-void	cd_to_dir(char *dir, t_obj *obj);
+int	ft_chdir(char *path, t_obj *obj);
 // free
 void	free_argv(char **argv);
 void	free_lexer(t_lexer **lexer);

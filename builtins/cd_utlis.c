@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 22:50:57 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/19 22:09:11 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/19 22:27:39 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,16 @@ int	cd_no_perm(t_obj *obj)
 	return (SUCCESS);
 }
 
-void	cd_to_dir(char *dir, t_obj *obj)
+int	ft_chdir(char *path, t_obj *obj)
 {
-	char	pwd[PATH_MAX];
-
-	ft_chdir(dir, obj);
-	free(obj->tool.oldpwd);
-	obj->tool.oldpwd = ft_strdup(obj->tool.pwd);
-	free(obj->tool.pwd);
-	getcwd(pwd, PATH_MAX);
-	obj->tool.pwd = ft_strdup(pwd);
+	if (chdir(path) != 0)
+	{
+		if (errno == EACCES)
+			ft_putstr_fd("cd: permission denied", 2);
+		else
+			ft_putstr_fd("cd: no such file or directory", 2);
+		determine_exit_code(obj, 1);
+		return (FAILURE);
+	}
+	return (SUCCESS);
 }
