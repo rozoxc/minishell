@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 22:50:57 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/19 22:27:39 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 20:55:49 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,30 @@ char	*get_parent_dir(const char *pwd)
 	return (ft_substr(pwd, 0, slash - pwd));
 }
 
-int	cd_no_perm(t_obj *obj)
+int	cd_no_perm(t_obj *obj, char **av)
 {
 	char	*new_pwd;
+	int		fd;
 
-	update_oldpwd(&obj->tool.oldpwd, &obj->tool.pwd);
-	new_pwd = get_parent_dir(obj->tool.pwd);
-	if (!new_pwd)
+	fd = open("/..", O_RDONLY | O_DIRECTORY);
+	if (!ft_strcmp("..", av[1]) && fd != -1)
 	{
-		determine_exit_code(obj, 1);
-		return (FAILURE);
+		close(fd);
+		update_oldpwd(&obj->tool.oldpwd, &obj->tool.pwd);
+		new_pwd = get_parent_dir(obj->tool.pwd);
+		if (!new_pwd)
+			return (determine_exit_code(obj, 1), FAILURE);
+		free(obj->tool.pwd);
+		obj->tool.pwd = new_pwd;
+		ft_chdir(obj->tool.pwd, obj);
+		determine_exit_code(obj, 0);
 	}
-	free(obj->tool.pwd);
-	obj->tool.pwd = new_pwd;
-	ft_chdir(obj->tool.pwd, obj);
-	determine_exit_code(obj, 0);
+	else
+	{
+		if (fd != -1)
+			close(fd);
+		ft_chdir(av[1], obj);
+	}
 	return (SUCCESS);
 }
 
@@ -66,9 +75,9 @@ int	ft_chdir(char *path, t_obj *obj)
 	if (chdir(path) != 0)
 	{
 		if (errno == EACCES)
-			ft_putstr_fd("cd: permission denied", 2);
+			ft_putstr_fd("cd: permission denied\n", 2);
 		else
-			ft_putstr_fd("cd: no such file or directory", 2);
+			ft_putstr_fd("cd: no such file or directory\n", 2);
 		determine_exit_code(obj, 1);
 		return (FAILURE);
 	}

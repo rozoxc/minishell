@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:21:41 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/17 15:40:44 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 20:32:27 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,15 @@ void	exit_code_pipe(t_obj *obj, t_token *token)
 {
 	obj->exit_code = 0;
 	token->type = PIPE;
+}
+
+void	count_heredoc(t_obj *obj, t_token *token)
+{
+	token->type = HEREDOC;
+	obj->count_heredoc++;
+	if (obj->count_heredoc >= 17)
+	{
+		ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
+		exit(2);
+	}
 }

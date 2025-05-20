@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/19 22:27:36 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 19:40:08 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	handle_cd_getcwd_failure(char **av, t_obj *obj, char *pwd)
 		fd = open(".", O_RDONLY | O_DIRECTORY);
 		if (fd == -1 && errno == EACCES)
 		{
-			if (cd_no_perm(obj) == FAILURE)
+			if (cd_no_perm(obj, av) == FAILURE)
 				return (FAILURE);
 		}
 		else

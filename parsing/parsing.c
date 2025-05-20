@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 12:04:37 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/18 21:33:39 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 20:01:55 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	token_type(t_token **token, t_obj *obj)
 	else if (ft_strcmp(token_tmp->str, ">>") == 0)
 		token_tmp->type = APPEND;
 	else if (ft_strcmp(token_tmp->str, "<<") == 0)
-		token_tmp->type = HEREDOC;
+		count_heredoc(obj, token_tmp);
 	else if (token_tmp->prev == NULL || token_tmp->prev->type == PIPE)
 		token_tmp->type = COMMAND;
 	else if (token_tmp->prev->prev && token_tmp->prev->prev->type == HEREDOC)
@@ -96,6 +96,7 @@ t_token	*token(char **str, t_obj *obj)
 
 	line = NULL;
 	token = NULL;
+	obj->count_heredoc = 0;
 	while (*(*str))
 	{
 		skip_space(str);

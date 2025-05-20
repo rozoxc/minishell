@@ -97,6 +97,7 @@ typedef struct s_obj
 	int				flag;
 	int				exit_code;
 	int				split_expand;
+	int				count_heredoc;
 	struct termios	term;
 }	t_obj;
 
@@ -151,8 +152,8 @@ int		check_flag(char *str);
 int		ft_size(char **arg);
 void	handle_special_char(void);
 char	*get_parent_dir(const char *pwd);
-int		cd_no_perm(t_obj *obj);
-int	ft_chdir(char *path, t_obj *obj);
+int		cd_no_perm(t_obj *obj, char **av);
+int		ft_chdir(char *path, t_obj *obj);
 // free
 void	free_argv(char **argv);
 void	free_lexer(t_lexer **lexer);
@@ -176,6 +177,7 @@ char	*ft_expand(t_obj *obj, char *str);
 char	*ft_getenv(t_env *env, char *key);
 void	open_error(t_obj *obj, int fd1, int fd2, char *file);
 void	exit_code_pipe(t_obj *obj, t_token *token);
+void	count_heredoc(t_obj *obj, t_token *token);
 //signals
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
