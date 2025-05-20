@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:13:28 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/19 12:00:32 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 13:01:52 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,23 +105,31 @@ int	check_export_syntax(char **av, int i, t_obj *obj)
 int	ft_export(char **av, t_obj *obj)
 {
 	int	i;
+	int count;
 
 	i = 1;
-	if (av[1] && av[1][0] != '\0')
+	count = 0;
+	if ((av[0] != NULL) && (av[1] && av[1][0] != '\0'))
 	{
 		while (av[i])
 		{
-			if (check_export_syntax(av, i, obj) == FAILURE)
-				return (determine_exit_code(obj, 1), FAILURE);
-			if (process_export_arg(av[i], obj) == FAILURE)
-				return (determine_exit_code(obj, 1), FAILURE);
+			if (check_export_syntax(av, i, obj) == SUCCESS)
+			{
+				if (process_export_arg(av[i], obj) == FAILURE)
+					determine_exit_code(obj, 1);
+			}
+			else
+			{	
+				determine_exit_code(obj, 1);
+				count++;
+			}
 			i++;
 		}
 	}
 	else if ((av[0] != NULL) && (av[1] == NULL || av[1][0] == '\0'))
-	{
 		if (print_envs(obj))
 			return (determine_exit_code(obj, 1), FAILURE);
-	}
+	if (count >= 1)
+		return (determine_exit_code(obj, 1), FAILURE);
 	return (determine_exit_code(obj, 0), SUCCESS);
 }

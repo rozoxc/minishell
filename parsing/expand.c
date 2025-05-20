@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/19 12:00:13 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 16:09:52 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ void	expand(t_obj *obj)
 	while (token)
 	{
 		if (token->type == COMMAND)
+		{
+			obj->split_expand = 0;
 			j = 0;
+		}
 		if (token->type == COMMAND && ft_strchr(token->str, '$'))
 			j = 1;
 		if (token->str && ft_strcmp(token->str, "<<") == 0)
@@ -93,6 +96,8 @@ void	expand(t_obj *obj)
 		|| (!ft_strcmp(str, "export") && (ft_strchr(token->str, '\'') \
 		|| ft_strchr(token->str, '"'))))
 			j = 1;
+		if (!ft_strcmp(token->str, "export"))
+			obj->split_expand = 1;
 		process_token(obj, token, &j, str);
 		token = token->next;
 	}

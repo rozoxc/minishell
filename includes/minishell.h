@@ -96,6 +96,7 @@ typedef struct s_obj
 	int				*pid;
 	int				flag;
 	int				exit_code;
+	int				split_expand;
 	struct termios	term;
 }	t_obj;
 

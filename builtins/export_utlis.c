@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 23:07:26 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/17 02:31:05 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 12:34:24 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	print_env_var(t_env *current)
 
 void	export_error(char *arg, t_obj *obj)
 {
-	ft_putstr_fd("export: not a valid identifier: ", STDERR_FILENO);
-	ft_putendl_fd(arg, STDERR_FILENO);
+	ft_putstr_fd("export: not a valid identifier: ", 2);
+	ft_putendl_fd(arg, 2);
 	determine_exit_code(obj, 1);
 }
 

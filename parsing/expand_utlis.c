@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:41:15 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/18 14:09:33 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 16:23:52 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,33 @@ char	*no_quotes(t_obj *obj, char **argv, int *i, int *j)
 	return (str);
 }
 
+void	scan_until_equal(char **av, int *j)
+{
+	int	i;
+
+	i = 0;
+	while (av[i])
+	{
+		if (ft_strchr(av[i], '='))
+			return ;
+		if (av[i][0] == '"')
+		{
+			(*j)++;
+			return ;
+		}
+		i++;
+	}
+	return ;
+}
+
 char	*do_quotes(t_obj *obj, char **argv, int *i, int *j)
 {
 	char	*str;
 	char	*s;
 
 	str = NULL;
+	if (obj->split_expand == 1)
+		scan_until_equal(argv, j);
 	while (argv[*i])
 	{
 		if (ft_strchr(argv[*i], '$'))
@@ -52,6 +73,34 @@ char	*do_quotes(t_obj *obj, char **argv, int *i, int *j)
 	free(str);
 	return (s);
 }
+void	export_equal(char **av, int *j, int *count)
+{
+	int	i;
+
+	i = 0;
+	while (av[i])
+	{
+		if (ft_strchr(av[i], '='))
+		{
+			i++;
+			while (av[i] && ft_strchr(av[i], '\''))
+			{
+				i++;
+				(*count)++;
+			}
+			return ;
+		}
+		if (av[i][0] == '\'')
+		{
+			(*j)++;
+			if ((*count) % 2 != 0)
+				(*count)++;
+			return ;
+		}
+		i++;
+	}
+	return ;
+}
 
 char	*si_quotes(t_obj *obj, char **argv, int *i, int *j)
 {
@@ -62,6 +111,8 @@ char	*si_quotes(t_obj *obj, char **argv, int *i, int *j)
 	count = 0;
 	while (argv[count] && ft_strchr(argv[count], '\''))
 		count++;
+	if (obj->split_expand == 1)
+		export_equal(argv, j, &count);
 	str = NULL;
 	while (argv[*i])
 	{
