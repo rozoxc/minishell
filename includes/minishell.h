@@ -178,6 +178,10 @@ char	*ft_getenv(t_env *env, char *key);
 void	open_error(t_obj *obj, int fd1, int fd2, char *file);
 void	exit_code_pipe(t_obj *obj, t_token *token);
 void	count_heredoc(t_obj *obj, t_token *token);
+void	export_equal(char **av, int *j, int *count);
+void	fix_norm(t_token *token, t_obj *obj, int *j);
+int		handle_export_args(char **av, t_obj *obj, int *count);
+int		process_export_arg(char *arg, t_obj *obj);
 //signals
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
