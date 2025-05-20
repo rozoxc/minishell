@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:13:28 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/20 13:01:52 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 20:26:18 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,38 +30,41 @@ int	print_envs(t_obj *obj)
 	return (determine_exit_code(obj, 0), 0);
 }
 
-int	handle_append_export(char *arg, t_obj *obj)
+int	handle_append_export(char *arg, t_obj *obj, char *full_var)
 {
 	char	*name;
 	char	*value;
 	char	*existing_value;
-	char	*new_value;
+	char	*temp1;
+	char	*temp2;
 
 	name = ft_substr(arg, 0, ft_strchr(arg, '+') - arg);
 	value = ft_substr(arg, ft_strchr(arg, '+') - arg + 2, ft_strlen(arg));
 	existing_value = lookup_env_value(obj, name);
 	if (existing_value)
-	{
-		new_value = ft_strjoin(existing_value, value);
-		add_env(ft_strjoin(name, ft_strjoin("=", new_value)), &obj->env);
-		free(new_value);
-		new_value = NULL;
-	}
+		temp1 = ft_strjoin(existing_value, value);
 	else
-		add_env(ft_strjoin(name, ft_strjoin("=", value)), &obj->env);
+		temp1 = ft_strdup(value);
+	temp2 = ft_strjoin("=", temp1);
+	full_var = ft_strjoin(name, temp2);
+	add_env(full_var, &obj->env);
 	free(name);
 	free(value);
-	name = NULL;
-	value = NULL;
+	free(temp1);
+	free(temp2);
+	free(full_var);
+	free(existing_value);
 	return (determine_exit_code(obj, 0), SUCCESS);
 }
 
 int	process_export_arg(char *arg, t_obj *obj)
 {
-	int	fond;
+	int		fond;
+	char	*full_var;
 
+	full_var = NULL;
 	if (ft_strnstr(arg, "+=", ft_strlen(arg)))
-		return (handle_append_export(arg, obj));
+		return (handle_append_export(arg, obj, full_var));
 	fond = check_fond(arg);
 	if (fond == -1)
 	{
@@ -73,59 +76,13 @@ int	process_export_arg(char *arg, t_obj *obj)
 	return (determine_exit_code(obj, 0), SUCCESS);
 }
 
-int	check_export_syntax(char **av, int i, t_obj *obj)
-{
-	int	pos;
-
-	if (!is_valid_varname_char(av[i][0], 1))
-	{
-		export_error(av[i], obj);
-		return (FAILURE);
-	}
-	pos = 0;
-	while (av[i][pos] != '\0' && av[i][pos] != '=' && av[i][pos] != '+')
-	{
-		if (!is_valid_varname_char(av[i][pos], 0))
-			return (export_error(av[i], obj), FAILURE);
-		pos++;
-	}
-	if (ft_strnstr(av[i], "+=", ft_strlen(av[i])))
-	{
-		pos = ft_strchr(av[i], '+') - av[i];
-		if (pos > 0 && av[i][pos - 1] != '+' && av[i][pos + 1] == '=')
-			return (determine_exit_code(obj, 0), SUCCESS);
-		return (export_error(av[i], obj), FAILURE);
-	}
-	if (ft_strchr(av[i], '=') || av[i][pos] == '\0')
-		return (determine_exit_code(obj, 0), SUCCESS);
-	export_error(av[i], obj);
-	return (FAILURE);
-}
-
 int	ft_export(char **av, t_obj *obj)
 {
-	int	i;
-	int count;
+	int	count;
 
-	i = 1;
 	count = 0;
 	if ((av[0] != NULL) && (av[1] && av[1][0] != '\0'))
-	{
-		while (av[i])
-		{
-			if (check_export_syntax(av, i, obj) == SUCCESS)
-			{
-				if (process_export_arg(av[i], obj) == FAILURE)
-					determine_exit_code(obj, 1);
-			}
-			else
-			{	
-				determine_exit_code(obj, 1);
-				count++;
-			}
-			i++;
-		}
-	}
+		handle_export_args(av, obj, &count);
 	else if ((av[0] != NULL) && (av[1] == NULL || av[1][0] == '\0'))
 		if (print_envs(obj))
 			return (determine_exit_code(obj, 1), FAILURE);

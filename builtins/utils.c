@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:22:24 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/17 00:24:05 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 20:26:33 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,55 @@ void	add_env(char *str, t_env **env)
 		tmp_env = tmp_env->next;
 	}
 	get_env(env, str);
+}
+
+int	check_export_syntax(char **av, int i, t_obj *obj)
+{
+	int	pos;
+
+	if (!is_valid_varname_char(av[i][0], 1))
+	{
+		export_error(av[i], obj);
+		return (FAILURE);
+	}
+	pos = 0;
+	while (av[i][pos] != '\0' && av[i][pos] != '=' && av[i][pos] != '+')
+	{
+		if (!is_valid_varname_char(av[i][pos], 0))
+			return (export_error(av[i], obj), FAILURE);
+		pos++;
+	}
+	if (ft_strnstr(av[i], "+=", ft_strlen(av[i])))
+	{
+		pos = ft_strchr(av[i], '+') - av[i];
+		if (pos > 0 && av[i][pos - 1] != '+' && av[i][pos + 1] == '=')
+			return (determine_exit_code(obj, 0), SUCCESS);
+		return (export_error(av[i], obj), FAILURE);
+	}
+	if (ft_strchr(av[i], '=') || av[i][pos] == '\0')
+		return (determine_exit_code(obj, 0), SUCCESS);
+	export_error(av[i], obj);
+	return (FAILURE);
+}
+
+int	handle_export_args(char **av, t_obj *obj, int *count)
+{
+	int	i;
+
+	i = 1;
+	while (av[i])
+	{
+		if (check_export_syntax(av, i, obj) == SUCCESS)
+		{
+			if (process_export_arg(av[i], obj) == FAILURE)
+				determine_exit_code(obj, 1);
+		}
+		else
+		{
+			determine_exit_code(obj, 1);
+			(*count)++;
+		}
+		i++;
+	}
+	return (SUCCESS);
 }

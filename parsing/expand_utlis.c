@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utlis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:41:15 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/20 16:23:52 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 19:45:04 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,34 +72,6 @@ char	*do_quotes(t_obj *obj, char **argv, int *i, int *j)
 	s = remove_all_quotes(str);
 	free(str);
 	return (s);
-}
-void	export_equal(char **av, int *j, int *count)
-{
-	int	i;
-
-	i = 0;
-	while (av[i])
-	{
-		if (ft_strchr(av[i], '='))
-		{
-			i++;
-			while (av[i] && ft_strchr(av[i], '\''))
-			{
-				i++;
-				(*count)++;
-			}
-			return ;
-		}
-		if (av[i][0] == '\'')
-		{
-			(*j)++;
-			if ((*count) % 2 != 0)
-				(*count)++;
-			return ;
-		}
-		i++;
-	}
-	return ;
 }
 
 char	*si_quotes(t_obj *obj, char **argv, int *i, int *j)

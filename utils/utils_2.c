@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:21:41 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/20 20:32:27 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 22:52:50 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,44 @@ void	count_heredoc(t_obj *obj, t_token *token)
 		ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
 		exit(2);
 	}
+}
+
+void	fix_norm(t_token *token, t_obj *obj, int *j)
+{
+	if (token->type == COMMAND)
+	{
+		obj->split_expand = 0;
+		*j = 0;
+	}
+	if (token->type == COMMAND && ft_strchr(token->str, '$'))
+		*j = 1;
+}
+
+void	export_equal(char **av, int *j, int *count)
+{
+	int	i;
+
+	i = 0;
+	while (av[i])
+	{
+		if (ft_strchr(av[i], '='))
+		{
+			i++;
+			while (av[i] && ft_strchr(av[i], '\''))
+			{
+				i++;
+				(*count)++;
+			}
+			return ;
+		}
+		if (av[i][0] == '\'')
+		{
+			(*j)++;
+			if ((*count) % 2 != 0)
+				(*count)++;
+			return ;
+		}
+		i++;
+	}
+	return ;
 }

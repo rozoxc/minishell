@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/20 16:09:52 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 22:46:27 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,7 @@ void	expand(t_obj *obj)
 	token = obj->token;
 	while (token)
 	{
-		if (token->type == COMMAND)
-		{
-			obj->split_expand = 0;
-			j = 0;
-		}
-		if (token->type == COMMAND && ft_strchr(token->str, '$'))
-			j = 1;
+		fix_norm(token, obj, &j);
 		if (token->str && ft_strcmp(token->str, "<<") == 0)
 		{
 			handle_special_tokens(&token);
