@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 22:28:18 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/21 01:22:52 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/21 14:31:51 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	argv_len(t_token *token)
 			token = token->next;
 		token = token->next;
 	}
+	if (count == 0)
+		count++;
 	return (count);
 }
 

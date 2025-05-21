@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:51 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/21 00:44:34 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/21 13:27:51 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int	set_red_input(t_lexer *red)
 	{
 		fd = open(red->str, O_RDONLY);
 		if (fd < 0)
-			return (ft_putstr_fd("Minishell Err, infile, No such file or \
-directory\n", 2), EXIT_FAILURE);
+			return (ft_putstr_fd("minishell: ambiguous redirect\n", 2), EXIT_FAILURE);
 		if (dup2(fd, STDIN_FILENO) < 0)
 		{
 			ft_putstr_fd("Minishell Error: redirection\n", STDERR_FILENO);
@@ -48,7 +47,7 @@ int	set_red_append(t_lexer *red)
 	fd = open(red->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd < 0)
 	{
-		ft_putstr_fd("minishell : ambiguous redirect\n", 2);
+		ft_putstr_fd("minishell: ambiguous redirect\n", 2);
 		return (EXIT_FAILURE);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
@@ -67,7 +66,7 @@ int	set_red_trunc(t_lexer *red)
 	fd = open(red->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 	{
-		ft_putstr_fd("minishell : ambiguous redirect\n", 2);
+		ft_putstr_fd("minishell: ambiguous redirect\n", 2);
 		return (EXIT_FAILURE);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
