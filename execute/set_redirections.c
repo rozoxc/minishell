@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:51 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/21 13:27:51 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:33:34 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	set_red_input(t_lexer *red)
 	{
 		fd = open(red->str, O_RDONLY);
 		if (fd < 0)
-			return (ft_putstr_fd("minishell: ambiguous redirect\n", 2), EXIT_FAILURE);
+			return (ft_putstr_fd("minishell: No such \
+file or directory\n", 2), EXIT_FAILURE);
 		if (dup2(fd, STDIN_FILENO) < 0)
 		{
 			ft_putstr_fd("Minishell Error: redirection\n", STDERR_FILENO);
@@ -82,12 +83,10 @@ int	set_redirections(t_cmd *cmd)
 {
 	t_lexer	*red_temp;
 
-	if (cmd == NULL)
-		return (0);
 	red_temp = cmd->lexer;
 	while (red_temp)
 	{
-		while (red_temp &&  red_temp->next != NULL)
+		while (red_temp && red_temp->next != NULL)
 			red_temp = red_temp->next;
 		if (red_temp->i == INPUT || red_temp->i == HEREDOC)
 		{

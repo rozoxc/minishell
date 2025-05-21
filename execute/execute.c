@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/21 13:35:02 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:26:30 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,28 +81,27 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 
 int	setup_execution(t_obj *obj, int *std_in, int *std_out, char ***env)
 {
-	t_obj *tmp_obj = obj;
-	*env = env_to_array(tmp_obj->env);
-	*std_in = dup_error(tmp_obj, dup(STDIN_FILENO));
-	*std_out = dup_error(tmp_obj, dup(STDOUT_FILENO));
-	if (ft_heredoc(tmp_obj) == FAILURE)
+	*env = env_to_array(obj->env);
+	*std_in = dup_error(obj, dup(STDIN_FILENO));
+	*std_out = dup_error(obj, dup(STDOUT_FILENO));
+	if (ft_heredoc(obj) == FAILURE)
 	{
-		while (tmp_obj->cmd->lexer)
+		while (obj->cmd->lexer)
 		{
-			if (tmp_obj->cmd->lexer->i == HEREDOC)
+			if (obj->cmd->lexer->i == HEREDOC)
 			{
-				free(tmp_obj->cmd->lexer->str);
-				free(tmp_obj->cmd->lexer);
-				close(tmp_obj->cmd->lexer->fd);
+				free(obj->cmd->lexer->str);
+				free(obj->cmd->lexer);
+				close(obj->cmd->lexer->fd);
 			}
 			else
 			{
-				free(tmp_obj->cmd->lexer->str);
-				free(tmp_obj->cmd->lexer);
+				free(obj->cmd->lexer->str);
+				free(obj->cmd->lexer);
 			}
-			tmp_obj->cmd->lexer = tmp_obj->cmd->lexer->next;
+			obj->cmd->lexer = obj->cmd->lexer->next;
 		}
-		cleanup_execution(tmp_obj, *std_in, *std_out, *env);
+		cleanup_execution(obj, *std_in, *std_out, *env);
 		return (determine_exit_code(obj, 1), 1);
 	}
 	return (0);

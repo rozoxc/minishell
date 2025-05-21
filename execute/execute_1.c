@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:53:42 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/21 01:11:45 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:22:23 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	shift_env_arg(char *argv[])
 	int	i;
 
 	i = 0;
+	free(argv[0]);
 	while (argv[i + 1] != NULL)
 	{
 		argv[i] = argv[i + 1];
@@ -67,7 +68,6 @@ void	child_process_execution(t_obj *obj, char *path, \
 char	*get_command_path(t_obj *obj, char *cmd)
 {
 	char	*path;
-	char	*str;
 
 	if (cmd[0] == '.' && cmd[1] == '/')
 		path = ft_strdup(cmd);
@@ -78,8 +78,7 @@ char	*get_command_path(t_obj *obj, char *cmd)
 		path = get_path(obj, cmd);
 		if (path == NULL)
 		{
-			str = ft_strjoin(cmd, " : command not found\n");
-			ft_putstr_fd(str, 2);
+			ft_putstr_fd("minishell: command not found\n", 2);
 			exit(determine_exit_code(obj, 127));
 		}
 	}
