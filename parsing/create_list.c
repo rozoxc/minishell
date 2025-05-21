@@ -30,8 +30,9 @@ int	process_cmd_segment(t_token **token, char **argv, t_lexer **lexer)
 	{
 		process_args_and_redirects(token, argv, lexer, &i);
 		*token = (*token)->next;
-		if ((!(*token) &&  (argv[0] == NULL && argv[1] == NULL)) \
-		|| (*token && (*token)->type == PIPE  && (argv[0] == NULL && argv[1] == NULL)))
+		if ((!(*token) && (argv[0] == NULL && argv[1] == NULL)) \
+		|| (*token && (*token)->type == PIPE
+				&& (argv[0] == NULL && argv[1] == NULL)))
 			argv[0] = ft_strdup(" ");
 	}
 	return (1);

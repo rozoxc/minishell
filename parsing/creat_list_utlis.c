@@ -30,11 +30,11 @@ int	argv_len(t_token *token)
 	return (count);
 }
 
-void    ft_redirection(t_lexer **lexer, t_token **token)
+void	ft_redirection(t_lexer **lexer, t_token **token)
 {
-    if ((*token) && (*token)->next)
-    {
-        append_lexer(lexer, (*token)->next->str, (*token)->type);
-        (*token) = (*token)->next;
-    }
+	if ((*token) && (*token)->next)
+	{
+		append_lexer(lexer, (*token)->next->str, (*token)->type);
+		(*token) = (*token)->next;
+	}
 }
