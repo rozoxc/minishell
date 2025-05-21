@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/20 22:46:27 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/21 00:31:15 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	expand(t_obj *obj)
 		|| (!ft_strcmp(str, "export") && (ft_strchr(token->str, '\'') \
 		|| ft_strchr(token->str, '"'))))
 			j = 1;
-		if (!ft_strcmp(token->str, "export"))
+		if (!ft_strcmp(str, "export"))
 			obj->split_expand = 1;
 		process_token(obj, token, &j, str);
 		token = token->next;

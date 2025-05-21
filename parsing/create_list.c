@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:20:04 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/19 12:54:31 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/21 01:20:38 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,8 @@ void	process_args_and_redirects(t_token **token,
 {
 	if (*token && (*token)->type <= 3)
 		argv[(*i)++] = ft_strdup((*token)->str);
-	else if ((*token && (*token)->type > 3 && argv[0] != NULL)
-		|| (*token && (*token)->type == HEREDOC))
+	else if (*token && (*token)->type > 3)
 		ft_redirection(lexer, token);
-}
-
-void	handle_special_token(t_token **token)
-{
-	if ((*token)->str[0] == '\0' && (!ft_strchr(++(*token)->str, '"')
-			&& !ft_strchr((*token)->str, '\'')))
-	{
-		handle_ambiguous_redirect(*token);
-		return ;
-	}
-	handle_file_open(*token);
-	*token = (*token)->next;
 }
 
 int	process_cmd_segment(t_token **token, char **argv, t_lexer **lexer)
@@ -43,13 +30,8 @@ int	process_cmd_segment(t_token **token, char **argv, t_lexer **lexer)
 	{
 		process_args_and_redirects(token, argv, lexer, &i);
 		*token = (*token)->next;
-		if (*token && (*token)->type == ARG && argv[0] == NULL)
-		{
-			handle_special_token(token);
-			continue ;
-		}
 		if (*token && (*token)->type == PIPE && argv[0] == NULL)
-			*token = (*token)->next;
+			argv[0] = ft_strdup(" ");
 	}
 	return (1);
 }

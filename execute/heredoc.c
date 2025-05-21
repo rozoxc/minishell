@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/20 18:51:37 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/20 23:08:13 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*ft_run(t_obj *obj, t_lexer *lexer)
 	while (1)
 	{
 		file = generate_random_filename();
-		if (!file || access(file, F_OK) != 0)
+		if (file && access(file, F_OK) != 0)
 			break ;
 		free(file);
 	}

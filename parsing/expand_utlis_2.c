@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:20:22 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/20 13:41:24 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/21 00:23:21 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	process_token(t_obj *obj, t_token *token, int *j, char *str)
 	while (argv[ij[0]])
 		process_quotes(obj, token, argv, ij);
 	*j = ij[1];
-	if (*j == 2)
+	if (*j >= 2)
 		split_expanded(token);
 	free_argv(argv);
 }

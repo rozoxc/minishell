@@ -194,7 +194,6 @@ char	*si_quotes(t_obj *obj, char **argv, int *i, int *j);
 t_token	*create_token(char *str);
 void	process_quotes(t_obj *obj, t_token *token, char **argv, int *ij);
 void	process_token(t_obj *obj, t_token *token, int *j, char *str);
-void	handle_special_tokens(t_token **token_ptr);
 void	split_expanded(t_token *token);
 char	*handle_special_chars(t_obj *obj, char *str);
 char	*lookup_env_value(t_obj *obj, char *str);
@@ -205,6 +204,7 @@ void	print_env_var(t_env *current);
 void	print_env_name(char *env_value);
 void	print_env_value(char *env_value, int i);
 int		ft_process_wait_status(pid_t pid, int status, t_obj *obj);
+void	handle_special_tokens(t_token **token_ptr);
 //fail execute
 void	handle_execution_error(t_obj *obj, char *path, char **env);
 // cd utlis
@@ -213,8 +213,6 @@ void	update_oldpwd(char **s1, char **s2);
 // creat list utlis
 int		argv_len(t_token *token);
 void	ft_redirection(t_lexer **lexer, t_token **token);
-void	handle_file_open(t_token *token);
-void	handle_ambiguous_redirect(t_token *token);
 void	export_error(char *arg, t_obj *obj);
 int		is_valid_varname_char(char c, int is_first_char);
 #endif

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/19 10:01:41 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/21 01:10:20 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 	t_cmd	*cur_cmd;
 	int		pid;
 	int		ft_pipe[2];
+	t_lexer	*lexer;
+	int	fd;
 
 	cur_cmd = obj->cmd;
 	pid = 0;
@@ -77,22 +79,50 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 		else
 			handle_parent(obj, &cur_cmd, &pid, ft_pipe);
 	}
+	while (cur_cmd && !cur_cmd->argv[0])
+	{
+		lexer = cur_cmd->lexer;
+		while (lexer)
+		{
+			if (lexer->i != HEREDOC)
+			{
+				if (lexer->str[0] == '\0')
+				{
+					ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+				}
+				fd = open(lexer->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
+				close(fd);
+			}
+			lexer = lexer->next;
+		}
+		cur_cmd = cur_cmd->next;
+	}
 }
 
 int	setup_execution(t_obj *obj, int *std_in, int *std_out, char ***env)
 {
-	*env = env_to_array(obj->env);
-	*std_in = dup_error(obj, dup(STDIN_FILENO));
-	*std_out = dup_error(obj, dup(STDOUT_FILENO));
-	if (ft_heredoc(obj) == FAILURE)
+	t_obj *tmp_obj = obj;
+	*env = env_to_array(tmp_obj->env);
+	*std_in = dup_error(tmp_obj, dup(STDIN_FILENO));
+	*std_out = dup_error(tmp_obj, dup(STDOUT_FILENO));
+	if (ft_heredoc(tmp_obj) == FAILURE)
 	{
-		while (obj->cmd->lexer)
+		while (tmp_obj->cmd->lexer)
 		{
-			if (obj->cmd->lexer->i == HEREDOC)
-				close(obj->cmd->lexer->fd);
-			obj->cmd->lexer = obj->cmd->lexer->next;
+			if (tmp_obj->cmd->lexer->i == HEREDOC)
+			{
+				free(tmp_obj->cmd->lexer->str);
+				free(tmp_obj->cmd->lexer);
+				close(tmp_obj->cmd->lexer->fd);
+			}
+			else
+			{
+				free(tmp_obj->cmd->lexer->str);
+				free(tmp_obj->cmd->lexer);
+			}
+			tmp_obj->cmd->lexer = tmp_obj->cmd->lexer->next;
 		}
-		cleanup_execution(obj, *std_in, *std_out, *env);
+		cleanup_execution(tmp_obj, *std_in, *std_out, *env);
 		return (determine_exit_code(obj, 1), 1);
 	}
 	return (0);
