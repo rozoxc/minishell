@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utlis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:41:15 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/20 19:45:04 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:42:38 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 char	*no_quotes(t_obj *obj, char **argv, int *i, int *j)
 {
 	char	*str;
+	char	*s;
 
 	str = NULL;
-	while (argv[*i] && ft_strcmp(argv[*i], "\"") && ft_strcmp(argv[*i], "\'"))
+	while (argv[*i])
 	{
 		if (ft_strchr(argv[*i], '$'))
 		{
@@ -28,7 +29,9 @@ char	*no_quotes(t_obj *obj, char **argv, int *i, int *j)
 			str = ft_strjoin2(str, argv[*i], 1);
 		(*i)++;
 	}
-	return (str);
+	s = remove_all_quotes(str);
+	free(str);
+	return (s);
 }
 
 void	scan_until_equal(char **av, int *j)
