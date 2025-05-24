@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:39:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/24 22:39:58 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 23:25:26 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*allocate_echo_buffer(char **arg, int start_idx, int size
 	if (no_new_line == 0)
 		buffer_size += 1;
 	buffer = malloc(sizeof(char) * buffer_size);
+	if (!buffer)
+		return (NULL);
 	return (buffer);
 }
 

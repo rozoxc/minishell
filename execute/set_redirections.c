@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:51 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/24 20:27:05 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 23:22:19 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int	set_redirections(t_cmd *cmd)
 	red_temp = cmd->lexer;
 	while (red_temp)
 	{
-		// while (red_temp && (red_temp->i == HEREDOC && red_temp->next != NULL))
-		// 	red_temp = red_temp->next;
 		if (red_temp->i == INPUT || red_temp->i == HEREDOC)
 		{
 			if (set_red_input(red_temp) == EXIT_FAILURE)

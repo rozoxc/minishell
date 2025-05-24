@@ -100,6 +100,8 @@ typedef struct s_obj
 	int				split_expand;
 	int				count_heredoc;
 	int				count_env;
+	int				fd_in;
+	int				fd_out;
 	struct termios	term;
 }	t_obj;
 
@@ -129,6 +131,7 @@ void	shift_empty_args_cmds(t_cmd *cmd);
 void	shift_env_arg(char *argv[]);
 void	process_input(t_obj *obj, char *s, int fd, char *stop);
 void	process_input(t_obj *obj, char *s, int fd, char *stop);
+int		setup_execution(t_obj *obj, int *std_in, int *std_out, char ***env);
 // parsing utlis function
 int		parsing(t_obj *obj);
 t_cmd	*create_list(t_obj *obj);

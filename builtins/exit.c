@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:23:14 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/24 15:52:25 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 23:25:47 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ char	*skip_zero(char *str)
 	if (str[i] != '0')
 		return (str);
 	p = malloc(sizeof(char) * ft_strlen(str) + 1);
+	if (!p)
+		return (NULL);
 	while (str[i] == '0')
 	{
 		i++;

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:23:42 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/17 14:27:00 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 23:49:17 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,34 @@ int	is_heredoc(t_cmd *cmd)
 			lexer = lexer->next;
 		}
 		cmd = cmd->next;
+	}
+	return (0);
+}
+
+int	setup_execution(t_obj *obj, int *std_in, int *std_out, char ***env)
+{
+	*env = env_to_array(obj->env);
+	*std_in = dup_error(obj, dup(STDIN_FILENO));
+	*std_out = dup_error(obj, dup(STDOUT_FILENO));
+	if (ft_heredoc(obj) == FAILURE)
+	{
+		while (obj->cmd->lexer)
+		{
+			if (obj->cmd->lexer->i == HEREDOC)
+			{
+				free(obj->cmd->lexer->str);
+				free(obj->cmd->lexer);
+				close(obj->cmd->lexer->fd);
+			}
+			else
+			{
+				free(obj->cmd->lexer->str);
+				free(obj->cmd->lexer);
+			}
+			obj->cmd->lexer = obj->cmd->lexer->next;
+		}
+		cleanup_execution(obj, *std_in, *std_out, *env);
+		return (determine_exit_code(obj, 1), 1);
 	}
 	return (0);
 }
