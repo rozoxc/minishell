@@ -184,6 +184,7 @@ void	export_equal(char **av, int *j, int *count);
 void	fix_norm(t_token *token, t_obj *obj, int *j);
 int		handle_export_args(char **av, t_obj *obj, int *count);
 int		process_export_arg(char *arg, t_obj *obj);
+void	swap_strings(char **s1, char **s2);
 //signals
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
