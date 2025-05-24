@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 12:04:37 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/20 20:01:55 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 16:05:45 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	quotes(char *str)
 				str++;
 			if (*str == '\0')
 			{
-				printf("minishell: syntax error with open quotes\n");
+				ft_putstr_fd("minishell: syntax error with open quotes\n", 2);
 				return (FAILURE);
 			}
 		}
@@ -132,6 +132,6 @@ int	parsing(t_obj *obj)
 	obj->cmd = create_list(obj);
 	free_token(&obj->token);
 	if (obj->cmd != NULL)
-		return (determine_exit_code(obj, SUCCESS));
-	return (determine_exit_code(obj, 0));
+		return (determine_exit_code(obj, obj->exit_code));
+	return (determine_exit_code(obj, 1));
 }

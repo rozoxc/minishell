@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:23:14 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 16:26:55 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 15:52:25 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ int	ft_exit(char **args, t_obj *obj)
 	if (obj->flag != 1)
 		ft_putstr_fd("exit\n", 1);
 	if (args[1] == NULL)
-		exit(SUCCESS);
+	{
+		exit(obj->exit_code);
+	}
 	if (!ft_is_numeric(args[1]) || !ft_is_valid(args[1]))
 	{
 		show_error(args[1]);

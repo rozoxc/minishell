@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/20 19:40:08 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 15:39:45 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	cd_no_av(t_obj *obj)
 	}
 	if (chdir(home) == FAILURE)
 	{
-		ft_putstr_fd("cd: no such file or directory: ", 2);
+		ft_putstr_fd("cd: no such file or directory: \n", 2);
 		ft_putendl_fd(home, 2);
 		return (FAILURE);
 	}

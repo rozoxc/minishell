@@ -91,8 +91,8 @@ void	shell_process(t_obj *obj)
 	}
 	if (obj->str == NULL)
 	{
-		printf("exit\n");
-		exit(0);
+		ft_putstr_fd("exit\n", 2);
+		exit(obj->exit_code);
 	}
 	parsing(obj);
 	if (*obj->str)
@@ -108,7 +108,7 @@ int	main(int args, char **argv, char **env)
 	t_obj	obj;
 
 	if (args == 2 || argv[1] != NULL)
-		return (printf("error \n"), 1);
+		return (ft_putstr_fd("error \n", 2), 1);
 	tcgetattr(0, &obj.term);
 	init_obj(&obj, env);
 	while (1)

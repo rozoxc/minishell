@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:53:42 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/21 16:22:23 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 15:35:46 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	shift_empty_args_cmds(t_cmd *cmd)
 		av = current->argv;
 		if (av != NULL)
 		{
-			if (av[0] != NULL && strcmp(av[0], "env") == 0 \
+			if (av[0] != NULL && ft_strcmp(av[0], "env") == 0 \
 				&& (av[1] != NULL && av[1][0] != '\0'))
 				shift_env_arg(av);
 			shift_empty_args(av);

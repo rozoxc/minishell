@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:42:20 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/16 21:35:14 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 15:42:04 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int	syntax(t_token *token)
 	if (i != 0)
 	{
 		if (i == -2)
-			printf("bash: syntax error near unexpected token `|'\n");
+			ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
 		else if (i == -3)
-			printf("bash: syntax error near unexpected token `newline'\n");
+			ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 		else if (i == -4)
-			printf("bash: syntax error near unexpected token `>>'\n");
+			ft_putstr_fd("bash: syntax error near unexpected token `>>'\n", 2);
 		return (FAILURE);
 	}
 	return (SUCCESS);

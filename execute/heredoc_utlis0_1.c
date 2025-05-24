@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:45:03 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/17 15:15:36 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 15:37:47 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ char	*remove_all_quotes(const char *input)
 	int		len;
 
 	if (!input || !*input)
-		return (strdup(""));
-	len = strlen(input);
+		return (ft_strdup(""));
+	len = ft_strlen(input);
 	result = malloc(len + 1);
 	if (!result)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:03:07 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/13 15:48:28 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 15:34:14 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*handle_dollar_quotes(char *input)
 	int		out_pos;
 	int		i;
 
-	out = malloc(strlen(input) + 1);
+	out = malloc(ft_strlen(input) + 1);
 	if (!out)
 		return (NULL);
 	out_pos = 0;
