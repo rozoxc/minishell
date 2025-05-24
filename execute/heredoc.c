@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/20 23:08:13 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 20:33:34 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*generate_random_filename(void)
 {
 	int		fd;
-	char	buffer[256];
+	char	buffer[1000];
 	char	*file;
 	int		i;
 	int		j;
@@ -30,7 +30,7 @@ char	*generate_random_filename(void)
 	close(fd);
 	i = 0;
 	j = 0;
-	while ((size_t)i < ft_strlen(buffer) && j < 10)
+	while ((size_t)i < sizeof(buffer) && j < 10)
 	{
 		if ((buffer[i] >= 97 && buffer[i] <= 122) \
 			|| (buffer[i] >= 65 && buffer[i] <= 90))
@@ -63,7 +63,6 @@ char	*ft_run(t_obj *obj, t_lexer *lexer)
 	fd2 = open(file, O_RDONLY);
 	open_error(obj, fd, fd2, file);
 	process_input(obj, s, fd, lexer->str);
-	close(fd2);
 	close(fd);
 	lexer->fd = fd2;
 	return (file);
