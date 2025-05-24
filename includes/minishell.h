@@ -103,7 +103,7 @@ typedef struct s_obj
 
 //executed utils functions
 int		determine_exit_code(t_obj *obj, int exit_code);
-void	pipe_error(t_obj *obj, int pid);
+int		pipe_error(t_obj *obj, int pid);
 int		fork_error(t_obj *obj, int pid);
 int		dup_error(t_obj *obj, int dup);
 void	dup2_error(t_obj *obj, int dup);

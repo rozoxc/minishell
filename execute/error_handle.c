@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:30 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/14 16:38:01 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 15:19:35 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@ int	determine_exit_code(t_obj *obj, int exit_code)
 	return (exit_code);
 }
 
-void	pipe_error(t_obj *obj, int pid)
+int		pipe_error(t_obj *obj, int pid)
 {
 	if (pid == -1)
 	{
 		ft_putstr_fd("minishell error : fail to create pipe\n", 2);
 		exit(determine_exit_code(obj, 1));
 	}
+	return(pid);
 }
 
 int	fork_error(t_obj *obj, int pid)

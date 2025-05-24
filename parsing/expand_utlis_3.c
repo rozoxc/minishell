@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:58:30 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/17 15:36:37 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 15:30:41 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*handle_special_chars(t_obj *obj, char *str)
 {
 	if (*str == '\0')
 		return (ft_strdup("$"));
+	if (*str == '$')
+		return (ft_strdup("$$"));
 	else if (*str == '%')
 		return (ft_strdup("$%"));
 	else if (*str == '+')

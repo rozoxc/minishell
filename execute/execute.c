@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/21 16:26:30 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 15:26:12 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,15 @@ void	execution_loop(t_obj *obj, int fd_in, int fd_out, char **env)
 	obj->pid = malloc(sizeof(t_cmd) * count_cmds(obj));
 	while (cur_cmd)
 	{
-		pipe_error(obj, pipe(ft_pipe));
+		if (pipe_error(obj, pipe(ft_pipe)) == -1)
+			break ;
 		obj->pid[pid] = fork_error(obj, fork());
 		if (obj->pid[pid] == -1)
+		{
+			close(ft_pipe[0]);
+			close(ft_pipe[1]);
 			break ;
+		}
 		if (obj->pid[pid] == 0)
 		{
 			close(fd_in);
