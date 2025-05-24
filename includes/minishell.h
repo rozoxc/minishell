@@ -95,7 +95,7 @@ typedef struct s_obj
 	char			*str;
 	int				*pid;
 	int				flag;
-	int				expand_flag;
+	int				echo_flag;
 	int				exit_code;
 	int				split_expand;
 	int				count_heredoc;

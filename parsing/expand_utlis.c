@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utlis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:41:15 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/21 15:42:38 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 21:01:25 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	*no_quotes(t_obj *obj, char **argv, int *i, int *j)
 		if (ft_strchr(argv[*i], '$'))
 		{
 			str = ft_strjoin2(str, get_value(obj, argv[*i] + 1), 2);
+			obj->echo_flag = 1;
 			(*j)++;
 		}
 		else

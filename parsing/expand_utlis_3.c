@@ -6,7 +6,7 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:58:30 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/24 20:42:19 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/24 21:01:35 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,5 @@ char	*lookup_env_value(t_obj *obj, char *str)
 	value = get_env_variable(obj, str);
 	if (!value)
 		return (NULL);
-	obj->expand_flag = 1;
 	return (value);
 }
