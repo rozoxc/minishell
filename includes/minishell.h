@@ -99,6 +99,7 @@ typedef struct s_obj
 	int				exit_code;
 	int				split_expand;
 	int				count_heredoc;
+	int				count_env;
 	struct termios	term;
 }	t_obj;
 
@@ -201,7 +202,7 @@ char	*lookup_env_value(t_obj *obj, char *str);
 void	write_input_line(t_obj *obj, char *str, int fd, char *stop);
 void	process_child(t_obj *obj, char *s, int fd, char *stop);
 char	*handle_dollar_quotes(char *input);
-void	print_env_var(t_env *current);
+void	print_env_var(char *env);
 void	print_env_name(char *env_value);
 void	print_env_value(char *env_value, int i);
 int		ft_process_wait_status(pid_t pid, int status, t_obj *obj);
@@ -216,4 +217,5 @@ int		argv_len(t_token *token);
 void	ft_redirection(t_lexer **lexer, t_token **token);
 void	export_error(char *arg, t_obj *obj);
 int		is_valid_varname_char(char c, int is_first_char);
+void	parse_echo_args(char ***str, int *id, int *no_new_line, int size);
 #endif

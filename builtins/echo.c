@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:39:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/24 20:51:56 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:39:58 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,28 +86,22 @@ void	echo_print_args(char **arg, int start_idx, int size, int no_new_line)
 
 int	ft_echo(char **arg, t_obj *obj)
 {
-	int	no_new_line;
-	int	size;
-	int	start_idx;
-	char **str;
+	int		no_new_line;
+	int		size;
+	int		start_idx;
+	char	**str;
 
 	str = arg;
-	no_new_line = 0;
 	start_idx = 1;
 	if (obj->echo_flag == 1)
 	{
-
 		str = ft_split_simple(arg[1], ' ');
 		size = ft_size(str);
 		start_idx = 0;
 	}
 	else
 		size = ft_size(str);
-	while (start_idx < size && check_flag(str[start_idx]))
-	{
-		no_new_line = 1;
-		start_idx++;
-	}
+	parse_echo_args(&str, &start_idx, &no_new_line, size);
 	echo_print_args(str, start_idx, size, no_new_line);
 	if (obj->echo_flag == 1)
 		clean_echo(str);

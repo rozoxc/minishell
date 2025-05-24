@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_utlis.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 16:00:10 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/24 20:18:03 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:40:49 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,14 @@ void clean_echo(char **str)
 		i++;
 	}
 	free(str);
+}
+
+void	parse_echo_args(char ***str, int *id, int *no_new_line, int size)
+{
+	*no_new_line = 0;
+	while (*id < size && check_flag((*str)[*id]))
+	{
+		*no_new_line = 1;
+		(*id)++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:22:24 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/24 15:07:27 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 22:37:32 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ int	check_export_syntax(char **av, int i, t_obj *obj)
 	int	pos;
 
 	pos = 0;
+	if (!is_valid_varname_char(av[i][0], 1))
+	{
+		export_error(av[i], obj);
+		return (FAILURE);
+	}
 	while (av[i][pos] != '\0' && av[i][pos] != '=' && av[i][pos] != '+')
 	{
 		if (!is_valid_varname_char(av[i][pos], 0))

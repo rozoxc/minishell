@@ -43,6 +43,7 @@ void	fill_obj(t_obj *obj, char *pwd)
 {
 	obj->flag = 0;
 	obj->echo_flag = 0;
+	obj->count_env = -1;
 	obj->str = NULL;
 	obj->tool.pwd = ft_strdup(pwd);
 	obj->tool.oldpwd = ft_strdup(pwd);
@@ -73,6 +74,7 @@ void	init_obj(t_obj *obj, char **env)
 		while (*env)
 		{
 			get_env(&obj->env, *env);
+			obj->count_env++;
 			env++;
 		}
 	}

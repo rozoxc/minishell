@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 23:07:26 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/20 12:34:24 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 22:33:30 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,18 @@ void	print_env_value(char *env_value, int i)
 	ft_putstr_fd("\n", STDOUT_FILENO);
 }
 
-void	print_env_var(t_env *current)
+void	print_env_var(char *str)
 {
 	int		i;
 
-	if (current->value)
+	if (str)
 	{
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
 		i = 0;
-		while (current->value[i] && current->value[i] != '=')
+		while (str[i] && str[i] != '=')
 			i++;
-		print_env_name(current->value);
-		print_env_value(current->value, i);
+		print_env_name(str);
+		print_env_value(str, i);
 	}
 }
 

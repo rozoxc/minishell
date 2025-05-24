@@ -3,30 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:13:28 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/20 20:26:18 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:55:09 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	swap_strings(char **s1, char **s2)
+{
+	char	*temp;
+
+	temp = *s1;
+	*s1 = *s2;
+	*s2 = temp;
+}
+
+void	sort_by_first_char(char **arr, t_obj *obj)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < obj->count_env)
+	{
+		j = 0;
+		while (j < obj->count_env - i)
+		{
+			if (arr[j][0] > arr[j + 1][0])
+				swap_strings(&arr[j], &arr[j + 1]);
+			j++;
+		}
+		i++;
+	}
+}
+
 int	print_envs(t_obj *obj)
 {
-	t_env	*current;
+	int i = 0;
+	char **env;
 
+	env = env_to_array(obj->env);
+	sort_by_first_char(env, obj);
 	if (!obj)
 	{
 		ft_putstr_fd("minishell: env: invalid shell object\n", STDERR_FILENO);
 		return (determine_exit_code(obj, 1), 1);
 	}
-	current = obj->env;
-	while (current != NULL)
+	while (env[i] != NULL)
 	{
-		print_env_var(current);
-		current = current->next;
+		print_env_var(env[i]);
+		free(env[i]);
+		i++;
 	}
+	free(env);
 	return (determine_exit_code(obj, 0), 0);
 }
 
