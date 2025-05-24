@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:22:24 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/24 22:37:32 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 23:29:04 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,13 @@ int	handle_export_args(char **av, t_obj *obj, int *count)
 		i++;
 	}
 	return (SUCCESS);
+}
+
+void	swap_strings(char **s1, char **s2)
+{
+	char	*temp;
+
+	temp = *s1;
+	*s1 = *s2;
+	*s2 = temp;
 }

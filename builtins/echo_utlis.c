@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 16:00:10 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/24 22:40:49 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 23:26:46 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_flag(char *str)
 	return (1);
 }
 
-void clean_echo(char **str)
+void	clean_echo(char **str)
 {
 	int	i;
 

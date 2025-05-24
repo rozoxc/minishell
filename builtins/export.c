@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:13:28 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/24 22:55:09 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 23:27:43 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	swap_strings(char **s1, char **s2)
-{
-	char	*temp;
-
-	temp = *s1;
-	*s1 = *s2;
-	*s2 = temp;
-}
 
 void	sort_by_first_char(char **arr, t_obj *obj)
 {
@@ -42,9 +33,10 @@ void	sort_by_first_char(char **arr, t_obj *obj)
 
 int	print_envs(t_obj *obj)
 {
-	int i = 0;
-	char **env;
+	int		i;
+	char	**env;
 
+	i = 0;
 	env = env_to_array(obj->env);
 	sort_by_first_char(env, obj);
 	if (!obj)
