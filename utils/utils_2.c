@@ -6,7 +6,7 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:21:41 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/20 22:52:50 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:48:42 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	open_error(t_obj *obj, int fd1, int fd2, char *file)
 	unlink(file);
 	if (fd1 == -1 || fd2 == -1)
 	{
-		ft_putstr_fd("file to open the file\n", 2);
+		ft_putstr_fd("faild to open the file\n", 2);
 		if (fd1 != -1)
 			close(fd1);
 		if (fd2 != -1)

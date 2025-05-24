@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utlis1_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:38:10 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/17 14:17:40 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/21 12:58:11 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,9 @@ void	process_input(t_obj *obj, char *s, int fd, char *stop)
 	signal(SIGINT, SIG_IGN);
 	pid = fork_error(obj, fork());
 	if (pid == 0)
+	{
 		process_child(obj, s, fd, stop);
+	}
 	else
 	{
 		free(s);
