@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_utlis.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 16:00:10 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/16 16:29:52 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 20:18:03 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,17 @@ int	check_flag(char *str)
 		i++;
 	}
 	return (1);
+}
+
+void clean_echo(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != NULL)
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
 }

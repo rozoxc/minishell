@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:39:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/17 02:15:40 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 20:17:11 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,28 @@ int	ft_echo(char **arg, t_obj *obj)
 	int	no_new_line;
 	int	size;
 	int	start_idx;
+	char **str;
 
-	(void)obj;
-	size = ft_size(arg);
+	str = arg;
 	no_new_line = 0;
 	start_idx = 1;
-	while (start_idx < size && check_flag(arg[start_idx]))
+	if (obj->expand_flag == 1)
+	{
+
+		str = ft_split_simple(arg[1], ' ');
+		size = ft_size(str);
+		start_idx = 0;
+	}
+	else
+		size = ft_size(str);
+	while (start_idx < size && check_flag(str[start_idx]))
 	{
 		no_new_line = 1;
 		start_idx++;
 	}
-	echo_print_args(arg, start_idx, size, no_new_line);
+	echo_print_args(str, start_idx, size, no_new_line);
+	if (obj->expand_flag == 1)
+		clean_echo(str);
+	obj->expand_flag = 0;
 	return (determine_exit_code(obj, 0), SUCCESS);
 }

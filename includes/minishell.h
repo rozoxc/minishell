@@ -95,6 +95,7 @@ typedef struct s_obj
 	char			*str;
 	int				*pid;
 	int				flag;
+	int				expand_flag;
 	int				exit_code;
 	int				split_expand;
 	int				count_heredoc;
@@ -160,7 +161,7 @@ void	free_lexer(t_lexer **lexer);
 void	free_token(t_token **token);
 void	free_cmd(t_cmd **cmd);
 void	free_env(t_env **env);
-
+void	clean_echo(char **str);
 // utlis
 char	*get_value(t_obj *obj, char *str);
 int		check_build(char *cmd);

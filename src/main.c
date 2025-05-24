@@ -42,6 +42,7 @@ void	get_env(t_env **env, char *str)
 void	fill_obj(t_obj *obj, char *pwd)
 {
 	obj->flag = 0;
+	obj->expand_flag = 0;
 	obj->str = NULL;
 	obj->tool.pwd = ft_strdup(pwd);
 	obj->tool.oldpwd = ft_strdup(pwd);
