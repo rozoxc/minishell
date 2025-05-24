@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 15:26:41 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/11 18:24:32 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 23:52:56 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	append_token(t_token **token, char *str)
 	if (!tmp_token)
 	{
 		(*token) = malloc(sizeof(t_token));
-		if (!token)
+		if (!*token)
 			return ;
 		(*token)->str = ft_strdup(str);
 		(*token)->next = NULL;

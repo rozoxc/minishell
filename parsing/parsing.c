@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 12:04:37 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/24 16:05:45 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 23:54:36 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	token_type(t_token **token, t_obj *obj)
 {
 	t_token	*token_tmp;
 
+	if (!*token)
+		return ;
 	token_tmp = *token;
 	while (token_tmp->next)
 		token_tmp = token_tmp->next;

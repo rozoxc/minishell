@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utlis1_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:23:42 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/24 23:49:17 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/24 23:55:38 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	cleanup_execution(t_obj *obj, int std_in, int std_out, char **env)
 	int	i;
 
 	i = 0;
+	if (!env)
+		return ;
 	while (env[i])
 	{
 		free(env[i]);
