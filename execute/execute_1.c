@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:53:42 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/24 15:35:46 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/25 23:46:58 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	child_process_execution(t_obj *obj, char *path, \
 	if (obj->cmd && obj->cmd->argv[0] == NULL && (ft_strchr(obj->str, '"') \
 		|| ft_strchr(obj->str, '\'')))
 	{
-		ft_putstr_fd("minishell: : command not found\n", 2);
+		ft_putstr_fd("minishell: command not found\n", 2);
 		exit(determine_exit_code(obj, 127));
 	}
 	if (is_only_whitespace(cur_cmd->argv[0]))
