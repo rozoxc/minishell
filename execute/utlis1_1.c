@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utlis1_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:23:42 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/24 23:55:38 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/25 23:03:15 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,20 +100,10 @@ int	setup_execution(t_obj *obj, int *std_in, int *std_out, char ***env)
 	*std_out = dup_error(obj, dup(STDOUT_FILENO));
 	if (ft_heredoc(obj) == FAILURE)
 	{
-		while (obj->cmd->lexer)
+		while (obj->cmd)
 		{
-			if (obj->cmd->lexer->i == HEREDOC)
-			{
-				free(obj->cmd->lexer->str);
-				free(obj->cmd->lexer);
-				close(obj->cmd->lexer->fd);
-			}
-			else
-			{
-				free(obj->cmd->lexer->str);
-				free(obj->cmd->lexer);
-			}
-			obj->cmd->lexer = obj->cmd->lexer->next;
+			clear_heredoc_lexers(obj);
+			obj->cmd = obj->cmd->next;
 		}
 		cleanup_execution(obj, *std_in, *std_out, *env);
 		return (determine_exit_code(obj, 1), 1);

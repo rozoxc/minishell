@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:53 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/24 15:39:45 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/25 22:53:36 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ int	cd_no_av(t_obj *obj)
 		ft_putstr_fd("cd: HOME not set\n", 2);
 		return (determine_exit_code(obj, 1), FAILURE);
 	}
-	if (chdir(home) == FAILURE)
+	if (chdir(home) == -1)
 	{
-		ft_putstr_fd("cd: no such file or directory: \n", 2);
-		ft_putendl_fd(home, 2);
+		if (home[0] == '\0')
+			return (SUCCESS);
+		ft_putstr_fd("cd: no such file or directory\n", 2);
 		return (FAILURE);
 	}
 	if (!getcwd(old_pwd_buf, PATH_MAX))
@@ -113,7 +114,7 @@ int	ft_cd(char **av, t_obj *obj)
 		ft_putstr_fd("too many arguments\n", 2);
 		return (determine_exit_code(obj, 1), FAILURE);
 	}
-	if (!av[1])
+	if (!av[1] || av[1][0] == '\0')
 	{
 		if (cd_no_av(obj) == FAILURE)
 			return (determine_exit_code(obj, 1), FAILURE);

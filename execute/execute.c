@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:20 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/24 23:49:38 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/25 22:44:32 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	handle_parent(t_obj *obj, t_cmd **cur_cmd,
 {
 	t_lexer	*lexer;
 
-	lexer = obj->cmd->lexer;
+	lexer = (*cur_cmd)->lexer;
 	while (lexer)
 	{
 		if (lexer->i == HEREDOC)

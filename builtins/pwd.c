@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:16:32 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/24 15:41:25 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/25 00:14:41 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_pwd(t_env *env, t_obj *obj)
 		node = ft_getenv(env, "PWD");
 		if (!node)
 		{
-			ft_putstr_fd("minishell: PWD not set", 2);
+			ft_putstr_fd("minishell: PWD not set\n", 2);
 			return (determine_exit_code(obj, 1), 1);
 		}
 		printf("%s\n", node);

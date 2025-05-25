@@ -166,6 +166,7 @@ void	free_token(t_token **token);
 void	free_cmd(t_cmd **cmd);
 void	free_env(t_env **env);
 void	clean_echo(char **str);
+void	clear_heredoc_lexers(t_obj *obj);
 // utlis
 char	*get_value(t_obj *obj, char *str);
 int		check_build(char *cmd);

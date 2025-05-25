@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:43 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/21 16:14:30 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/25 00:15:16 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_path(t_obj *obj, char *cmd)
 	}
 	if (!path_array)
 	{
-		ft_putstr_fd("could not find path variables", 2);
+		ft_putstr_fd("could not find path variables\n", 2);
 		exit (determine_exit_code(obj, Q_ERROR));
 	}
 	return (pp_path_cheker(path_array, cmd));

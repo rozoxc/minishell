@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 12:04:37 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/24 23:54:36 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/25 00:07:48 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,5 @@ int	parsing(t_obj *obj)
 	free_token(&obj->token);
 	if (obj->cmd != NULL)
 		return (determine_exit_code(obj, obj->exit_code));
-	return (determine_exit_code(obj, 1));
+	return (determine_exit_code(obj, obj->exit_code));
 }

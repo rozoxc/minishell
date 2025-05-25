@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:51 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/24 23:22:19 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/25 23:03:21 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,19 @@ int	set_redirections(t_cmd *cmd)
 		red_temp = red_temp->next;
 	}
 	return (0);
+}
+
+void	clear_heredoc_lexers(t_obj *obj)
+{
+	t_lexer	*tmp;
+
+	while (obj->cmd->lexer)
+	{
+		tmp = obj->cmd->lexer->next;
+		if (obj->cmd->lexer->i == HEREDOC)
+			close(obj->cmd->lexer->fd);
+		free(obj->cmd->lexer->str);
+		free(obj->cmd->lexer);
+		obj->cmd->lexer = tmp;
+	}
 }
