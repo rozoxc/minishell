@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/21 15:36:31 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/27 16:15:48 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	expand(t_obj *obj)
 	token = obj->token;
 	while (token)
 	{
-		fix_norm(token, obj, &j);
+		check_type(token, obj, &j);
 		if (token->str && ft_strcmp(token->str, "<<") == 0)
 		{
 			handle_special_tokens(&token);

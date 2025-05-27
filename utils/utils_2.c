@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:21:41 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/24 20:24:54 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/27 16:15:34 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	count_heredoc(t_obj *obj, t_token *token)
 	}
 }
 
-void	fix_norm(t_token *token, t_obj *obj, int *j)
+void	check_type(t_token *token, t_obj *obj, int *j)
 {
 	if (token->type == COMMAND)
 	{

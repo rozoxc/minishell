@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:23:14 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/24 23:25:47 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/27 16:09:02 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ int	ft_is_valid(char *str)
 		free(str);
 		return (1);
 	}
-	else if (n == 1)
+	if (n == -1)
 	{
 		free(str);
-		return (1);
+		return (0);
 	}
 	free(str);
-	return (0);
+	return (1);
 }
 
 int	ft_exit(char **args, t_obj *obj)
