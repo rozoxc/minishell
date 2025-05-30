@@ -6,7 +6,7 @@
 /*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:23:14 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/27 16:09:02 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/30 00:08:49 by ababdoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,12 @@ int	ft_exit(char **args, t_obj *obj)
 	{
 		exit(obj->exit_code);
 	}
-	if (!ft_is_numeric(args[1]) || !ft_is_valid(args[1]))
+	else if (args[2] != NULL)
+	{
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+		return (1);
+	}
+	else if (!ft_is_numeric(args[1]) || !ft_is_valid(args[1]))
 	{
 		show_error(args[1]);
 		exit(255);
