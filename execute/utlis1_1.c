@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:23:42 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/31 14:24:10 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/31 15:13:52 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	is_heredoc(t_cmd *cmd)
 int	setup_execution(t_obj *obj, int *std_in, int *std_out, char ***env)
 {
 	t_cmd	*next;
-	
+
 	*env = env_to_array(obj->env);
 	*std_in = dup_error(obj, dup(STDIN_FILENO));
 	*std_out = dup_error(obj, dup(STDOUT_FILENO));

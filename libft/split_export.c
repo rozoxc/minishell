@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 11:11:53 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/31 11:12:10 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/31 15:13:39 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ int	is_whitespace(char c)
 
 int	count_parts(const char *s)
 {
-	int count = 0;
+	int	count;
 
+	count = 0;
 	while (*s)
 	{
 		if (is_whitespace(*s))
@@ -36,35 +37,29 @@ int	count_parts(const char *s)
 			count++;
 		}
 	}
-	return count;
+	return (count);
 }
 
 char	*substr(const char *start, const char *end)
 {
-	size_t	len = end - start;
-	char	*res = malloc(len + 1);
+	size_t	len;
+	char	*res;
+
+	len = end - start;
+	res = malloc(len + 1);
 	if (!res)
-		return NULL;
+		return (NULL);
 	ft_memcpy(res, start, len);
 	res[len] = '\0';
-	return res;
+	return (res);
 }
 
-char	**ft_split_export(const char *s, char c)
+int	ft_fill_split_export(char **result, const char *s)
 {
-	(void)c;
-	char	**result;
-	int		i = 0;
-	const char *start;
+	int			i;
+	const char	*start;
 
-	if (!s)
-		return NULL;
-
-	int count = count_parts(s);
-	result = malloc(sizeof(char *) * (count + 1));
-	if (!result)
-		return NULL;
-
+	i = 0;
 	while (*s)
 	{
 		if (is_whitespace(*s))
@@ -83,5 +78,21 @@ char	**ft_split_export(const char *s, char c)
 		}
 	}
 	result[i] = NULL;
+	return (1);
+}
+
+char	**ft_split_export(const char *s, char c)
+{
+	char	**result;
+	int		count;
+
+	(void)c;
+	if (!s)
+		return (NULL);
+	count = count_parts(s);
+	result = malloc(sizeof(char *) * (count + 1));
+	if (!result)
+		return (NULL);
+	ft_fill_split_export(result, s);
 	return (result);
 }
