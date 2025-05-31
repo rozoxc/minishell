@@ -15,6 +15,7 @@ SRC = parsing/create_list.c \
 	parsing/expand_utlis.c \
 	parsing/expand_utlis_2.c \
 	parsing/expand_utlis_3.c \
+	parsing/handle_whitespace.c \
 	execute/error_handle.c \
 	execute/execute_utilis.c \
 	execute/execute.c \

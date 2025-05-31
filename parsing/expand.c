@@ -3,35 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/27 16:15:48 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/31 11:29:35 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	should_split_token(t_token *token)
-{
-	if (!(ft_strchr(token->str, ' ')))
-		return (0);
-	if (!token->str)
-		return (0);
-	return (1);
-}
-
-void	create_new_tokens(t_token *token, char **parts)
+void	create_new_tokens(t_token *token, char **parts, int i)
 {
 	t_token	*curr;
 	t_token	*new_tok;
-	int		i;
 
 	curr = token;
-	i = 1;
+	i++;
 	while (parts[i])
 	{
-		if (!(ft_strchr(parts[i], ' ')))
+		if (!(ft_strchr(parts[i], ' ')) && !(ft_strchr(parts[i], '\t')))
 		{
 			new_tok = create_token(ft_strdup(parts[i]));
 			new_tok->next = curr->next;
@@ -45,15 +35,27 @@ void	create_new_tokens(t_token *token, char **parts)
 void	split_expanded(t_token *token)
 {
 	char	**parts;
+	int		i;
+	int		count;
 
-	if (!should_split_token(token))
-		return ;
-	parts = ft_split(token->str, ' ');
+	count = ft_count_words(token->str);
+	parts = ft_split_export(token->str, ' ');
 	if (!parts)
 		return ;
-	free(token->str);
-	token->str = ft_strdup(parts[0]);
-	create_new_tokens(token, parts);
+	i = 0;
+	while (is_all_whitespace(parts[i]))
+		i++;
+	if (count > 1)
+	{
+		free(token->str);
+		token->str = ft_strdup(parts[i]);
+		create_new_tokens(token, parts, i);
+	}
+	else
+	{
+		free(token->str);
+		token->str = ft_strdup(parts[i]);
+	}
 	free_argv(parts);
 }
 

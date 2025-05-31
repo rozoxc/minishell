@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 12:56:59 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/13 21:31:40 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/31 11:12:20 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ int		ft_skip(const char **str);
 int		ft_sep2(char c);
 int		dollar_len(const char **str);
 void	free_split(char **arr, int n);
+char	**ft_split_export(const char *s, char c);
 #endif

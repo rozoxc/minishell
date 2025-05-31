@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 15:39:51 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/14 18:19:00 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/31 11:00:53 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	skip_space(char **str)
 {
-	while (*(*str) == ' ' || *(*str) == '\t' \
+	while (*(*str) == ' ' || *(*str) == '\t' || *(*str) == '\n' \
 		|| *(*str) == '\r' || *(*str) == '\v' || *(*str) == '\f')
 		(*str)++;
 }
@@ -37,9 +37,9 @@ int	check_sep(char **str, char c)
 			return (0);
 		return (1);
 	}
-	else if ((*(*str) == ' ' || *(*str) == '|'))
+	else if ((ft_is_whitespace(*(*str)) || *(*str) == '|'))
 		return (1);
-	else if ((*(*str + 1) == ' ' || *(*str + 1) == '|' \
+	else if ((ft_is_whitespace(*(*str + 1)) || *(*str + 1) == '|' \
 			|| *(*str + 1) == '>' || *(*str + 1) == '<'))
 		return (1);
 	return (0);

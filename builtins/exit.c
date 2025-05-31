@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:23:14 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/30 00:08:49 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/31 11:33:22 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	ft_exit(char **args, t_obj *obj)
 	else if (args[2] != NULL)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-		return (1);
+		return (determine_exit_code(obj, 1), 1);
 	}
 	else if (!ft_is_numeric(args[1]) || !ft_is_valid(args[1]))
 	{

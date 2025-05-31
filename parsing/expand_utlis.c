@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utlis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:41:15 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/24 21:01:25 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:52:03 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ t_token	*create_token(char *str)
 	if (!tok)
 		return (NULL);
 	tok->str = str;
+	tok->type = ARG;
 	tok->next = NULL;
 	return (tok);
 }

@@ -144,7 +144,10 @@ int		syntax(t_token *token);
 void	expand(t_obj *obj);
 void	append_lexer(t_lexer **lexer, char *str, int i);
 void	append_argv(t_cmd **cmd, t_lexer *lexer, char **argv);
-
+int		ft_is_whitespace(char c);
+int		count_env_entries(t_env *env);
+int		is_all_whitespace(char *str);
+int		ft_count_words(const char *s);
 //builtuin function
 int		ft_export(char	**av, t_obj *obj);
 int		ft_echo(char	**arg, t_obj *obj);
@@ -223,4 +226,5 @@ void	ft_redirection(t_lexer **lexer, t_token **token);
 void	export_error(char *arg, t_obj *obj);
 int		is_valid_varname_char(char c, int is_first_char);
 void	parse_echo_args(char ***str, int *id, int *no_new_line, int size);
+
 #endif

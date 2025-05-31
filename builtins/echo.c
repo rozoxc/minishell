@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:39:34 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/24 23:25:26 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/31 12:00:28 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	ft_echo(char **arg, t_obj *obj)
 	start_idx = 1;
 	if (obj->echo_flag == 1)
 	{
-		str = ft_split_simple(arg[1], ' ');
+		str = ft_split_export(arg[1], ' ');
 		size = ft_size(str);
 		start_idx = 0;
 	}

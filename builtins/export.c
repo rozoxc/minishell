@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ababdoul <ababdoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:13:28 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/24 23:27:43 by ababdoul         ###   ########.fr       */
+/*   Updated: 2025/05/31 10:47:36 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	print_envs(t_obj *obj)
 
 	i = 0;
 	env = env_to_array(obj->env);
+	obj->count_env = (count_env_entries(obj->env) - 1);
 	sort_by_first_char(env, obj);
 	if (!obj)
 	{

@@ -74,7 +74,6 @@ void	init_obj(t_obj *obj, char **env)
 		while (*env)
 		{
 			get_env(&obj->env, *env);
-			obj->count_env++;
 			env++;
 		}
 	}

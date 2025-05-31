@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:56:04 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/04/27 17:28:44 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/31 11:05:29 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	ft_word_len(const char *str, char charset)
 	return (i);
 }
 
-static int	ft_count_words(const char *str, char c)
+static int	ft_count_word(const char *str, char c)
 {
 	int	i;
 	int	w;
@@ -67,7 +67,7 @@ char	**ft_split_simple(char const *str, char charset)
 	int		n;
 	char	*temp_word;
 
-	size = ft_count_words(str, charset);
+	size = ft_count_word(str, charset);
 	array = malloc ((size + 1) * sizeof(char *));
 	if (!(array))
 		return (NULL);
