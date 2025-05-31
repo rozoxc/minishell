@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 22:01:05 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/31 11:00:31 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/31 14:53:53 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,19 @@ int	ft_is_whitespace(char c)
 	if (c == ' ' || c == '\n' || c == '\t'
 		|| c == '\v' || c == '\f' || c == '\r')
 		return (1);
+	return (0);
+}
+
+int	contains_whitespace(const char *s)
+{
+	if (s == NULL)
+		return (0);
+	while (*s)
+	{
+		if (ft_is_whitespace((unsigned char)*s))
+			return (1);
+		s++;
+	}
 	return (0);
 }
 

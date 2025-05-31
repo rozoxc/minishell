@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 22:19:56 by ababdoul          #+#    #+#             */
-/*   Updated: 2025/05/31 11:29:35 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/31 14:53:56 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	split_expanded(t_token *token)
 	int		i;
 	int		count;
 
+	if (!contains_whitespace(token->str))
+		return ;
 	count = ft_count_words(token->str);
 	parts = ft_split_export(token->str, ' ');
 	if (!parts)

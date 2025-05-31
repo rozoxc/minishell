@@ -15,13 +15,9 @@
 
 # include <stdio.h>
 # include <limits.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <string.h>
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <sys/wait.h>
 # include <signal.h>
 # include <termios.h>
 # include "../libft/libft.h"
@@ -130,7 +126,6 @@ void	child_process_execution(t_obj *obj, char *path, \
 void	shift_empty_args_cmds(t_cmd *cmd);
 void	shift_env_arg(char *argv[]);
 void	process_input(t_obj *obj, char *s, int fd, char *stop);
-void	process_input(t_obj *obj, char *s, int fd, char *stop);
 int		setup_execution(t_obj *obj, int *std_in, int *std_out, char ***env);
 // parsing utlis function
 int		parsing(t_obj *obj);
@@ -148,6 +143,7 @@ int		ft_is_whitespace(char c);
 int		count_env_entries(t_env *env);
 int		is_all_whitespace(char *str);
 int		ft_count_words(const char *s);
+int		contains_whitespace(const char *s);
 //builtuin function
 int		ft_export(char	**av, t_obj *obj);
 int		ft_echo(char	**arg, t_obj *obj);
