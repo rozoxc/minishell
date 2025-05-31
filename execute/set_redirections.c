@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:42:51 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/25 23:03:21 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/31 14:22:32 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,15 +108,18 @@ int	set_redirections(t_cmd *cmd)
 
 void	clear_heredoc_lexers(t_obj *obj)
 {
-	t_lexer	*tmp;
+	t_lexer	*current;
+	t_lexer	*next;
 
-	while (obj->cmd->lexer)
+	current = obj->cmd->lexer;
+	while (current)
 	{
-		tmp = obj->cmd->lexer->next;
-		if (obj->cmd->lexer->i == HEREDOC)
-			close(obj->cmd->lexer->fd);
-		free(obj->cmd->lexer->str);
-		free(obj->cmd->lexer);
-		obj->cmd->lexer = tmp;
+		next = current->next;
+		if (current->i == HEREDOC)
+			close(current->fd);
+		free(current->str);
+		free(current);
+		current = next;
 	}
+	obj->cmd->lexer = NULL;
 }

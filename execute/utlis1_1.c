@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:23:42 by hfalati           #+#    #+#             */
-/*   Updated: 2025/05/31 10:48:53 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/05/31 14:24:10 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int	is_heredoc(t_cmd *cmd)
 
 int	setup_execution(t_obj *obj, int *std_in, int *std_out, char ***env)
 {
+	t_cmd	*next;
+	
 	*env = env_to_array(obj->env);
 	*std_in = dup_error(obj, dup(STDIN_FILENO));
 	*std_out = dup_error(obj, dup(STDOUT_FILENO));
@@ -102,9 +104,13 @@ int	setup_execution(t_obj *obj, int *std_in, int *std_out, char ***env)
 	{
 		while (obj->cmd)
 		{
+			next = obj->cmd->next;
+			free_argv(obj->cmd->argv);
 			clear_heredoc_lexers(obj);
-			obj->cmd = obj->cmd->next;
+			free(obj->cmd);
+			obj->cmd = next;
 		}
+		obj->cmd = NULL;
 		cleanup_execution(obj, *std_in, *std_out, *env);
 		return (determine_exit_code(obj, 1), 1);
 	}
